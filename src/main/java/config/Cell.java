@@ -5,12 +5,12 @@ public record Cell(boolean Wall, Cell.Content initialContent) {
 	
 	public static Cell Cellule(int i) {
 		//Mur
-		if(i == 0)return new Cell(true, NOTHING);
+		if(i == 0)return new Cell(true, Content.NOTHING);
 		//Case vide
-		if(i == 1)return new Cell(false, NOTHING);
+		if(i == 1)return new Cell(false, Content.NOTHING);
 		//Case avec un Dot
-		if(i == 2)return new Cell(false, DOT);
+		if(i == 2)return new Cell(false, Content.DOT);
 		//Case avec un energizer
-		if(i == 3)return new Cell(false, ENERGIZER);   
+		if(i == 3)return new Cell(false, Content.ENERGIZER);   
 	}
 }
