@@ -3,6 +3,7 @@ package model;
 import config.MazeConfig;
 import geometry.IntCoordinates;
 import geometry.RealCoordinates;
+import javafx.scene.text.Text;
 
 import java.util.List;
 import java.util.Map;
@@ -21,6 +22,9 @@ public final class MazeState {
 
     private final Map<Critter, RealCoordinates> initialPos;
     private int lives = 3;
+
+    private Text point = new Text();
+
 
     public MazeState(MazeConfig config) {
         this.config = config;
@@ -50,7 +54,11 @@ public final class MazeState {
         return height;
     }
 
-    public void update(long deltaTns) {
+    public int getScore() {
+        return score;
+    }
+
+        public void update(long deltaTns) {
         // FIXME: too many things in this method. Maybe some responsibilities can be delegated to other methods or classes?
         for  (var critter: critters) {
             var curPos = critter.getPos();
@@ -118,7 +126,9 @@ public final class MazeState {
     }
 
     private void displayScore() {
-        // FIXME: this should be displayed in the JavaFX view, not in the console
+        point.setText(score+"");
+        point.setX(50);
+        point.setY(50);
         System.out.println("Score: " + score);
     }
 
@@ -149,4 +159,6 @@ public final class MazeState {
     public boolean getGridState(IntCoordinates pos) {
         return gridState[pos.y()][pos.x()];
     }
+
+
 }
