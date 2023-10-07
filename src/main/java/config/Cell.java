@@ -11,6 +11,8 @@ public record Cell(boolean Wall, Cell.Content initialContent) {
 		//Case avec un Dot
 		if(i == 2)return new Cell(false, Content.DOT);
 		//Case avec un energizer
-		if(i == 3)return new Cell(false, Content.ENERGIZER);   
+		if(i == 3)return new Cell(false, Content.ENERGIZER);  
+		
+		return null;
 	}
 }
