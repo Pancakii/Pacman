@@ -18,6 +18,9 @@ public final class MazeState {
     private final Map<Critter, RealCoordinates> initialPos;
     private int lives = 3;
 
+    private Text point = new Text();
+
+
     public MazeState(MazeConfig config) {
         this.config = config;
         height = config.getHeight();
@@ -46,7 +49,11 @@ public final class MazeState {
         return height;
     }
 
-    public void update(long deltaTns) {
+    public int getScore() {
+        return score;
+    }
+
+        public void update(long deltaTns) {
         // FIXME: too many things in this method. Maybe some responsibilities can be delegated to other methods or classes?
     	// Note : FINI !!!
     	this.Neighbours(deltaTns);
@@ -137,6 +144,9 @@ public final class MazeState {
     
     // FIXME: this should be displayed in the JavaFX view, not in the console
     private void displayScore() {
+        point.setText(score+"");
+        point.setX(50);
+        point.setY(50);
         System.out.println("Score: " + score);
     }
     
@@ -167,5 +177,6 @@ public final class MazeState {
     public boolean getGridState(IntCoordinates pos) {
         return gridState[pos.y()][pos.x()];
     }
-  
+
+
 }
