@@ -12,8 +12,21 @@ public final class PacMan implements Critter {
 
     private PacMan() {
     }
-
+    
     public static final PacMan INSTANCE = new PacMan();
+    
+    /*
+     * Si pacman entre dans une case une nouvelle case
+     * il gagne 1pts
+     */
+    public static void pacEnterNewCell(boolean[][] gridState) {
+    	var pacPos = PacMan.INSTANCE.getPos().round();
+    	
+        if (!gridState[pacPos.y()][pacPos.x()]) {
+            MazeState.addScore(1);
+            gridState[pacPos.y()][pacPos.x()] = true;
+        }
+    }
 
     @Override
     public RealCoordinates getPos() {

@@ -3,22 +3,17 @@ package model;
 import config.MazeConfig;
 import geometry.IntCoordinates;
 import geometry.RealCoordinates;
-import javafx.scene.text.Text;
-
 import java.util.List;
 import java.util.Map;
-
 import static model.Ghost.*;
 
 public final class MazeState {
     private final MazeConfig config;
     private final int height;
     private final int width;
-
     private final boolean[][] gridState;
-
     private final List<Critter> critters;
-    private int score;
+    private static int score;
 
     private final Map<Critter, RealCoordinates> initialPos;
     private int lives = 3;
@@ -60,11 +55,25 @@ public final class MazeState {
 
         public void update(long deltaTns) {
         // FIXME: too many things in this method. Maybe some responsibilities can be delegated to other methods or classes?
+    	// Note : FINI !!!
+    	this.Neighbours(deltaTns);
+        PacMan.pacEnterNewCell(this.gridState);
+        this.statusPacman();
+    }
+    
+    /*
+     * Si pacman entre dans une case où il y a un fantôme
+     * on vérifie s'il est énergiser
+     * Oui : Gagne 10pts et tue le fantôme
+     * Non : Perd une vie ou Game Over si 0 vie
+     */
+    private void Neighbours(long deltaTns) {
         for  (var critter: critters) {
             var curPos = critter.getPos();
             var nextPos = critter.nextPos(deltaTns);
             var curNeighbours = curPos.intNeighbours();
             var nextNeighbours = nextPos.intNeighbours();
+            
             if (!curNeighbours.containsAll(nextNeighbours)) { // the critter would overlap new cells. Do we allow it?
                 switch (critter.getDirection()) {
                     case NORTH -> {
@@ -96,23 +105,27 @@ public final class MazeState {
                         }
                     }
                 }
-
             }
 
             critter.setPos(nextPos.warp(width, height));
         }
-        // FIXME Pac-Man rules should somehow be in Pacman class
-        var pacPos = PacMan.INSTANCE.getPos().round();
-        if (!gridState[pacPos.y()][pacPos.x()]) {
-            addScore(1);
-            gridState[pacPos.y()][pacPos.x()] = true;
-        }
-        for (var critter : critters) {
-            if (critter instanceof Ghost && critter.getPos().round().equals(pacPos)) {
-                if (PacMan.INSTANCE.isEnergized()) {
-                    addScore(10);
-                    resetCritter(critter);
-                } else {
+    }
+    
+    /*
+     * Si pacman entre dans une case où il y a un fantôme
+     * on vérifie s'il est énergiser
+     * Oui : Gagne 10pts et tue le fantôme
+     * Non : Perd une vie ou Game Over si 0 vie
+     */
+    private void statusPacman() {
+    	var pacPos = PacMan.INSTANCE.getPos().round();
+    	
+    	for (var critter : critters) {
+    		if (critter instanceof Ghost && critter.getPos().round().equals(pacPos)) {
+    			if(PacMan.INSTANCE.isEnergized()) {
+                     addScore(10);
+                     resetCritter(critter);
+                }else {
                     playerLost();
                     return;
                 }
@@ -120,20 +133,25 @@ public final class MazeState {
         }
     }
 
-    private void addScore(int increment) {
+    public static void addScore(int increment) {
         score += increment;
-        displayScore();
+        //displayScore();
     }
-
+    
+    public int getScore() {
+    	return this.score;
+    }
+    
+    // FIXME: this should be displayed in the JavaFX view, not in the console
     private void displayScore() {
         point.setText(score+"");
         point.setX(50);
         point.setY(50);
         System.out.println("Score: " + score);
     }
-
+    
+    // FIXME: this should be displayed in the JavaFX view, not in the console. A game over screen would be nice too.
     private void playerLost() {
-        // FIXME: this should be displayed in the JavaFX view, not in the console. A game over screen would be nice too.
         lives--;
         if (lives == 0) {
             System.out.println("Game over!");
