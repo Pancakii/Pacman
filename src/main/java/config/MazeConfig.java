@@ -96,9 +96,8 @@ public class MazeConfig {
         }
         return maze;
     }
-
-    // configuration du mawe
-// placement de pacman et des ghost a fixer
+    // configuration du maze
+    // placement de pacman et des ghost a fixer
     public static MazeConfig make() throws Exception {
         return new MazeConfig(grid(),
                 new IntCoordinates(3, 0), // pacamn
