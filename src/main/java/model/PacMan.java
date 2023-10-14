@@ -21,12 +21,12 @@ public final class PacMan implements Critter {
 	
 	// We should be able to change the position 
 	// when we change the level.
-    private PacMan() 
+    private PacMan()
 	{
 		this(0.0, 0.0, false);
     }
-	
-	private Pacman(double x, double y, boolean e)
+
+	private PacMan(double x, double y, boolean e)
 	{
 		pos = new RealCoordinates(x, y);
 		energized = e;
@@ -34,7 +34,7 @@ public final class PacMan implements Critter {
 	}
 	
 
-    public static final PacMan INSTANCE = new PacMan(0, 0, false);
+    public static final PacMan INSTANCE = new PacMan(0., 0., false);
 
     @Override
     public RealCoordinates getPos() {
@@ -83,13 +83,13 @@ public final class PacMan implements Critter {
 			if(cell.Content == ENERGIZER)// to change
 			{
 				// If it's an energizer, set energized true and 
-				// return true toindicate that the pellet is eaten.
+				// return true to indicate that the pellet is eaten.
 				setEnergized(true);
 				return true;
 			}
 			else if(cell.Content == PELLET)// to change
 			{
-				// If it's a pellet, increment the score and 
+				// If it's a pellet, increment the score and
 				// return true to indicate that the pellet is eaten.
 				//set score++;
 				return true;
@@ -118,13 +118,7 @@ public final class PacMan implements Critter {
 	}
 	
 	
-    public boolean isEnergized() 
-	{
-        // TODO handle timeout!(func energizedTimerCount)
-		// Already done, can be used as a getter if needed.
-		
-        return energized;
-    }
+    public boolean isEnergized() {return energized;}
 
     public void setEnergized(boolean energized) 
 	{
