@@ -66,32 +66,37 @@ public final class PacMan implements Critter {
 	{
 		// Distance calculator. Can be changed or not, 
 		// depending on the cell position system.
-		return Math.sqrt(Math.pow( ((p[0] - pos.x) + (p[1] - pos.y)), 2));
+		return Math.sqrt(Math.pow( ((p[0] - pos.x()) + (p[1] - pos.y())), 2));
 	}
 	
-	public boolean eatBall(Cell cell)
+	public boolean eatBall(Cell cell, RealCoordinates cell_coordinates)
 	{
 		// Call this function for a cell that contains a pellet(energizer or normal)
-		
-		// Check if the cell has anything.
-		// If so, if close enough to the middle, eat and return true, else return false.
-		double[] temp = {cell.getCoordinates.x, cell.getCoordinates.y};
+
+		// Return value might not be useful if we can have a setter for Cell.Content
+
+		// Not sure if this is going to work, the RealCoordinates x and y are private
+		double[] temp = {cell_coordinates.x(), cell_coordinates.y()};
+		// Check if close enough to the middle.
+		// If the cell has anything, eat and return true, else return false.
 		if(INSTANCE.distance(temp) < 0.4)
 		{
 			// Supposing pacman radius is 0.8 cell size, if the distance between pellet and pacman
 			// is half pacman long, then it means pacman is close enough to eat it.
-			if(cell.initialContent == Cell.Content.ENERGIZER)// to change
+			if(cell.aEnergizer())// to change
 			{
 				// If it's an energizer, set energized true and 
 				// return true to indicate that the pellet is eaten.
+				cell.initialContent = Cell.Content.NOTHING;
 				setEnergized(true);
 				return true;
 			}
-			if(cell.initialContent == Cell.Content.DOT)// to change
+			if(cell.aDot())// to do: Somehow do score++
 			{
 				// If it's a pellet, increment the score and
 				// return true to indicate that the pellet is eaten.
 				//set score++;
+				cell.initialContent = Cell.Content.NOTHING;
 				return true;
 			}
 		}

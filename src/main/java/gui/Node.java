@@ -12,7 +12,7 @@ public class Node
     Node[] neighbors = new Node[4]; // 0: nord, 1: est, 2: sud, 3: ouest
     boolean open;
 
-    public Node(double i, double j, int used, double di, double dj)
+    public Node(int i, int j, int used, int di, int dj)
     {
         coordinates = new RealCoordinates(i, j);
         this.used = used;
@@ -22,43 +22,43 @@ public class Node
         open = false;
     }
 
-    void discoverNeighbors(Cell[][] tab, double di, double dj)
+    void discoverNeighbors(Cell[][] tab, int di, int dj)
     {
         //a faire: gerer le cas ou index out of bounds
         //NORD
-        if(coordinates.x >= 1) {
-            if (!tab[(int) coordinates.x - 1][(int) coordinates.y()].Wall()) //si neighbor n'est pas un mur
+        if(coordinates.round().x() >= 1) {
+            if (!tab[coordinates.round().x() - 1][coordinates.round().y()].Wall()) //si neighbor n'est pas un mur
             {
-                neighbors[0] = new Node(coordinates.x - 1, coordinates.y, used + 1, di, dj);
+                neighbors[0] = new Node(coordinates.x() - 1, coordinates.y(), used + 1, di, dj);
             }
         }
         //EST
-        if(coordinates.y <= tab[0].length-1) {
-            if (!tab[(int) coordinates.x][(int) coordinates.y() + 1].Wall()) //si neighbor n'est pas un mur
+        if(coordinates.round().y() <= tab[0].length-1) {
+            if (!tab[coordinates.round().x()][coordinates.round().y() + 1].Wall()) //si neighbor n'est pas un mur
             {
                 neighbors[0] = new Node(coordinates.x, coordinates.y + 1, used + 1, di, dj);
             }
         }
         //SUD
-        if(coordinates.x <= tab.length-1) {
-            if (!tab[(int) coordinates.x + 1][(int) coordinates.y()].Wall()) //si neighbor n'est pas un mur
+        if(coordinates.round().x() <= tab.length-1) {
+            if (!tab[coordinates.round().x() + 1][coordinates.round().y()].Wall()) //si neighbor n'est pas un mur
             {
                 neighbors[0] = new Node(coordinates.x + 1, coordinates.y, used + 1, di, dj);
             }
         }
         //OUEST
-        if(coordinates.y >= 1) {
-            if (!tab[(int) coordinates.x][(int) coordinates.y() - 1].Wall()) //si neighbor n'est pas un mur
+        if(coordinates.round().y() >= 1) {
+            if (!tab[coordinates.round().x()][coordinates.round().y() - 1].Wall()) //si neighbor n'est pas un mur
             {
                 neighbors[0] = new Node(coordinates.x, coordinates.y - 1, used + 1, di, dj);
             }
         }
     }
 
-    int calculateDistance(double di, double dj)
+    int calculateDistance(int di, int dj)
     {
-        int x = Math.abs(di-coordinates.x);
-        int y = Math.abs(dj-coordinates.y);
+        int x = Math.abs(di-coordinates.round().x());
+        int y = Math.abs(dj-coordinates.round().y());
         return x + y;
     }
 
