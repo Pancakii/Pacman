@@ -1,8 +1,8 @@
 package config;
 
+import javafx.scene.text.Text;
 import geometry.IntCoordinates;
 import java.io.* ;
-
 import static config.Cell.Content.DOT;
 import static config.Cell.*;
 import static config.Cell.Content.NOTHING;

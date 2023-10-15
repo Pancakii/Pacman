@@ -1,5 +1,6 @@
 package model;
 
+import javafx.scene.text.*;
 import config.MazeConfig;
 import geometry.IntCoordinates;
 import geometry.RealCoordinates;
@@ -17,9 +18,7 @@ public final class MazeState {
 
     private final Map<Critter, RealCoordinates> initialPos;
     private int lives = 3;
-
-    private Text point = new Text();
-
+    private Text point;
 
     public MazeState(MazeConfig config) {
         this.config = config;
@@ -53,55 +52,63 @@ public final class MazeState {
         return score;
     }
 
-        public void update(long deltaTns) {
-        // FIXME: too many things in this method. Maybe some responsibilities can be delegated to other methods or classes?
-    	// Note : FINI !!!
+    public void update(long deltaTns) {
     	this.Neighbours(deltaTns);
         PacMan.pacEnterNewCell(this.gridState);
         this.statusPacman();
     }
     
-    /*
-     * Si pacman entre dans une case où il y a un fantôme
-     * on vérifie s'il est énergiser
-     * Oui : Gagne 10pts et tue le fantôme
-     * Non : Perd une vie ou Game Over si 0 vie
-     */
     private void Neighbours(long deltaTns) {
-        for  (var critter: critters) {
+        for (var critter : critters) {
             var curPos = critter.getPos();
             var nextPos = critter.nextPos(deltaTns);
             var curNeighbours = curPos.intNeighbours();
             var nextNeighbours = nextPos.intNeighbours();
-            
-            if (!curNeighbours.containsAll(nextNeighbours)) { // the critter would overlap new cells. Do we allow it?
+
+            // Vérifie si la nouvelle position est un mur
+            for (var n : nextNeighbours) {
+                if (config.getCell(n).isWall()) {
+                    critter.setDirection(Direction.NONE);
+                    break;
+                }
+            }
+
+            if (!curNeighbours.containsAll(nextNeighbours)) {
                 switch (critter.getDirection()) {
                     case NORTH -> {
-                        for (var n: curNeighbours) if (config.getCell(n).northWall()) {
-                            nextPos = curPos.floorY();
-                            critter.setDirection(Direction.NONE);
-                            break;
+                        for (var n : curNeighbours) {
+                            if (config.getCell(n).isWall()) {
+                                nextPos = curPos.floorY();
+                                critter.setDirection(Direction.NONE);
+                                break;
+                            }
                         }
                     }
                     case EAST -> {
-                        for (var n: curNeighbours) if (config.getCell(n).eastWall()) {
-                            nextPos = curPos.ceilX();
-                            critter.setDirection(Direction.NONE);
-                            break;
+                        for (var n : curNeighbours) {
+                            if (config.getCell(n).isWall()) {
+                                nextPos = curPos.ceilX();
+                                critter.setDirection(Direction.NONE);
+                                break;
+                            }
                         }
                     }
                     case SOUTH -> {
-                        for (var n: curNeighbours) if (config.getCell(n).southWall()) {
-                            nextPos = curPos.ceilY();
-                            critter.setDirection(Direction.NONE);
-                            break;
+                        for (var n : curNeighbours) {
+                            if (config.getCell(n).isWall()) {
+                                nextPos = curPos.ceilY();
+                                critter.setDirection(Direction.NONE);
+                                break;
+                            }
                         }
                     }
                     case WEST -> {
-                        for (var n: curNeighbours) if (config.getCell(n).westWall()) {
-                            nextPos = curPos.floorX();
-                            critter.setDirection(Direction.NONE);
-                            break;
+                        for (var n : curNeighbours) {
+                            if (config.getCell(n).isWall()) {
+                                nextPos = curPos.floorX();
+                                critter.setDirection(Direction.NONE);
+                                break;
+                            }
                         }
                     }
                 }
@@ -110,6 +117,7 @@ public final class MazeState {
             critter.setPos(nextPos.warp(width, height));
         }
     }
+
     
     /*
      * Si pacman entre dans une case où il y a un fantôme
@@ -136,10 +144,6 @@ public final class MazeState {
     public static void addScore(int increment) {
         score += increment;
         //displayScore();
-    }
-    
-    public int getScore() {
-    	return this.score;
     }
     
     // FIXME: this should be displayed in the JavaFX view, not in the console
@@ -177,6 +181,5 @@ public final class MazeState {
     public boolean getGridState(IntCoordinates pos) {
         return gridState[pos.y()][pos.x()];
     }
-
 
 }

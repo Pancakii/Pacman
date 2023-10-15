@@ -21,7 +21,7 @@ public class PacmanController {
         if (event.getCode()== KeyCode.LEFT ){
             // prend la position d'à côté pour voir s'il y a un mur
             for (var n : PacMan.INSTANCE.getPos().intNeighbourWest()) {
-                if (!(m.getCell(n).Wall())) {
+                if (!(m.getCell(n).isWall())) {
                     PacMan.INSTANCE.setDirection(Direction.WEST);
                 }
             }
@@ -29,7 +29,7 @@ public class PacmanController {
         } else if (event.getCode()== KeyCode.RIGHT ){
             // prend la position d'à côté pour voir s'il y a un mur
             for (var n : PacMan.INSTANCE.getPos().intNeighbourEast() ) {
-                if (!(m.getCell(n).Wall())) {
+                if (!(m.getCell(n).isWall())) {
                     PacMan.INSTANCE.setDirection(Direction.EAST);
                 }
             }
@@ -37,7 +37,7 @@ public class PacmanController {
         } else if (event.getCode()== KeyCode.UP ){
             // prend la position d'à côté pour voir s'il y a un mur
             for (var n : PacMan.INSTANCE.getPos().intNeighbourNorth()) {
-                if (!(m.getCell(n).Wall())) {
+                if (!(m.getCell(n).isWall())) {
                     PacMan.INSTANCE.setDirection(Direction.NORTH);
                 }
             }
@@ -45,7 +45,7 @@ public class PacmanController {
         } else if (event.getCode()== KeyCode.DOWN ){
             // prend la position d'à côté pour voir s'il y a un mur
             for (var n :PacMan.INSTANCE.getPos().intNeighbourSouth() ) {
-                if (!(m.getCell(n).Wall())) {
+                if (!(m.getCell(n).isWall())) {
                     PacMan.INSTANCE.setDirection(Direction.SOUTH);
                 }
             }
@@ -64,7 +64,7 @@ public class PacmanController {
         if (event.getCode()== KeyCode.LEFT ){
             // prend la position d'à côté pour voir s'il y a un mur
             for (var n : PacMan.INSTANCE.getPos().intNeighbourWest()) {
-                if (!(m.getCell(n).Wall())) {
+                if (!(m.getCell(n).isWall())) {
                     PacMan.INSTANCE.setDirection(Direction.WEST);
                 }
             }
@@ -72,7 +72,7 @@ public class PacmanController {
         } else if (event.getCode()== KeyCode.RIGHT ){
             // prend la position d'à côté pour voir s'il y a un mur
             for (var n : PacMan.INSTANCE.getPos().intNeighbourEast() ) {
-                if (!(m.getCell(n).Wall())) {
+                if (!(m.getCell(n).isWall())) {
                     PacMan.INSTANCE.setDirection(Direction.EAST);
                 }
             }
@@ -80,7 +80,7 @@ public class PacmanController {
         } else if (event.getCode()== KeyCode.UP ){
             // prend la position d'à côté pour voir s'il y a un mur
             for (var n : PacMan.INSTANCE.getPos().intNeighbourNorth()) {
-                if (!(m.getCell(n).Wall())) {
+                if (!(m.getCell(n).isWall())) {
                     PacMan.INSTANCE.setDirection(Direction.NORTH);
                 }
             }
@@ -88,7 +88,7 @@ public class PacmanController {
         } else if (event.getCode()== KeyCode.DOWN ){
             // prend la position d'à côté pour voir s'il y a un mur
             for (var n :PacMan.INSTANCE.getPos().intNeighbourSouth() ) {
-                if (!(m.getCell(n).Wall())) {
+                if (!(m.getCell(n).isWall())) {
                     PacMan.INSTANCE.setDirection(Direction.SOUTH);
                 }
             }

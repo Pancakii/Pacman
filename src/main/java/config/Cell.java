@@ -1,7 +1,12 @@
 package config;
 
-public record Cell(boolean Wall, Cell.Content initialContent) {
+public record Cell(boolean wall, Cell.Content initialContent) {
 	public enum Content {NOTHING, DOT, ENERGIZER}
+	
+	// Méthode pour vérifier si la case est un mur
+	public boolean isWall() {
+		  return wall;
+	}
 	
 	public static Cell Cellule(int i) {
 		//Mur
@@ -15,4 +20,5 @@ public record Cell(boolean Wall, Cell.Content initialContent) {
 		
 		return null;
 	}
+	
 }
