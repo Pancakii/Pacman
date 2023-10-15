@@ -2,10 +2,7 @@ package config;
 
 import geometry.IntCoordinates;
 import java.io.* ;
-
-import static config.Cell.Content.DOT;
 import static config.Cell.*;
-import static config.Cell.Content.NOTHING;
 
 public class MazeConfig {
     public MazeConfig(Cell[][] grid, IntCoordinates pacManPos, IntCoordinates blinkyPos, IntCoordinates pinkyPos,
@@ -57,16 +54,37 @@ public class MazeConfig {
     }
     // compte le nombre ligne dans le fichier Maze.txt
     public static int compteligne() throws Exception {
-
-        File file = new File("Maze.txt");
+        String path =System.getProperty("user.dir") ;
+        File file ;
+        try {
+            file =new File(path+"/src/main/resources/Maze.txt");
+        } catch (Exception e ){
+            e.printStackTrace();
+            file =new File(path + "\\src\\main\\resources\\Maze.txt");
+        }
         FileReader fr = new FileReader(file);
         BufferedReader r = new BufferedReader(fr);
         int ligne = 0;
-        String lire ;
-        while ((lire = r.readLine()) != null) {
+        while ( r.readLine()!= null) {
             ligne++;
         }fr.close();
         return ligne;
+    }
+    //compte la longueur d'une ligne dans Maze.txt
+    public static int comptelongueur() throws Exception{
+        File file ;
+        String path =System.getProperty("user.dir") ;
+        try {
+            file =new File(path+"/src/main/resources/Maze.txt");
+        } catch (Exception e ){
+            e.printStackTrace();
+            file =new File(path +"\\src\\main\\resources\\Maze.txt");
+        }
+        FileReader fr = new FileReader(file);
+        BufferedReader r = new BufferedReader(fr);
+        fr.close();
+        return  r.readLine().length() ;
+
     }
 
     // creation du tableau de tableau des cellules
@@ -74,16 +92,16 @@ public class MazeConfig {
         String path =System.getProperty("user.dir") ;
         File file ;
         try {
-            file =new File(path + "/src/main/java/resources/Maze.txt");
+            file =new File(path+"/src/main/resources/Maze.txt");
         } catch (Exception e ){
             e.printStackTrace();
-            file =new File(path + "\\src\\main\\java\\resources\\Maze.txt");
+            file =new File(path+"\\src\\main\\resources\\Maze.txt");
         }
 
         FileReader fr = new FileReader(file);
         BufferedReader r = new BufferedReader(fr);
         String str ;
-        Cell[][] maze = new Cell[compteligne()-1][r.readLine().length()] ;
+        Cell[][] maze = new Cell[compteligne()][comptelongueur()] ;
         int j = 0 ;
         while ((str = r.readLine() )!= null ){
             for ( int i = 0 ; i< str.length();i++){
@@ -100,7 +118,7 @@ public class MazeConfig {
     // placement de pacman et des ghost a fixer
     public static MazeConfig make() throws Exception {
         return new MazeConfig(grid(),
-                new IntCoordinates(3, 0), // pacamn
+                new IntCoordinates(3, 0), // pacman
                 new IntCoordinates(0, 3), // blinky
                 new IntCoordinates(3, 5), // pinke
                 new IntCoordinates(5, 5), // inky
