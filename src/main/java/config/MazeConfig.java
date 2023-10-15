@@ -70,6 +70,7 @@ public class MazeConfig {
         }fr.close();
         return ligne;
     }
+
     //compte la longueur d'une ligne dans Maze.txt
     public static int comptelongueur() throws Exception{
         File file ;
