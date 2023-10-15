@@ -2,9 +2,8 @@ package model;
 
 //TESTING
 
-import java.util.Math;
-
 import geometry.RealCoordinates;
+import config.Cell;
 
 /**
  * Implements Pac-Man character using singleton pattern. FIXME: check whether singleton is really a good idea.
@@ -67,7 +66,7 @@ public final class PacMan implements Critter {
 	{
 		// Distance calculator. Can be changed or not, 
 		// depending on the cell position system.
-		return sqrt(power( ((p[0] - pos.x) + (p[1] - pos.y)), 2)); 
+		return Math.sqrt(Math.pow( ((p[0] - pos.x) + (p[1] - pos.y)), 2));
 	}
 	
 	public boolean eatBall(Cell cell)
@@ -76,7 +75,8 @@ public final class PacMan implements Critter {
 		
 		// Check if the cell has anything.
 		// If so, if close enough to the middle, eat and return true, else return false.
-		if(INSTANCE.distance(new {cell.getCoordinates.x, cell.getCoordinates.y}) < 0.4)
+		double[] temp = {cell.getCoordinates.x, cell.getCoordinates.y};
+		if(INSTANCE.distance(temp) < 0.4)
 		{
 			// Supposing pacman radius is 0.8 cell size, if the distance between pellet and pacman
 			// is half pacman long, then it means pacman is close enough to eat it.
@@ -98,7 +98,7 @@ public final class PacMan implements Critter {
 		return false;
 	}
 	
-	public void energizedTimerCount(double delta)
+	public void energizedTimerCount(int delta)
 	{
 		// This function decreases the timer of the energy buff.
 		// If the timer is done, sets energized false.
