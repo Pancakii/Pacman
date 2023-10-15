@@ -80,14 +80,14 @@ public final class PacMan implements Critter {
 		{
 			// Supposing pacman radius is 0.8 cell size, if the distance between pellet and pacman
 			// is half pacman long, then it means pacman is close enough to eat it.
-			if(cell.Content == ENERGIZER)// to change
+			if(cell.initialContent == Cell.Content.ENERGIZER)// to change
 			{
 				// If it's an energizer, set energized true and 
 				// return true to indicate that the pellet is eaten.
 				setEnergized(true);
 				return true;
 			}
-			else if(cell.Content == PELLET)// to change
+			if(cell.initialContent == Cell.Content.DOT)// to change
 			{
 				// If it's a pellet, increment the score and
 				// return true to indicate that the pellet is eaten.

@@ -1,7 +1,6 @@
 package config;
 
 import geometry.IntCoordinates;
-
 import static config.Cell.Content.DOT;
 import static config.Cell.*;
 import static config.Cell.Content.NOTHING;
