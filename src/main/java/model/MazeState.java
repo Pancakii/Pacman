@@ -3,6 +3,10 @@ package model;
 import config.MazeConfig;
 import geometry.IntCoordinates;
 import geometry.RealCoordinates;
+import gui.GameView;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 
 import java.util.List;
 import java.util.Map;
@@ -17,10 +21,13 @@ public final class MazeState {
     private final boolean[][] gridState;
 
     private final List<Critter> critters;
-    private int score;
+    public static int score;
 
     private final Map<Critter, RealCoordinates> initialPos;
-    private int lives = 3;
+    static int lives = 3;
+    static Text point = new Text();
+
+    public GameView g;
 
     public MazeState(MazeConfig config) {
         this.config = config;
@@ -50,7 +57,8 @@ public final class MazeState {
         return height;
     }
 
-    public void update(long deltaTns) {
+
+        public void update(long deltaTns) {
         // FIXME: too many things in this method. Maybe some responsibilities can be delegated to other methods or classes?
         for  (var critter: critters) {
             var curPos = critter.getPos();
@@ -114,13 +122,10 @@ public final class MazeState {
 
     private void addScore(int increment) {
         score += increment;
-        displayScore();
+
     }
 
-    private void displayScore() {
-        // FIXME: this should be displayed in the JavaFX view, not in the console
-        System.out.println("Score: " + score);
-    }
+
 
     private void playerLost() {
         // FIXME: this should be displayed in the JavaFX view, not in the console. A game over screen would be nice too.
@@ -149,4 +154,6 @@ public final class MazeState {
     public boolean getGridState(IntCoordinates pos) {
         return gridState[pos.y()][pos.x()];
     }
+
+
 }
