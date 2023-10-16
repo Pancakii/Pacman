@@ -15,4 +15,27 @@ public record Cell(boolean Wall, Cell.Content initialContent) {
 		
 		return null;
 	}
+
+	// Méthode pour vérifier si la case est un mur
+	public boolean isWall() {
+		return Wall;
+	}
+
+	// Méthode pour vérifier si la case a un DOT
+	public boolean aDot() {
+		if(initialContent == Content.DOT)return true;
+		return false;
+	}
+
+	// Méthode pour vérifier si la case a un Energizer
+	public boolean aEnergizer() {
+		if(initialContent == Content.ENERGIZER)return true;
+		return false;
+	}
+
+	// Méthode pour vérifier si la case a rien
+	public boolean aNothing() {
+		if(initialContent == Content.NOTHING)return true;
+		return false;
+	}
 }

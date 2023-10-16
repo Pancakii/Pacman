@@ -87,7 +87,6 @@ public final class PacMan implements Critter {
 			{
 				// If it's an energizer, set energized true and 
 				// return true to indicate that the pellet is eaten.
-				cell.initialContent = Cell.Content.NOTHING;
 				setEnergized(true);
 				return true;
 			}
@@ -96,7 +95,6 @@ public final class PacMan implements Critter {
 				// If it's a pellet, increment the score and
 				// return true to indicate that the pellet is eaten.
 				//set score++;
-				cell.initialContent = Cell.Content.NOTHING;
 				return true;
 			}
 		}
