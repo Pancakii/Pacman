@@ -52,6 +52,7 @@ public class MazeConfig {
     public Cell getCell(IntCoordinates pos) {
         return grid[Math.floorMod(pos.y(), getHeight())][Math.floorMod(pos.x(), getWidth())];
     }
+
     // compte le nombre ligne dans le fichier Maze.txt
     public static int compteligne() throws Exception {
         String path =System.getProperty("user.dir") ;
