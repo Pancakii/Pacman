@@ -8,25 +8,29 @@ import javafx.scene.layout.Pane;
 public class Vie {
 
     public GraphicsUpdater remainingLife(Pane root){
-        Image image = new Image("NoLF");
+        Image imageNLF = new Image("CoeurVide.png");
+        Image imageOneLF = new Image("Coeur_1.png");
+        Image imageTwo = new Image("Coeur_2.png");
+        Image imageThree = new Image("Coeur_3.png");
 
-        ImageView vie = new ImageView(image);
+
+        ImageView vie = new ImageView(imageNLF);
 
 
-        vie.setFitHeight(10);
-        vie.setFitWidth(10);
-        vie.setX(30);
-        vie.setY(20);
+        vie.setFitHeight(20);
+        vie.setFitWidth(60);
+        vie.setX(40);
+        vie.setY(40);
 
         return new GraphicsUpdater() {
             @Override
             public void update() {
 
                 switch (MazeState.lives){
-                    case 1 : vie.setImage(image);break;
-                    case 2 : vie.setImage(image);break;
-                    case 3 : vie.setImage(image);break;
-                    default: vie.setImage(image);break;
+                    case 1 : vie.setImage(imageOneLF);break;
+                    case 2 : vie.setImage(imageTwo);break;
+                    case 3 : vie.setImage(imageThree);break;
+                    default: vie.setImage(imageNLF);break;
 
 
                 }
