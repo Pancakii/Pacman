@@ -1,5 +1,6 @@
 package gui;
 
+import com.sun.source.doctree.SystemPropertyTree;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
 import geometry.IntCoordinates;
@@ -54,15 +55,20 @@ public class GameView {
         var critterFactory = new CritterGraphicsFactory(scale);
         var cellFactory = new CellGraphicsFactory(scale);
         var affichageScore = new Score();
+        //var afficheVie = new Vie();
         graphicsUpdaters = new ArrayList<>();
 
-        affichageScore.displayScore(root);
+
+        //addGraphics(afficheVie.remainingLife(root));
 
 
         for (var critter : maze.getCritters()) addGraphics(critterFactory.makeGraphics(critter));
+
         for (int x = 0; x < maze.getWidth(); x++)
             for (int y = 0; y < maze.getHeight(); y++)
                 addGraphics(cellFactory.makeGraphics(maze, new IntCoordinates(x, y)));
+
+        addGraphics(affichageScore.displayScore(root));
     }
 
     public void animate() {
@@ -77,7 +83,6 @@ public class GameView {
                 }
                 var deltaT = now - last;
                 maze.update(deltaT);
-
 
                 for (var updater : graphicsUpdaters) {
                     updater.update();
