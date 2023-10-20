@@ -22,12 +22,10 @@ public final class MazeState {
 
     private final List<Critter> critters;
     public static int score;
+    public static int lives = 3;
 
     private final Map<Critter, RealCoordinates> initialPos;
-    static int lives = 3;
-    static Text point = new Text();
 
-    public GameView g;
 
     public MazeState(MazeConfig config) {
         this.config = config;

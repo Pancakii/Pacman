@@ -55,11 +55,10 @@ public class GameView {
         var critterFactory = new CritterGraphicsFactory(scale);
         var cellFactory = new CellGraphicsFactory(scale);
         var affichageScore = new Score();
-        //var afficheVie = new Vie();
+        var afficheVie = new Vie();
         graphicsUpdaters = new ArrayList<>();
 
 
-        //addGraphics(afficheVie.remainingLife(root));
 
 
         for (var critter : maze.getCritters()) addGraphics(critterFactory.makeGraphics(critter));
@@ -69,6 +68,8 @@ public class GameView {
                 addGraphics(cellFactory.makeGraphics(maze, new IntCoordinates(x, y)));
 
         addGraphics(affichageScore.displayScore(root));
+        addGraphics(afficheVie.remainingLife(root));
+
     }
 
     public void animate() {
