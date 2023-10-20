@@ -94,6 +94,7 @@ public final class MazeState {
             critter.setPos(nextPos.warp(width, height));
         }
         // FIXME Pac-Man rules should somehow be in Pacman class
+
         var pacPos = PacMan.INSTANCE.getPos().round();
         if (!gridState[pacPos.y()][pacPos.x()]) {
             addScore(1);

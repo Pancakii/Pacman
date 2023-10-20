@@ -55,22 +55,5 @@ public class MazeConfig {
     }
 
 
-    // simple example with a square shape
-    // TODO: mazes should be loaded from a text file
-    public static MazeConfig makeExample1() {
-        return new MazeConfig(new Cell[][]{
-                {nTee(DOT),    hPipe(DOT),     hPipe(DOT),     hPipe(DOT),     hPipe(DOT),     nTee(DOT)},
-                {vPipe(DOT),    seVee(NOTHING), nTee(NOTHING),  nTee(NOTHING),  swVee(NOTHING), vPipe(DOT)},
-                {vPipe(DOT),     wTee(NOTHING),  open(NOTHING),  open(NOTHING),  eTee(NOTHING),  vPipe(DOT)},
-                {vPipe(DOT),    wTee(NOTHING),  open(NOTHING),  open(NOTHING),  eTee(NOTHING),  vPipe(DOT)},
-                {vPipe(DOT),    neVee(NOTHING), sTee(NOTHING),  sTee(NOTHING),   nwVee(NOTHING), vPipe(DOT)},
-                {neVee(DOT),    hPipe(DOT),     hPipe(DOT),     hPipe(DOT),     hPipe(DOT),     nwVee(DOT)}
-        },
-                new IntCoordinates(3, 0),
-                new IntCoordinates(0, 3),
-                new IntCoordinates(3, 5),
-                new IntCoordinates(5, 5),
-                new IntCoordinates(5, 1)
-        );
-    }
+
 }

@@ -28,42 +28,14 @@ public class CellGraphicsFactory {
         dot.setCenterX(scale/2);
         dot.setCenterY(scale/2);
         dot.setFill(Color.YELLOW);
-        if (cell.northWall()) {
-            var nWall = new Rectangle();
-            nWall.setHeight(scale/10);
-            nWall.setWidth(scale);
-            nWall.setY(0);
-            nWall.setX(0);
-            nWall.setFill(Color.BLUEVIOLET);
-            group.getChildren().add(nWall);
-        }
-        if (cell.eastWall()) {
-            var nWall = new Rectangle();
-            nWall.setHeight(scale);
-            nWall.setWidth(scale/10);
-            nWall.setY(0);
-            nWall.setX(9*scale/10);
-            nWall.setFill(Color.BLUEVIOLET);
-            group.getChildren().add(nWall);
-        }
-        if (cell.southWall()) {
-            var nWall = new Rectangle();
-            nWall.setHeight(scale/10);
-            nWall.setWidth(scale);
-            nWall.setY(9*scale/10);
-            nWall.setX(0);
-            nWall.setFill(Color.BLUEVIOLET);
-            group.getChildren().add(nWall);
-        }
-        if (cell.westWall()) {
-            var nWall = new Rectangle();
-            nWall.setHeight(scale);
-            nWall.setWidth(scale/10);
-            nWall.setY(0);
-            nWall.setX(0);
-            nWall.setFill(Color.BLUEVIOLET);
-            group.getChildren().add(nWall);
-        }
+        //var nWall = new Rectangle();
+        //nWall.setHeight(scale/10);
+        //nWall.setWidth(scale);
+        //nWall.setY(0);
+        //nWall.setX(0);
+        //nWall.setFill(Color.BLUEVIOLET);
+        //group.getChildren().add(nWall);
+
         return new GraphicsUpdater() {
             @Override
             public void update() {
