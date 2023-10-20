@@ -36,6 +36,7 @@ public final class CritterGraphicsFactory {
         this.instance = pacmanRight ;
     }
 
+
     // change les images de pacman en fonction de la direction de pacman
     public ImageView updateImagePacman (){
          switch ( PacMan.INSTANCE.getDirection()) {
