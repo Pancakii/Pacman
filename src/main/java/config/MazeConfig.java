@@ -1,8 +1,9 @@
 package config;
 
 import geometry.IntCoordinates;
-import java.io.* ;
+import static config.Cell.Content.DOT;
 import static config.Cell.*;
+import static config.Cell.Content.NOTHING;
 
 public class MazeConfig {
     public MazeConfig(Cell[][] grid, IntCoordinates pacManPos, IntCoordinates blinkyPos, IntCoordinates pinkyPos,
@@ -53,79 +54,23 @@ public class MazeConfig {
         return grid[Math.floorMod(pos.y(), getHeight())][Math.floorMod(pos.x(), getWidth())];
     }
 
-    // compte le nombre ligne dans le fichier Maze.txt
-    public static int compteligne() throws Exception {
-        String path =System.getProperty("user.dir") ;
-        File file ;
-        try {
-            file =new File(path+"/src/main/resources/Maze.txt");
-        } catch (Exception e ){
-            e.printStackTrace();
-            file =new File(path + "\\src\\main\\resources\\Maze.txt");
-        }
-        FileReader fr = new FileReader(file);
-        BufferedReader r = new BufferedReader(fr);
-        int ligne = 0;
-        while ( r.readLine()!= null) {
-            ligne++;
-        }fr.close();
-        return ligne;
+
+    // simple example with a square shape
+    // TODO: mazes should be loaded from a text file
+    public static MazeConfig makeExample1() {
+        return new MazeConfig(new Cell[][]{
+                {nTee(DOT),    hPipe(DOT),     hPipe(DOT),     hPipe(DOT),     hPipe(DOT),     nTee(DOT)},
+                {vPipe(DOT),    seVee(NOTHING), nTee(NOTHING),  nTee(NOTHING),  swVee(NOTHING), vPipe(DOT)},
+                {vPipe(DOT),     wTee(NOTHING),  open(NOTHING),  open(NOTHING),  eTee(NOTHING),  vPipe(DOT)},
+                {vPipe(DOT),    wTee(NOTHING),  open(NOTHING),  open(NOTHING),  eTee(NOTHING),  vPipe(DOT)},
+                {vPipe(DOT),    neVee(NOTHING), sTee(NOTHING),  sTee(NOTHING),   nwVee(NOTHING), vPipe(DOT)},
+                {neVee(DOT),    hPipe(DOT),     hPipe(DOT),     hPipe(DOT),     hPipe(DOT),     nwVee(DOT)}
+        },
+                new IntCoordinates(3, 0),
+                new IntCoordinates(0, 3),
+                new IntCoordinates(3, 5),
+                new IntCoordinates(5, 5),
+                new IntCoordinates(5, 1)
+        );
     }
-
-    //compte la longueur d'une ligne dans Maze.txt
-    public static int comptelongueur() throws Exception{
-        File file ;
-        String path =System.getProperty("user.dir") ;
-        try {
-            file =new File(path+"/src/main/resources/Maze.txt");
-        } catch (Exception e ){
-            e.printStackTrace();
-            file =new File(path +"\\src\\main\\resources\\Maze.txt");
-        }
-        FileReader fr = new FileReader(file);
-        BufferedReader r = new BufferedReader(fr);
-        fr.close();
-        return  r.readLine().length() ;
-
-    }
-
-    // creation du tableau de tableau des cellules
-    public static Cell[][] grid () throws Exception {
-        String path =System.getProperty("user.dir") ;
-        File file ;
-        try {
-            file =new File(path+"/src/main/resources/Maze.txt");
-        } catch (Exception e ){
-            e.printStackTrace();
-            file =new File(path+"\\src\\main\\resources\\Maze.txt");
-        }
-
-        FileReader fr = new FileReader(file);
-        BufferedReader r = new BufferedReader(fr);
-        String str ;
-        Cell[][] maze = new Cell[compteligne()][comptelongueur()] ;
-        int j = 0 ;
-        while ((str = r.readLine() )!= null ){
-            for ( int i = 0 ; i< str.length();i++){
-                if (str.charAt(i)=='0') maze[j][i]= Cellule(0) ;
-                if (str.charAt(i)=='1') maze[j][i]= Cellule(1) ;
-                if (str.charAt(i)=='2') maze[j][i]= Cellule(2) ;
-                if (str.charAt(i)=='3') maze[j][i]= Cellule(3) ;
-            }
-            j++ ;
-        }
-        return maze;
-    }
-    // configuration du maze
-    // placement de pacman et des ghost a fixer
-    public static MazeConfig make() throws Exception {
-        return new MazeConfig(grid(),
-                new IntCoordinates(3, 0), // pacman
-                new IntCoordinates(0, 3), // blinky
-                new IntCoordinates(3, 5), // pinke
-                new IntCoordinates(5, 5), // inky
-                new IntCoordinates(5, 1)  // clyde
-        ) ;
-    }
-
 }

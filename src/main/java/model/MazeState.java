@@ -126,19 +126,6 @@ public final class MazeState {
                      addScore(10);
                      resetCritter(critter);
                 }else {
-        // FIXME Pac-Man rules should somehow be in Pacman class
-
-        var pacPos = PacMan.INSTANCE.getPos().round();
-        if (!gridState[pacPos.y()][pacPos.x()]) {
-            addScore(1);
-            gridState[pacPos.y()][pacPos.x()] = true;
-        }
-        for (var critter : critters) {
-            if (critter instanceof Ghost && critter.getPos().round().equals(pacPos)) {
-                if (PacMan.INSTANCE.isEnergized()) {
-                    addScore(10);
-                    resetCritter(critter);
-                } else {
                     playerLost();
                     return;
                 }
