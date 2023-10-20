@@ -119,6 +119,7 @@ public class MazeConfig {
     // placement de pacman et des ghost a fixer
     public static MazeConfig make() throws Exception {
         return new MazeConfig(grid(),
+                // FIXME: 20/10/2023 definir les coordonnees de pacman et des ghost 
                 new IntCoordinates(3, 0), // pacman
                 new IntCoordinates(0, 3), // blinky
                 new IntCoordinates(3, 5), // pinke
