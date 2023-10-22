@@ -5,7 +5,6 @@ import geometry.IntCoordinates;
 import java.io.* ;
 import static config.Cell.Content.DOT;
 import static config.Cell.*;
-import static config.Cell.Content.NOTHING;
 
 public class MazeConfig {
     public MazeConfig(Cell[][] grid, IntCoordinates pacManPos, IntCoordinates blinkyPos, IntCoordinates pinkyPos,
@@ -62,16 +61,38 @@ public class MazeConfig {
     
     // compte le nombre ligne dans le fichier Maze.txt
     public static int compteligne() throws Exception {
-
-        File file = new File(System.getProperty("user.dir") + "/src/main/resources/Maze.txt");
+        String path =System.getProperty("user.dir") ;
+        File file ;
+        try {
+            file =new File(path+"/src/main/resources/Maze.txt");
+        } catch (Exception e ){
+            e.printStackTrace();
+            file =new File(path + "\\src\\main\\resources\\Maze.txt");
+        }
         FileReader fr = new FileReader(file);
         BufferedReader r = new BufferedReader(fr);
         int ligne = 0;
-        String lire ;
-        while ((lire = r.readLine()) != null) {
+        while ( r.readLine()!= null) {
             ligne++;
         }fr.close();
         return ligne;
+    }
+
+    //compte la longueur d'une ligne dans Maze.txt
+    public static int comptelongueur() throws Exception{
+        File file ;
+        String path =System.getProperty("user.dir") ;
+        try {
+            file =new File(path+"/src/main/resources/Maze.txt");
+        } catch (Exception e ){
+            e.printStackTrace();
+            file =new File(path +"\\src\\main\\resources\\Maze.txt");
+        }
+        FileReader fr = new FileReader(file);
+        BufferedReader r = new BufferedReader(fr);
+        fr.close();
+        return  r.readLine().length() ;
+
     }
 
     // creation du tableau de tableau des cellules
@@ -79,10 +100,10 @@ public class MazeConfig {
         String path = System.getProperty("user.dir") ;
         File file;
         try {
-            file = new File(System.getProperty("user.dir") + "/src/main/resources/Maze.txt");
+            file =new File(path+"/src/main/resources/Maze.txt");
         } catch (Exception e ){
             e.printStackTrace();
-            file = new File(System.getProperty("user.dir") + "/src/main/resources/Maze.txt");
+            file =new File(path+"\\src\\main\\resources\\Maze.txt");
         }
 
         FileReader fr = new FileReader(file);
