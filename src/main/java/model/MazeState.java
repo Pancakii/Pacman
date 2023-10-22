@@ -18,7 +18,7 @@ public final class MazeState {
 
     private final Map<Critter, RealCoordinates> initialPos;
     private int lives = 3;
-    private Text point;
+    private static Text point;
 
     public MazeState(MazeConfig config) {
         this.config = config;
@@ -62,60 +62,21 @@ public final class MazeState {
         for (var critter : critters) {
             var curPos = critter.getPos();
             var nextPos = critter.nextPos(deltaTns);
-            var curNeighbours = curPos.intNeighbours();
-            var nextNeighbours = nextPos.intNeighbours();
 
             // Vérifie si la nouvelle position est un mur
-            for (var n : nextNeighbours) {
-                if (config.getCell(n).isWall()) {
-                    critter.setDirection(Direction.NONE);
-                    break;
-                }
-            }
-
-            if (!curNeighbours.containsAll(nextNeighbours)) {
-                switch (critter.getDirection()) {
-                    case NORTH -> {
-                        for (var n : curNeighbours) {
-                            if (config.getCell(n).isWall()) {
-                                nextPos = curPos.floorY();
-                                critter.setDirection(Direction.NONE);
-                                break;
-                            }
-                        }
-                    }
-                    case EAST -> {
-                        for (var n : curNeighbours) {
-                            if (config.getCell(n).isWall()) {
-                                nextPos = curPos.ceilX();
-                                critter.setDirection(Direction.NONE);
-                                break;
-                            }
-                        }
-                    }
-                    case SOUTH -> {
-                        for (var n : curNeighbours) {
-                            if (config.getCell(n).isWall()) {
-                                nextPos = curPos.ceilY();
-                                critter.setDirection(Direction.NONE);
-                                break;
-                            }
-                        }
-                    }
-                    case WEST -> {
-                        for (var n : curNeighbours) {
-                            if (config.getCell(n).isWall()) {
-                                nextPos = curPos.floorX();
-                                critter.setDirection(Direction.NONE);
-                                break;
-                            }
-                        }
-                    }
-                }
+            if (isWall(nextPos)) {
+                critter.setDirection(Direction.NONE);
+                nextPos = curPos;  // Reste à la position actuelle
             }
 
             critter.setPos(nextPos.warp(width, height));
         }
+    }
+    
+    //Vérifie si la nouvelle position est un mur
+    private boolean isWall(RealCoordinates position) {
+        IntCoordinates cell = position.round();
+        return config.getCell(cell).isWall();
     }
 
     
@@ -143,18 +104,17 @@ public final class MazeState {
 
     public static void addScore(int increment) {
         score += increment;
-        //displayScore();
+        //gameView.updateScore(score);
     }
     
-    // FIXME: this should be displayed in the JavaFX view, not in the console
-    private void displayScore() {
-        point.setText(score+"");
-        point.setX(50);
-        point.setY(50);
-        System.out.println("Score: " + score);
+    public void displayScore() {
+    	point.setText("Score: " + score);
     }
     
-    // FIXME: this should be displayed in the JavaFX view, not in the console. A game over screen would be nice too.
+    public void initializeScoreText(Text scoreText) {
+        point = scoreText;
+    }
+    
     private void playerLost() {
         lives--;
         if (lives == 0) {
