@@ -68,7 +68,7 @@ goto fail
 :execute
 @rem Setup the command line
 
-set CLASSPATH=%APP_HOME%\lib\pacman-1.0-SNAPSHOT.jar;%APP_HOME%\lib\javafx-controls-17-mac-aarch64.jar;%APP_HOME%\lib\javafx-graphics-17-mac-aarch64.jar;%APP_HOME%\lib\javafx-base-17-mac-aarch64.jar
+set CLASSPATH=%APP_HOME%\lib\pacman-1.0-SNAPSHOT.jar;%APP_HOME%\lib\javafx-controls-17-win.jar;%APP_HOME%\lib\javafx-graphics-17-win.jar;%APP_HOME%\lib\javafx-base-17-win.jar
 
 
 @rem Execute pacman

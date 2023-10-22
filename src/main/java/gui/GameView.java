@@ -1,5 +1,7 @@
 package gui;
 
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.scene.image.Image;
 import javafx.scene.text.Text;
 import geometry.IntCoordinates;
@@ -7,7 +9,6 @@ import javafx.animation.AnimationTimer;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import model.MazeState;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,10 +16,7 @@ public class GameView {
     // class parameters
     private final MazeState maze;
     private final Pane gameRoot; // main node of the game
-
-
-
-
+    private Text scoreText;
     private final List<GraphicsUpdater> graphicsUpdaters;
 
 
@@ -46,17 +44,21 @@ public class GameView {
         this.maze = maze;
         this.gameRoot = root;
         // pixels per cell
-        root.setMinWidth(maze.getWidth() * scale);
-        root.setMinHeight(maze.getHeight() * scale);
+        root.setMinWidth(maze.getWidth() * scale - 35);
+        root.setMinHeight(maze.getHeight() * scale - 35);
         root.setStyle("-fx-background-color: #FFFFFF");
+        
         var critterFactory = new CritterGraphicsFactory(scale);
         var cellFactory = new CellGraphicsFactory(scale);
-
-
-
-
-
         graphicsUpdaters = new ArrayList<>();
+        
+        scoreText = new Text("Score: 0");
+        scoreText.setX(50);
+        scoreText.setY(50);
+        scoreText.setFont(Font.font(20));
+        scoreText.setFill(Color.YELLOW);
+        gameRoot.getChildren().add(scoreText);
+        maze.initializeScoreText(scoreText);     
         for (var critter : maze.getCritters()) addGraphics(critterFactory.makeGraphics(critter));
         for (int x = 0; x < maze.getWidth(); x++)
             for (int y = 0; y < maze.getHeight(); y++)
@@ -81,5 +83,9 @@ public class GameView {
                 last = now;
             }
         }.start();
+    }
+    
+    public void updateScore(int score) {
+        scoreText.setText("Score: " + score);
     }
 }

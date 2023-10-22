@@ -23,47 +23,32 @@ public class CellGraphicsFactory {
         group.setTranslateY(pos.y()*scale);
         var cell = state.getConfig().getCell(pos);
         var dot = new Circle();
-        group.getChildren().add(dot);
-        dot.setRadius(switch (cell.initialContent()) { case DOT -> scale/15; case ENERGIZER -> scale/5; case NOTHING -> 0; });
+        if (cell != null) {
+            dot.setRadius(switch (cell.initialContent()) {
+                case DOT -> scale / 15;
+                case ENERGIZER -> scale / 5;
+                case NOTHING -> 0;
+            });
+        } else {
+            dot.setRadius(0); 
+        }
         dot.setCenterX(scale/2);
         dot.setCenterY(scale/2);
         dot.setFill(Color.YELLOW);
-        if (cell.northWall()) {
-            var nWall = new Rectangle();
-            nWall.setHeight(scale/10);
-            nWall.setWidth(scale);
-            nWall.setY(0);
-            nWall.setX(0);
-            nWall.setFill(Color.BLUEVIOLET);
-            group.getChildren().add(nWall);
+        group.getChildren().add(dot);
+        
+        if (cell != null) {
+        	if (cell.isWall()) {
+        		var Wall = new Rectangle();
+        		Wall.setHeight(scale);
+        		Wall.setWidth(scale);
+        		Wall.setY(0);
+        		Wall.setX(0);
+        		Wall.setFill(Color.BLUEVIOLET);
+            	group.getChildren().add(Wall);
+        	}
         }
-        if (cell.eastWall()) {
-            var nWall = new Rectangle();
-            nWall.setHeight(scale);
-            nWall.setWidth(scale/10);
-            nWall.setY(0);
-            nWall.setX(9*scale/10);
-            nWall.setFill(Color.BLUEVIOLET);
-            group.getChildren().add(nWall);
-        }
-        if (cell.southWall()) {
-            var nWall = new Rectangle();
-            nWall.setHeight(scale/10);
-            nWall.setWidth(scale);
-            nWall.setY(9*scale/10);
-            nWall.setX(0);
-            nWall.setFill(Color.BLUEVIOLET);
-            group.getChildren().add(nWall);
-        }
-        if (cell.westWall()) {
-            var nWall = new Rectangle();
-            nWall.setHeight(scale);
-            nWall.setWidth(scale/10);
-            nWall.setY(0);
-            nWall.setX(0);
-            nWall.setFill(Color.BLUEVIOLET);
-            group.getChildren().add(nWall);
-        }
+        
         return new GraphicsUpdater() {
             @Override
             public void update() {
