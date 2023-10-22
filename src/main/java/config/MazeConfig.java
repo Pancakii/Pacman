@@ -1,7 +1,9 @@
 package config;
 
+import javafx.scene.text.Text;
 import geometry.IntCoordinates;
 import java.io.* ;
+import static config.Cell.Content.DOT;
 import static config.Cell.*;
 
 public class MazeConfig {
@@ -48,10 +50,15 @@ public class MazeConfig {
     public int getHeight() {
         return grid.length;
     }
+    
+    public boolean isWall(IntCoordinates pos) {
+        return grid[Math.floorMod(pos.y(), getHeight())][Math.floorMod(pos.x(), getWidth())].isWall();
+    }
 
     public Cell getCell(IntCoordinates pos) {
         return grid[Math.floorMod(pos.y(), getHeight())][Math.floorMod(pos.x(), getWidth())];
     }
+    
     // compte le nombre ligne dans le fichier Maze.txt
     public static int compteligne() throws Exception {
         String path =System.getProperty("user.dir") ;
@@ -90,8 +97,8 @@ public class MazeConfig {
 
     // creation du tableau de tableau des cellules
     public static Cell[][] grid () throws Exception {
-        String path =System.getProperty("user.dir") ;
-        File file ;
+        String path = System.getProperty("user.dir") ;
+        File file;
         try {
             file =new File(path+"/src/main/resources/Maze.txt");
         } catch (Exception e ){
@@ -101,30 +108,62 @@ public class MazeConfig {
 
         FileReader fr = new FileReader(file);
         BufferedReader r = new BufferedReader(fr);
-        String str ;
-        Cell[][] maze = new Cell[compteligne()][comptelongueur()] ;
-        int j = 0 ;
-        while ((str = r.readLine() )!= null ){
-            for ( int i = 0 ; i< str.length();i++){
-                if (str.charAt(i)=='0') maze[j][i]= Cellule(0) ;
-                if (str.charAt(i)=='1') maze[j][i]= Cellule(1) ;
-                if (str.charAt(i)=='2') maze[j][i]= Cellule(2) ;
-                if (str.charAt(i)=='3') maze[j][i]= Cellule(3) ;
+        String str;
+        String firstLine = r.readLine(); 
+        int maxCols = firstLine.length(); // Obtiens la longueur de la première ligne
+        int numRows = compteligne() + 1; // Utilise la fonction pour obtenir le nombre de lignes
+
+        // Initialise le tableau `maze` avec les dimensions appropriées
+        Cell[][] maze = new Cell[numRows][maxCols];
+
+        int j = 0;
+
+        // Utilise la première ligne pour initialiser le tableau, puis on lit le labyrinthe
+        for (int i = 0; i < maxCols; i++) {
+            char currentChar = firstLine.charAt(i);
+            if (currentChar == '0') {
+                maze[j][i] = Cellule(0);
+            } else if (currentChar == '1') {
+                maze[j][i] = Cellule(1);
+            } else if (currentChar == '2') {
+                maze[j][i] = Cellule(2);
+            } else if (currentChar == '3') {
+                maze[j][i] = Cellule(3);
             }
-            j++ ;
         }
+
+        j++; // Avance à la prochaine ligne
+
+        while ((str = r.readLine()) != null) {
+            for (int i = 0; i < str.length(); i++) {
+                char currentChar = str.charAt(i);
+                if (currentChar == '0') {
+                    maze[j][i] = Cellule(0);
+                } else if (currentChar == '1') {
+                    maze[j][i] = Cellule(1);
+                } else if (currentChar == '2') {
+                    maze[j][i] = Cellule(2);
+                } else if (currentChar == '3') {
+                    maze[j][i] = Cellule(3);
+                }
+            }
+            j++;
+        }
+        
         return maze;
     }
+
+    
     // configuration du maze
     // placement de pacman et des ghost a fixer
     public static MazeConfig make() throws Exception {
         return new MazeConfig(grid(),
-                // FIXME: 20/10/2023 definir les coordonnees de pacman et des ghost 
-                new IntCoordinates(3, 0), // pacman
-                new IntCoordinates(0, 3), // blinky
-                new IntCoordinates(3, 5), // pinke
-                new IntCoordinates(5, 5), // inky
-                new IntCoordinates(5, 1)  // clyde
+        						//(x, y)
+                new IntCoordinates(2, 1), // pacman
+                new IntCoordinates(9, 9), // blinky
+                new IntCoordinates(10, 9), // pinke
+                new IntCoordinates(11, 9), // inky
+                new IntCoordinates(10, 10)  // clyde
         ) ;
     }
 

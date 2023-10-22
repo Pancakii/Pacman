@@ -1,5 +1,6 @@
 package model;
 
+import javafx.scene.text.*;
 import config.MazeConfig;
 import geometry.IntCoordinates;
 import geometry.RealCoordinates;
@@ -17,9 +18,7 @@ public final class MazeState {
 
     private final Map<Critter, RealCoordinates> initialPos;
     private int lives = 3;
-
-    private Text point = new Text();
-
+    private static Text point;
 
     public MazeState(MazeConfig config) {
         this.config = config;
@@ -53,63 +52,33 @@ public final class MazeState {
         return score;
     }
 
-        public void update(long deltaTns) {
-        // FIXME: too many things in this method. Maybe some responsibilities can be delegated to other methods or classes?
-    	// Note : FINI !!!
+    public void update(long deltaTns) {
     	this.Neighbours(deltaTns);
         PacMan.pacEnterNewCell(this.gridState);
         this.statusPacman();
     }
     
-    /*
-     * Si pacman entre dans une case où il y a un fantôme
-     * on vérifie s'il est énergiser
-     * Oui : Gagne 10pts et tue le fantôme
-     * Non : Perd une vie ou Game Over si 0 vie
-     */
     private void Neighbours(long deltaTns) {
-        for  (var critter: critters) {
+        for (var critter : critters) {
             var curPos = critter.getPos();
             var nextPos = critter.nextPos(deltaTns);
-            var curNeighbours = curPos.intNeighbours();
-            var nextNeighbours = nextPos.intNeighbours();
-            
-            if (!curNeighbours.containsAll(nextNeighbours)) { // the critter would overlap new cells. Do we allow it?
-                switch (critter.getDirection()) {
-                    case NORTH -> {
-                        for (var n: curNeighbours) if (config.getCell(n).northWall()) {
-                            nextPos = curPos.floorY();
-                            critter.setDirection(Direction.NONE);
-                            break;
-                        }
-                    }
-                    case EAST -> {
-                        for (var n: curNeighbours) if (config.getCell(n).eastWall()) {
-                            nextPos = curPos.ceilX();
-                            critter.setDirection(Direction.NONE);
-                            break;
-                        }
-                    }
-                    case SOUTH -> {
-                        for (var n: curNeighbours) if (config.getCell(n).southWall()) {
-                            nextPos = curPos.ceilY();
-                            critter.setDirection(Direction.NONE);
-                            break;
-                        }
-                    }
-                    case WEST -> {
-                        for (var n: curNeighbours) if (config.getCell(n).westWall()) {
-                            nextPos = curPos.floorX();
-                            critter.setDirection(Direction.NONE);
-                            break;
-                        }
-                    }
-                }
+
+            // Vérifie si la nouvelle position est un mur
+            if (isWall(nextPos)) {
+                critter.setDirection(Direction.NONE);
+                nextPos = curPos;  // Reste à la position actuelle
             }
 
             critter.setPos(nextPos.warp(width, height));
         }
     }
+    
+    //Vérifie si la nouvelle position est un mur
+    private boolean isWall(RealCoordinates position) {
+        IntCoordinates cell = position.round();
+        return config.getCell(cell).isWall();
+    }
+
     
     /*
      * Si pacman entre dans une case où il y a un fantôme
@@ -135,22 +104,17 @@ public final class MazeState {
 
     public static void addScore(int increment) {
         score += increment;
-        //displayScore();
+        //gameView.updateScore(score);
     }
     
-    public int getScore() {
-    	return this.score;
+    public void displayScore() {
+    	point.setText("Score: " + score);
     }
     
-    // FIXME: this should be displayed in the JavaFX view, not in the console
-    private void displayScore() {
-        point.setText(score+"");
-        point.setX(50);
-        point.setY(50);
-        System.out.println("Score: " + score);
+    public void initializeScoreText(Text scoreText) {
+        point = scoreText;
     }
     
-    // FIXME: this should be displayed in the JavaFX view, not in the console. A game over screen would be nice too.
     private void playerLost() {
         lives--;
         if (lives == 0) {
@@ -177,6 +141,5 @@ public final class MazeState {
     public boolean getGridState(IntCoordinates pos) {
         return gridState[pos.y()][pos.x()];
     }
-
 
 }
