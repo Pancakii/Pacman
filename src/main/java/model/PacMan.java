@@ -25,8 +25,6 @@ public final class PacMan implements Critter {
 		this(0.0, 0.0, false);
     }
     
-    public static final PacMan INSTANCE = new PacMan();
-    
     /*
      * Si pacman entre dans une case une nouvelle case
      * il gagne 1pts
