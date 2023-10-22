@@ -25,6 +25,8 @@ public final class PacMan implements Critter {
 		this(0.0, 0.0, false);
     }
     
+    public static final PacMan INSTANCE = new PacMan();
+    
     /*
      * Si pacman entre dans une case une nouvelle case
      * il gagne 1pts
@@ -44,9 +46,6 @@ public final class PacMan implements Critter {
 		energized = e;
 		energized_timer = 0;
 	}
-	
-
-    public static final PacMan INSTANCE = new PacMan(0., 0., false);
 
     @Override
     public RealCoordinates getPos() {
