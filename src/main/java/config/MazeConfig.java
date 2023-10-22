@@ -1,13 +1,8 @@
 package config;
 
-import javafx.scene.text.Text;
 import geometry.IntCoordinates;
-
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-
-import static config.Cell.Cellule;
+import java.io.* ;
+import static config.Cell.*;
 
 public class MazeConfig {
     public MazeConfig(Cell[][] grid, IntCoordinates pacManPos, IntCoordinates blinkyPos, IntCoordinates pinkyPos,
@@ -24,8 +19,6 @@ public class MazeConfig {
     }
 
     private final Cell[][] grid;
-
-
     private final IntCoordinates pacManPos, blinkyPos, pinkyPos, inkyPos, clydePos;
 
     public IntCoordinates getPacManPos() {
@@ -55,7 +48,7 @@ public class MazeConfig {
     public int getHeight() {
         return grid.length;
     }
-    
+
     public boolean isWall(IntCoordinates pos) {
         return grid[Math.floorMod(pos.y(), getHeight())][Math.floorMod(pos.x(), getWidth())].isWall();
     }
@@ -63,7 +56,6 @@ public class MazeConfig {
     public Cell getCell(IntCoordinates pos) {
         return grid[Math.floorMod(pos.y(), getHeight())][Math.floorMod(pos.x(), getWidth())];
     }
-    
     // compte le nombre ligne dans le fichier Maze.txt
     public static int compteligne() throws Exception {
         String path =System.getProperty("user.dir") ;
@@ -103,7 +95,7 @@ public class MazeConfig {
     // creation du tableau de tableau des cellules
     public static Cell[][] grid () throws Exception {
         String path = System.getProperty("user.dir") ;
-        File file;
+        File file ;
         try {
             file =new File(path+"/src/main/resources/Maze.txt");
         } catch (Exception e ){
@@ -114,7 +106,7 @@ public class MazeConfig {
         FileReader fr = new FileReader(file);
         BufferedReader r = new BufferedReader(fr);
         String str;
-        String firstLine = r.readLine(); 
+        String firstLine = r.readLine();
         int maxCols = firstLine.length(); // Obtiens la longueur de la première ligne
         int numRows = compteligne(); // Utilise la fonction pour obtenir le nombre de lignes
 
@@ -152,13 +144,10 @@ public class MazeConfig {
                     maze[j][i] = Cellule(3);
                 }
             }
-            j++;
+            j++ ;
         }
-        
         return maze;
     }
-
-    
     // configuration du maze
     // placement de pacman et des ghost a fixer
     public static MazeConfig make() throws Exception {

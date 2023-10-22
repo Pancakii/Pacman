@@ -95,7 +95,7 @@ public final class MazeState {
     }
 
     private void Neighbours(long deltaTns) {
-        for (var critter : critters) {
+        for  (var critter: critters) {
             var curPos = critter.getPos();
             var nextPos = critter.nextPos(deltaTns);
 
@@ -114,7 +114,6 @@ public final class MazeState {
         IntCoordinates cell = position.round();
         return config.getCell(cell).isWall();
     }
-
 
     public static void addScore(int increment) {
         score += increment;

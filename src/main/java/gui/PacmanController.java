@@ -1,11 +1,10 @@
 package gui;
 
 import config.MazeConfig;
+import javafx.scene.input.KeyCode;
 import model.Direction;
-import model.DirectionUtils;
 import model.PacMan;
-import geometry.RealCoordinates;
-import geometry.IntCoordinates;
+
 import javafx.scene.input.KeyEvent;
 import misc.Debug;
 
@@ -18,6 +17,9 @@ public class PacmanController {
         this.mazeConfig = mazeConfig;
     }
 
+    // le but est de le faire deplacer sans qu'il s'arrete face un mur quand
+// le joueur appuye sur les touches et de le faire tourner a la bonne direction
+// quand le joueur a appuyer sur la bonne touche
     public void keyPressedHandler(KeyEvent event) {
         newDirection = null;
 

@@ -31,7 +31,6 @@ public class GameView {
     public GameView(MazeState maze, Pane root, double scale) {
         this.maze = maze;
         this.gameRoot = root;
-
         // pixels per cell
         root.setStyle("-fx-background-color: #000000");
         var critterFactory = new CritterGraphicsFactory(scale);
@@ -39,18 +38,10 @@ public class GameView {
         var affichageScore = new Score();
         var afficheVie = new Vie();
         graphicsUpdaters = new ArrayList<>();
-
-
-
-            for (var critter : maze.getCritters()) addGraphics(critterFactory.makeGraphics(critter));
-
-            for (int x = 0; x < maze.getWidth(); x++)
-                for (int y = 0; y < maze.getHeight(); y++)
-                    addGraphics(cellFactory.makeGraphics(maze, new IntCoordinates(x, y)));
-
-            addGraphics(affichageScore.displayScore(root));
-            addGraphics(afficheVie.remainingLife(root));
-
+        for (var critter : maze.getCritters()) addGraphics(critterFactory.makeGraphics(critter));
+        for (int x = 0; x < maze.getWidth(); x++)
+            for (int y = 0; y < maze.getHeight(); y++)
+                addGraphics(cellFactory.makeGraphics(maze, new IntCoordinates(x, y)));
     }
 
     public void animate() {
@@ -72,8 +63,4 @@ public class GameView {
             }
         }.start();
     }
-
-
-
-
 }
