@@ -47,6 +47,7 @@ public final class CritterGraphicsFactory {
         }
     }
 
+
     public GraphicsUpdater makeGraphics(Critter critter) {
         var size = 0.7;
         var image = (critter instanceof PacMan) ? updateImagePacman() :
