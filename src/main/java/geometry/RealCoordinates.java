@@ -68,36 +68,4 @@ public record RealCoordinates(double x, double y) {
             ry -= height;
         return new RealCoordinates(rx, ry);
     }
-    // regarde si il y a un mur a gauche
-    public IntCoordinates[] intNeighbourWest(){
-        return new IntCoordinates[]{
-                new IntCoordinates((int) Math.floor(x), (int) Math.floor(y)),
-                new IntCoordinates((int) Math.floor(x), (int) Math.ceil(y))
-        };
-    }
-
-    // regarde si il y a un mur a droite
-    public IntCoordinates[] intNeighbourEast(){
-        return new IntCoordinates[]{
-                new IntCoordinates((int) Math.ceil(x), (int) Math.ceil(y)),
-                new IntCoordinates((int) Math.ceil(x), (int) Math.floor(y))
-        };
-    }
-
-    // regarde si il y a un mur en haut
-    public IntCoordinates[] intNeighbourNorth(){
-        return new IntCoordinates[]{
-                new IntCoordinates((int) Math.floor(x), (int) Math.ceil(y)),
-                new IntCoordinates((int) Math.ceil(x), (int) Math.ceil(y))
-        } ;
-    }
-
-    // regarde si il y a un mur en bas
-    public IntCoordinates[] intNeighbourSouth(){
-        return new IntCoordinates[]{
-                new IntCoordinates((int) Math.floor(x), (int) Math.floor(y)),
-                new IntCoordinates((int) Math.ceil(x), (int) Math.floor(y))
-        };
-    }
-
 }
