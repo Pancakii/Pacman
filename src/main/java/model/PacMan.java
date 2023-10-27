@@ -3,7 +3,7 @@ package model;
 //TESTING
 
 import geometry.RealCoordinates;
-import config.Cell;
+import config.*;
 
 /**
  * Implements Pac-Man character using singleton pattern. FIXME: check whether singleton is really a good idea.
@@ -31,14 +31,44 @@ public final class PacMan implements Critter {
      * Si pacman entre dans une case une nouvelle case
      * il gagne 1pts
      */
-    public static void pacEnterNewCell(boolean[][] gridState) {
-    	var pacPos = PacMan.INSTANCE.getPos().round();
-    	
-        if (!gridState[pacPos.y()][pacPos.x()]) {
-            MazeState.addScore(1);
-            gridState[pacPos.y()][pacPos.x()] = true;
-        }
+    public static void checknEatCell(MazeConfig grid, boolean[][] grid_state) {
+    	var pacPos = PacMan.INSTANCE.getPos().round();// get pacman position
+    	int x = pacPos.x(); // get x axis
+		int y = pacPos.y(); // get y axis
+		if(!grid_state[y][x]) // verify if the cell pacman in is entered before(false = not entered yet)
+		{
+			if (!grid.getCell(pacPos).aDot())// if the unentered cell contains a dot
+			{
+				MazeState.addScore(1);// add 1 to the score
+				grid_state[y][x] = true;// set the cell state "entered"
+			}
+			else if (grid.getCell(pacPos).aEnergizer())// if the unentered cell contains an energizer
+			{
+				MazeState.addScore(10);// add 10 to the score
+				INSTANCE.setEnergized(true);// set energized true
+				grid_state[y][x] = true;// set the cell state "entered"
+			}
+		}
     }
+
+	/*
+	TO DO: finish
+	private void statusPacman() {
+		var pacPos = PacMan.INSTANCE.getPos().round();
+
+		for (var critter : critters) {
+			if (critter instanceof Ghost && critter.getPos().round().equals(pacPos)) {
+				if (PacMan.INSTANCE.isEnergized()) {
+					addScore(10);
+					resetCritter(critter);
+				} else {
+					playerLost();
+					return;
+				}
+			}
+		}
+	}
+	*/
 
 	private PacMan(double x, double y, boolean e)
 	{
@@ -46,9 +76,6 @@ public final class PacMan implements Critter {
 		energized = e;
 		energized_timer = 0;
 	}
-	
-
-    public static final PacMan INSTANCE = new PacMan(0., 0., false);
 
     @Override
     public RealCoordinates getPos() {
@@ -74,47 +101,7 @@ public final class PacMan implements Critter {
     public void setPos(RealCoordinates pos) {
         this.pos = pos;
     }
-	
-	
-	// Eating energizer or pellets
-	public double distance(double[] p)
-	{
-		// Distance calculator. Can be changed or not, 
-		// depending on the cell position system.
-		return Math.sqrt(Math.pow( ((p[0] - pos.x()) + (p[1] - pos.y())), 2));
-	}
-	
-	public boolean eatBall(Cell cell, RealCoordinates cell_coordinates)
-	{
-		// Call this function for a cell that contains a pellet(energizer or normal)
 
-		// Return value might not be useful if we can have a setter for Cell.Content
-
-		// Not sure if this is going to work, the RealCoordinates x and y are private
-		double[] temp = {cell_coordinates.x(), cell_coordinates.y()};
-		// Check if close enough to the middle.
-		// If the cell has anything, eat and return true, else return false.
-		if(INSTANCE.distance(temp) < 0.4)
-		{
-			// Supposing pacman radius is 0.8 cell size, if the distance between pellet and pacman
-			// is half pacman long, then it means pacman is close enough to eat it.
-			if(cell.aEnergizer())// to change
-			{
-				// If it's an energizer, set energized true and 
-				// return true to indicate that the pellet is eaten.
-				setEnergized(true);
-				return true;
-			}
-			if(cell.aDot())// to do: Somehow do score++
-			{
-				// If it's a pellet, increment the score and
-				// return true to indicate that the pellet is eaten.
-				//set score++;
-				return true;
-			}
-		}
-		return false;
-	}
 	
 	public void energizedTimerCount(int delta)
 	{
