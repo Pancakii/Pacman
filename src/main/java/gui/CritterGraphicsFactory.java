@@ -7,11 +7,11 @@ import model.Critter;
 import model.Direction;
 import model.Ghost;
 import model.PacMan;
+import misc.Debug;
 
 
 public final class CritterGraphicsFactory {
     private final double scale;
-    // FIXME: 20/10/2023  a changer en fonction de la taille du labyrinthe 
     private final double  size = 0.7;
     private final ImageView pacmanUp ;
     private final ImageView pacmanDown  ;
@@ -21,6 +21,7 @@ public final class CritterGraphicsFactory {
     private final ImageView clyde ;
     private final ImageView inky ;
     private final ImageView pinky ;
+    private ImageView instance ;
 
     public CritterGraphicsFactory(double scale) {
         this.scale = scale;
@@ -32,19 +33,30 @@ public final class CritterGraphicsFactory {
         this.clyde = new ImageView( new Image ("ghost_clyde.png",size*scale,size*scale,true,true));
         this.inky = new ImageView( new Image ("ghost_inky.png",size*scale,size*scale,true,true));
         this.pinky =new ImageView( new Image ("ghost_pinky.png",size*scale,size*scale,true,true));
+        this.instance = pacmanRight ;
     }
 
-    // change les images de pacman en fonction des direction de pacman
+    // change les images de pacman en fonction de la direction de pacman
     public ImageView updateImagePacman (){
-        if ( PacMan.INSTANCE.getDirection()== Direction.NORTH ){
-            return pacmanUp ;
-        } else if (PacMan.INSTANCE.getDirection()== Direction.SOUTH) {
-             return pacmanDown ;
-        } else if (PacMan.INSTANCE.getDirection()== Direction.WEST){
-             return pacmanLeft ;
-        } else {
-             return pacmanRight ;
-        }
+         switch ( PacMan.INSTANCE.getDirection()) {
+             case NORTH -> {
+                 this.instance = pacmanUp;
+                 return pacmanUp ;
+             }
+             case EAST -> {
+                 this.instance = pacmanRight;
+                 return pacmanRight ;
+             }
+             case WEST -> {
+                 this.instance = pacmanLeft;
+                 return pacmanLeft ;
+             }
+             case SOUTH -> {
+                 this.instance = pacmanDown;
+                 return pacmanDown ;
+             }
+         }
+        return this.instance ;
     }
 
 
@@ -60,6 +72,9 @@ public final class CritterGraphicsFactory {
         return new GraphicsUpdater() {
             @Override
             public void update() {
+                if ( critter instanceof PacMan) {
+                    image.setImage(updateImagePacman().getImage());
+                }
                 image.setTranslateX((critter.getPos().x() + (1 - size) / 2) * scale);
                 image.setTranslateY((critter.getPos().y() + (1 - size) / 2) * scale);
                 // Debug.out("sprite updated");

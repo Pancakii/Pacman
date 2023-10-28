@@ -1,9 +1,11 @@
 package model;
 
+import gui.PacmanController;
 import javafx.scene.text.*;
 import config.MazeConfig;
 import geometry.IntCoordinates;
 import geometry.RealCoordinates;
+import misc.Debug;
 import java.util.List;
 import java.util.Map;
 import static model.Ghost.*;
@@ -56,6 +58,7 @@ public final class MazeState {
     	this.Neighbours(deltaTns);
         PacMan.pacEnterNewCell(this.gridState);
         this.statusPacman();
+        PacmanController.checknWalk(config);
     }
     
     private void Neighbours(long deltaTns) {
