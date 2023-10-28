@@ -1,25 +1,20 @@
 package gui;
 
 import config.MazeConfig;
-import javafx.scene.input.KeyCode;
 import model.Direction;
+import model.DirectionUtils;
 import model.PacMan;
-
+import geometry.RealCoordinates;
+import geometry.IntCoordinates;
 import javafx.scene.input.KeyEvent;
-import misc.Debug;
 
 public class PacmanController {
     private MazeConfig mazeConfig;
-    private static Direction newDirection = null;
-    private static Direction lastDirection = null;
 
     public PacmanController(MazeConfig mazeConfig) {
         this.mazeConfig = mazeConfig;
     }
 
-    // le but est de le faire deplacer sans qu'il s'arrete face un mur quand
-// le joueur appuye sur les touches et de le faire tourner a la bonne direction
-// quand le joueur a appuyer sur la bonne touche
     public void keyPressedHandler(KeyEvent event) {
         newDirection = null;
 
@@ -42,24 +37,24 @@ public class PacmanController {
             RealCoordinates nextPos = PacMan.INSTANCE.getPos().plus(DirectionUtils.getVector(newDirection));
             IntCoordinates nextCell = nextPos.round();
 
-            if (!mazeConfig.getCell(nextCell).isWall()) {
-                PacMan.INSTANCE.setDirection(newDirection);
-                lastDirection = null; // Reset pending direction when setting a new direction
+            if ( !mazeConfig.getCell(nextCell).isWall() ) {
+                    PacMan.INSTANCE.setDirection(newDirection);
             } else {
-            	lastDirection = newDirection;
+                lastDirection =newDirection;
                 Debug.out(lastDirection.toString());
                 newDirection = null;
             }
         }
+
     }
 
-    public static void checknWalk(MazeConfig mazeConfig) {
-        if (newDirection == null && lastDirection != null) {
+    public static void checknWalk ( MazeConfig mazeConfig){
+        if ( newDirection == null) {
             RealCoordinates nextPos = PacMan.INSTANCE.getPos().plus(DirectionUtils.getVector(lastDirection));
             IntCoordinates nextCell = nextPos.round();
             if (!mazeConfig.getCell(nextCell).isWall()) {
                 PacMan.INSTANCE.setDirection(lastDirection);
-                lastDirection = null;
+                //Debug.out("setDirectionlastDirection");
             }
         }
     }
