@@ -4,6 +4,8 @@ import javafx.scene.text.*;
 import config.MazeConfig;
 import geometry.IntCoordinates;
 import geometry.RealCoordinates;
+
+
 import java.util.List;
 import java.util.Map;
 import static model.Ghost.*;
@@ -54,8 +56,42 @@ public final class MazeState {
 
     public void update(long deltaTns) {
     	this.Neighbours(deltaTns);
-        PacMan.pacEnterNewCell(this.gridState);
-        this.statusPacman();
+        pacmanUpdate(deltaTns);
+    }
+
+
+    /*
+    Uses Pacman functions to update its state
+     */
+    private void pacmanUpdate(long deltaTns)
+    {
+        PacMan.checknEatCell(getConfig(), this.gridState);
+        eatGhosts();
+        PacMan.INSTANCE.energizedTimerCount(deltaTns);
+    }
+
+    /*
+     * Si pacman entre dans une case où il y a un fantôme
+     * on vérifie s'il est énergiser
+     * Oui : Gagne 10pts et tue le fantôme
+     * Non : Perd une vie ou Game Over si 0 vie
+     */
+    private void eatGhosts() {
+        List<Critter> close_ghosts = PacMan.INSTANCE.closeGhosts(critters);
+        if(!close_ghosts.isEmpty())
+        {
+            if(PacMan.INSTANCE.isEnergized())
+            {
+                for (Critter ghost : close_ghosts) {
+                    addScore(10);
+                    resetCritter(ghost);
+                }
+            }
+            else
+            {
+                playerLost();
+            }
+        }
     }
     
     private void Neighbours(long deltaTns) {
@@ -80,27 +116,7 @@ public final class MazeState {
     }
 
     
-    /*
-     * Si pacman entre dans une case où il y a un fantôme
-     * on vérifie s'il est énergiser
-     * Oui : Gagne 10pts et tue le fantôme
-     * Non : Perd une vie ou Game Over si 0 vie
-     */
-    private void statusPacman() {
-    	var pacPos = PacMan.INSTANCE.getPos().round();
-    	
-    	for (var critter : critters) {
-    		if (critter instanceof Ghost && critter.getPos().round().equals(pacPos)) {
-    			if(PacMan.INSTANCE.isEnergized()) {
-                     addScore(10);
-                     resetCritter(critter);
-                }else {
-                    playerLost();
-                    return;
-                }
-            }
-        }
-    }
+
 
     public static void addScore(int increment) {
         score += increment;
