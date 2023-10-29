@@ -5,6 +5,9 @@ package model;
 import geometry.RealCoordinates;
 import config.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Implements Pac-Man character using singleton pattern. FIXME: check whether singleton is really a good idea.
  * Yes it is, as there will be only one pacman in the whole game.
@@ -13,8 +16,8 @@ public final class PacMan implements Critter {
     private Direction direction = Direction.NONE;
     private RealCoordinates pos;
     private boolean energized;
-	private final int energized_timer_max = 10000;// in milliseconds
-	private int energized_timer;
+	private final long energized_timer_max = 10000;// in milliseconds
+	private long energized_timer;
 	
 	
 	
@@ -26,12 +29,13 @@ public final class PacMan implements Critter {
     }
     
     public static final PacMan INSTANCE = new PacMan();
-    
-    /*
-     * Si pacman entre dans une case une nouvelle case
-     * il gagne 1pts
-     */
-    public static void checknEatCell(MazeConfig grid, boolean[][] grid_state) {
+
+
+    public static void checknEatCell(MazeConfig grid, boolean[][] grid_state)
+	{
+		/*
+		Check if pacman is in a new cell, if so eat the content
+		 */
     	var pacPos = PacMan.INSTANCE.getPos().round();// get pacman position
     	int x = pacPos.x(); // get x axis
 		int y = pacPos.y(); // get y axis
@@ -45,30 +49,31 @@ public final class PacMan implements Critter {
 			else if (grid.getCell(pacPos).aEnergizer())// if the unentered cell contains an energizer
 			{
 				MazeState.addScore(10);// add 10 to the score
+				INSTANCE.energized_timer = INSTANCE.energized_timer_max;// set the energizer timer
 				INSTANCE.setEnergized(true);// set energized true
 				grid_state[y][x] = true;// set the cell state "entered"
 			}
 		}
     }
 
-	/*
-	TO DO: finish
-	private void statusPacman() {
+	public List<Critter> closeGhosts(List<Critter> critters)
+	{
+		/*
+		return critters that are close enough. Gonna check if pacman is energized later
+		 */
+		List<Critter> res = new ArrayList<>();
 		var pacPos = PacMan.INSTANCE.getPos().round();
 
 		for (var critter : critters) {
 			if (critter instanceof Ghost && critter.getPos().round().equals(pacPos)) {
 				if (PacMan.INSTANCE.isEnergized()) {
-					addScore(10);
-					resetCritter(critter);
-				} else {
-					playerLost();
-					return;
+					MazeState.addScore(10);
+					res.add(critter);
 				}
 			}
 		}
+		return res;
 	}
-	*/
 
 	private PacMan(double x, double y, boolean e)
 	{
@@ -103,7 +108,7 @@ public final class PacMan implements Critter {
     }
 
 	
-	public void energizedTimerCount(int delta)
+	public void energizedTimerCount(long delta)
 	{
 		// This function decreases the timer of the energy buff.
 		// If the timer is done, sets energized false.
