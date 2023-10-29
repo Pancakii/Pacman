@@ -1,23 +1,18 @@
 package model;
 
-//TESTING
-
 import geometry.RealCoordinates;
 import config.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Implements Pac-Man character using singleton pattern. FIXME: check whether singleton is really a good idea.
- * Yes it is, as there will be only one pacman in the whole game.
- */
+
 public final class PacMan implements Critter {
     private Direction direction = Direction.NONE;
     private RealCoordinates pos;
     private boolean energized;
-	private final long energized_timer_max = 10000;// in milliseconds
-	private long energized_timer;
+	private final double energized_timer_max = 10;
+	private double energized_timer;
 	
 	
 	
@@ -41,7 +36,7 @@ public final class PacMan implements Critter {
 		int y = pacPos.y(); // get y axis
 		if(!grid_state[y][x]) // verify if the cell pacman in is entered before(false = not entered yet)
 		{
-			if (!grid.getCell(pacPos).aDot())// if the unentered cell contains a dot
+			if (grid.getCell(pacPos).aDot())// if the unentered cell contains a dot
 			{
 				MazeState.addScore(1);// add 1 to the score
 				grid_state[y][x] = true;// set the cell state "entered"
@@ -65,11 +60,13 @@ public final class PacMan implements Critter {
 		var pacPos = PacMan.INSTANCE.getPos().round();
 
 		for (var critter : critters) {
-			if (critter instanceof Ghost && critter.getPos().round().equals(pacPos)) {
-				if (PacMan.INSTANCE.isEnergized()) {
+			if (critter instanceof Ghost && critter.getPos().round().equals(pacPos))
+			{
+				if (PacMan.INSTANCE.isEnergized())
+				{
 					MazeState.addScore(10);
-					res.add(critter);
 				}
+				res.add(critter);
 			}
 		}
 		return res;
@@ -116,9 +113,11 @@ public final class PacMan implements Critter {
 		// if energized
 		// timer -= delta
 		// if timer < 0 then setEnergized(false)
+
+		double delta_double = (double)delta;
 		if(energized)
 		{
-			energized_timer -= delta;
+			energized_timer -= delta_double/1000000000;
 			if(energized_timer <= 0)
 			{
 				setEnergized(false);

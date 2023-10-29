@@ -5,7 +5,7 @@ import config.MazeConfig;
 import geometry.IntCoordinates;
 import geometry.RealCoordinates;
 
-import java.util.ArrayList;
+
 import java.util.List;
 import java.util.Map;
 import static model.Ghost.*;
