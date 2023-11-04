@@ -1,5 +1,7 @@
 package gui;
 
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -9,11 +11,10 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import model.MazeState;
 
-public class GameOver  {
+public class Menu implements EventHandler<ActionEvent> {
 
-        public static void affichage(){
+        public static void affichageMenu()  {
         //Initialisation du nouvel ecran
         VBox parent = new VBox();
         Stage ecran = new Stage();
@@ -25,7 +26,7 @@ public class GameOver  {
         parent.setStyle("-fx-background-color: #000000");
 
         // Ajouter un nom a la page
-        ecran.setTitle("GameOver");
+        ecran.setTitle("Menu");
         // Ajouter une icone a la page`
         Image icon = new Image("pacman.png");
         ecran.getIcons().add(icon);
@@ -33,34 +34,25 @@ public class GameOver  {
         ecran.setResizable(false);
 
 
-        //affiche le score apres le game over
-        Text score = new Text();
-        score.setText("Score: " + MazeState.score);
-        score.setTranslateX(125);
-        score.setTranslateY(100);//La ou on place le score
-        score.setFont(Font.font(20)); //La taille de l'affichage
-        score.setFill(Color.WHITE); //La couleur
-        parent.getChildren().add(score);
-
-        //affichage du mesage GameOver
+        //affichage du mesage Menu
         Text go = new Text();
-        go.setText("Game Over!");
-        go.setTranslateX(125);
-        go.setTranslateY(20);
+        go.setText("Menu");
+        go.setTranslateX(190);
+        go.setTranslateY(40);
         go.setFont(Font.font(50));
         go.setFill(Color.YELLOW);
         parent.getChildren().add(go);
 
-        //bouton pour rejouer
-        Button bouton = new Button("Retry"); //Le nom du bouton
+        //bouton pour jouer
+        Button bouton = new Button(" Play "); //Le nom du bouton
         bouton.setTranslateX(210);//Les coordonnées du bouton
         bouton.setTranslateY(150);
         bouton.setFont(Font.font(20));
-        //bouton.setOnAction();
+        bouton.setOnAction(new Jeu());
         parent.getChildren().add(bouton);
 
-        //bouton pour retourner au menu
-        Button menubouton = new Button("Menu");
+        //bouton pour les modes
+        Button menubouton = new Button("Mode");
         menubouton.setTranslateX(210);
         menubouton.setTranslateY(170);
         menubouton.setFont(Font.font(20));
@@ -81,7 +73,8 @@ public class GameOver  {
     }
 
 
-
-
-
+        @Override
+        public void handle(ActionEvent event) {
+                affichageMenu();
+        }
 }

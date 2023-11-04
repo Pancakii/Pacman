@@ -3,10 +3,7 @@ package model;
 import config.MazeConfig;
 import geometry.IntCoordinates;
 import geometry.RealCoordinates;
-import gui.GameView;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.scene.text.Text;
+import gui.GameOver;
 
 import java.util.List;
 import java.util.Map;
@@ -120,19 +117,15 @@ public final class MazeState {
 
     private void addScore(int increment) {
         score += increment;
-
     }
 
 
 
     private void playerLost() {
-        // FIXME: this should be displayed in the JavaFX view, not in the console. A game over screen would be nice too.
         lives--;
-        if (lives == 0) {
-            System.out.println("Game over!");
-            System.exit(0);
+        if(MazeState.lives == 0){
+            GameOver.affichageGameOver();
         }
-        System.out.println("Lives: " + lives);
         resetCritters();
     }
 

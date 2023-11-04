@@ -1,18 +1,14 @@
 package gui;
 
-import com.sun.source.doctree.SystemPropertyTree;
-import javafx.scene.Node;
-import javafx.scene.image.Image;
 import geometry.IntCoordinates;
 import javafx.animation.AnimationTimer;
+import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import model.MazeState;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static model.MazeState.score;
 
 public class GameView {
     // class parameters
@@ -29,7 +25,6 @@ public class GameView {
         Image icon = new Image("pacman.png");
         stage.getIcons().add(icon); // Ajouter une icone a la page
         stage.setResizable(false); // Ne plus pouvoir aggrandir/retrecir la page
-        stage.setFullScreen(true); // Mettre en plein ecran
         stage.setFullScreenExitHint ("Press esc for exit");
 
     }
@@ -60,15 +55,14 @@ public class GameView {
 
 
 
+            for (var critter : maze.getCritters()) addGraphics(critterFactory.makeGraphics(critter));
 
-        for (var critter : maze.getCritters()) addGraphics(critterFactory.makeGraphics(critter));
+            for (int x = 0; x < maze.getWidth(); x++)
+                for (int y = 0; y < maze.getHeight(); y++)
+                    addGraphics(cellFactory.makeGraphics(maze, new IntCoordinates(x, y)));
 
-        for (int x = 0; x < maze.getWidth(); x++)
-            for (int y = 0; y < maze.getHeight(); y++)
-                addGraphics(cellFactory.makeGraphics(maze, new IntCoordinates(x, y)));
-
-        addGraphics(affichageScore.displayScore(root));
-        addGraphics(afficheVie.remainingLife(root));
+            addGraphics(affichageScore.displayScore(root));
+            addGraphics(afficheVie.remainingLife(root));
 
     }
 
