@@ -1,13 +1,13 @@
 package model;
 
-import javafx.scene.text.*;
 import config.MazeConfig;
 import geometry.IntCoordinates;
 import geometry.RealCoordinates;
-
+import gui.GameOver;
 
 import java.util.List;
 import java.util.Map;
+
 import static model.Ghost.*;
 
 public final class MazeState {
@@ -16,11 +16,11 @@ public final class MazeState {
     private final int width;
     private final boolean[][] gridState;
     private final List<Critter> critters;
-    private static int score;
+    public static int score;
+    public static int lives = 3;
 
     private final Map<Critter, RealCoordinates> initialPos;
-    private int lives = 3;
-    private static Text point;
+
 
     public MazeState(MazeConfig config) {
         this.config = config;
@@ -50,9 +50,6 @@ public final class MazeState {
         return height;
     }
 
-    public int getScore() {
-        return score;
-    }
 
     public void update(long deltaTns) {
     	this.Neighbours(deltaTns);
@@ -93,7 +90,7 @@ public final class MazeState {
             }
         }
     }
-    
+
     private void Neighbours(long deltaTns) {
         for (var critter : critters) {
             var curPos = critter.getPos();
@@ -108,36 +105,25 @@ public final class MazeState {
             critter.setPos(nextPos.warp(width, height));
         }
     }
-    
+
     //Vérifie si la nouvelle position est un mur
     private boolean isWall(RealCoordinates position) {
         IntCoordinates cell = position.round();
         return config.getCell(cell).isWall();
     }
 
-    
 
-
-    public static void addScore(int increment) {
+    private static void addScore(int increment) {
         score += increment;
-        //gameView.updateScore(score);
     }
-    
-    public void displayScore() {
-    	point.setText("Score: " + score);
-    }
-    
-    public void initializeScoreText(Text scoreText) {
-        point = scoreText;
-    }
-    
+
+
+
     private void playerLost() {
         lives--;
-        if (lives == 0) {
-            System.out.println("Game over!");
-            System.exit(0);
+        if(MazeState.lives == 0){
+            GameOver.affichageGameOver();
         }
-        System.out.println("Lives: " + lives);
         resetCritters();
     }
 
@@ -157,5 +143,4 @@ public final class MazeState {
     public boolean getGridState(IntCoordinates pos) {
         return gridState[pos.y()][pos.x()];
     }
-
 }

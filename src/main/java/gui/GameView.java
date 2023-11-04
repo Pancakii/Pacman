@@ -1,14 +1,12 @@
 package gui;
 
-import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.scene.image.Image;
-import javafx.scene.text.Text;
 import geometry.IntCoordinates;
 import javafx.animation.AnimationTimer;
+import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import model.MazeState;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,7 +14,9 @@ public class GameView {
     // class parameters
     private final MazeState maze;
     private final Pane gameRoot; // main node of the game
-    private Text scoreText;
+
+
+
     private final List<GraphicsUpdater> graphicsUpdaters;
 
 
@@ -25,14 +25,12 @@ public class GameView {
         Image icon = new Image("pacman.png");
         stage.getIcons().add(icon); // Ajouter une icone a la page
         stage.setResizable(false); // Ne plus pouvoir aggrandir/retrecir la page
-        stage.setFullScreen(true); // Mettre en plein ecran
         stage.setFullScreenExitHint ("Press esc for exit");
 
     }
     private void addGraphics(GraphicsUpdater updater) {
         gameRoot.getChildren().add(updater.getNode());
         graphicsUpdaters.add(updater);
-
     }
 
     /**
@@ -43,26 +41,28 @@ public class GameView {
     public GameView(MazeState maze, Pane root, double scale) {
         this.maze = maze;
         this.gameRoot = root;
+
         // pixels per cell
-        root.setMinWidth(maze.getWidth() * scale - 35);
-        root.setMinHeight(maze.getHeight() * scale - 35);
-        root.setStyle("-fx-background-color: #FFFFFF");
-        
+        root.setMinWidth(maze.getWidth() * scale);
+        root.setMinHeight(maze.getHeight() * scale);
+        root.setStyle("-fx-background-color: #000000");
         var critterFactory = new CritterGraphicsFactory(scale);
         var cellFactory = new CellGraphicsFactory(scale);
+        var affichageScore = new Score();
+        var afficheVie = new Vie();
         graphicsUpdaters = new ArrayList<>();
-        
-        scoreText = new Text("Score: 0");
-        scoreText.setX(50);
-        scoreText.setY(50);
-        scoreText.setFont(Font.font(20));
-        scoreText.setFill(Color.YELLOW);
-        gameRoot.getChildren().add(scoreText);
-        maze.initializeScoreText(scoreText);     
-        for (var critter : maze.getCritters()) addGraphics(critterFactory.makeGraphics(critter));
-        for (int x = 0; x < maze.getWidth(); x++)
-            for (int y = 0; y < maze.getHeight(); y++)
-                addGraphics(cellFactory.makeGraphics(maze, new IntCoordinates(x, y)));
+
+
+
+            for (var critter : maze.getCritters()) addGraphics(critterFactory.makeGraphics(critter));
+
+            for (int x = 0; x < maze.getWidth(); x++)
+                for (int y = 0; y < maze.getHeight(); y++)
+                    addGraphics(cellFactory.makeGraphics(maze, new IntCoordinates(x, y)));
+
+            addGraphics(affichageScore.displayScore(root));
+            addGraphics(afficheVie.remainingLife(root));
+
     }
 
     public void animate() {
@@ -84,8 +84,8 @@ public class GameView {
             }
         }.start();
     }
-    
-    public void updateScore(int score) {
-        scoreText.setText("Score: " + score);
-    }
+
+
+
+
 }
