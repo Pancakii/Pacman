@@ -31,6 +31,7 @@ public final class CritterGraphicsFactory {
                 image.setTranslateX((critter.getPos().x() + (1 - size) / 2) * scale);
                 image.setTranslateY((critter.getPos().y() + (1 - size) / 2) * scale);
                 // Debug.out("sprite updated");
+
             }
 
             @Override
