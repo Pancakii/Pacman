@@ -7,7 +7,6 @@ import model.Critter;
 import model.Ghost;
 import model.PacMan;
 
-
 public final class CritterGraphicsFactory {
     private final double scale;
 
@@ -23,14 +22,19 @@ public final class CritterGraphicsFactory {
                     case CLYDE -> "ghost_clyde.png";
                     case INKY -> "ghost_inky.png";
                     case PINKY -> "ghost_pinky.png";
+                    default -> throw new IllegalArgumentException("Unexpected value: " + (Ghost) critter);
                 };
+        System.out.println("URL de l'image : " + url); // pour afficher le message de debogage (une image ou qq chose)
         var image = new ImageView(new Image(url, scale * size, scale * size, true, true));
         return new GraphicsUpdater() {
             @Override
             public void update() {
-                image.setTranslateX((critter.getPos().x() + (1 - size) / 2) * scale);
-                image.setTranslateY((critter.getPos().y() + (1 - size) / 2) * scale);
-                // Debug.out("sprite updated");
+                double translateX = (critter.getPos().x() + (1 - size) / 2) * scale;
+                double translateY = (critter.getPos().y() + (1 - size) / 2) * scale;
+                System.out.println("translateX : " + translateX + ", translateY: " + translateY); // on deboge la traduction
+                image.setTranslateX(translateX);
+                image.setTranslateY(translateY);
+                System.out.println("Sprite mis à jour"); // on deboge la mise à jour du sprite
             }
 
             @Override
@@ -40,3 +44,4 @@ public final class CritterGraphicsFactory {
         };
     }
 }
+
