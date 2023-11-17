@@ -2,9 +2,12 @@ package config;
 
 import javafx.scene.text.Text;
 import geometry.IntCoordinates;
-import java.io.* ;
-import static config.Cell.Content.DOT;
-import static config.Cell.*;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+
+import static config.Cell.Cellule;
 
 public class MazeConfig {
     public MazeConfig(Cell[][] grid, IntCoordinates pacManPos, IntCoordinates blinkyPos, IntCoordinates pinkyPos,
