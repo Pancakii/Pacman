@@ -47,6 +47,7 @@ public class GameView {
         root.setStyle("-fx-background-color: #000000");
         var critterFactory = new CritterGraphicsFactory(scale);
         var cellFactory = new CellGraphicsFactory(scale);
+        var BonusFactory = new BonusGraphics(scale) ;
         var affichageScore = new Score();
         var afficheVie = new Vie();
         graphicsUpdaters = new ArrayList<>();
@@ -61,6 +62,7 @@ public class GameView {
 
             addGraphics(affichageScore.displayScore(root));
             addGraphics(afficheVie.remainingLife(root));
+            addGraphics(BonusFactory.afficheBonus());
 
     }
 

@@ -1,16 +1,16 @@
 package model;
 
 public class Bonus {
-    private boolean haveBonus ;
+    private static boolean haveBonus =true;
     private double bonusTimer;
     private final double bonusTimeMax = 5 ;
 
-    public boolean canHaveBonus() {
+    public static boolean canHaveBonus() {
         return haveBonus;
     }
 
-    public void setHaveBonus(boolean haveBonus) {
-        this.haveBonus = haveBonus;
+    public static void setHaveBonus(boolean havebonus) {
+        haveBonus = havebonus;
     }
 
     public void bonusTimer (long delta){
@@ -23,6 +23,7 @@ public class Bonus {
             }
         }
     }
+
 
 
 }

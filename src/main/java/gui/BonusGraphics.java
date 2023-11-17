@@ -16,7 +16,7 @@ public final class BonusGraphics {
     private final ImageView galaxian ;
     private final ImageView cloche ;
     private final ImageView cle ;
-    private ImageView instance ;
+    private ImageView instance  ;
 
 
     public BonusGraphics(double scale ){
@@ -29,7 +29,7 @@ public final class BonusGraphics {
         this.galaxian = new ImageView(new Image("BonusGalaxian.png" , scale*size , scale*size , true , true )) ;
         this.cloche = new ImageView(new Image("BonusCloche.png" , scale*size , scale*size , true , true )) ;
         this.cle = new ImageView(new Image("BonusCle.png" , scale*size , scale*size , true , true )) ;
-        this.instance = null ;
+        this.instance = fraise ;
     }
 
     public ImageView updateImageBonus (){
@@ -81,8 +81,8 @@ public final class BonusGraphics {
         return new GraphicsUpdater() {
             @Override
             public void update() {
-                image.setTranslateX((12+(1 - size) / 2) * scale) ;
-                image.setTranslateY((12+(1 - size) / 2) * scale );
+                image.setTranslateX((10+(1 - size) / 2) * scale) ;
+                image.setTranslateY((11+(1 - size) / 2) * scale );
             }
 
             @Override
@@ -91,8 +91,7 @@ public final class BonusGraphics {
             }
         };
     }
-
-
-
-
+    public double getSize() {
+        return size;
+    }
 }
