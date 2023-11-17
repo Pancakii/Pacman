@@ -15,16 +15,16 @@ public final class PacMan implements Critter {
     private boolean energized;
 	private final double energized_timer_max = 10;
 	private double energized_timer;
-	
-	
-	
+
+
+
 	// We should be able to change the position 
 	// when we change the level.
     private PacMan()
 	{
 		this(0.0, 0.0, false);
     }
-    
+
     public static final PacMan INSTANCE = new PacMan();
 
 
@@ -105,8 +105,8 @@ public final class PacMan implements Critter {
     public void setPos(RealCoordinates pos) {
         this.pos = pos;
     }
-	
-	
+
+
 	// Eating energizer or pellets
 	public double distance(double[] p)
 	{
@@ -114,17 +114,13 @@ public final class PacMan implements Critter {
 		// depending on the cell position system.
 		return Math.sqrt(Math.pow( ((p[0] - pos.x()) + (p[1] - pos.y())), 2));
 	}
-	
-	public boolean eatBall(Cell cell, RealCoordinates cell_coordinates)
-	{
-		// Call this function for a cell that contains a pellet(energizer or normal)
 
-	
+
 	public void energizedTimerCount(long delta)
 	{
 		// This function decreases the timer of the energy buff.
 		// If the timer is done, sets energized false.
-		
+
 		// if energized
 		// timer -= delta
 		// if timer < 0 then setEnergized(false)
@@ -140,12 +136,16 @@ public final class PacMan implements Critter {
 			}
 		}
 	}
-	
-	
+
+
     public boolean isEnergized() {return energized;}
 
-    public void setEnergized(boolean energized) 
+    public void setEnergized(boolean energized)
 	{
         this.energized = energized;
     }
+
+	public int getLevel() {
+		return 1;
+	}
 }
