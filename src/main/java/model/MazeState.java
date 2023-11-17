@@ -9,6 +9,7 @@ import gui.GameOver;
 
 import java.util.List;
 import java.util.Map;
+
 import static model.Ghost.*;
 
 public final class MazeState {
@@ -92,7 +93,7 @@ public final class MazeState {
             }
         }
     }
-    
+
     private void Neighbours(long deltaTns) {
         for (var critter : critters) {
             var curPos = critter.getPos();
@@ -160,5 +161,4 @@ public final class MazeState {
     public boolean getGridState(IntCoordinates pos) {
         return gridState[pos.y()][pos.x()];
     }
-
 }

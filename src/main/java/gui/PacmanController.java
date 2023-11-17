@@ -10,6 +10,10 @@ import javafx.scene.input.KeyEvent;
 
 public class PacmanController {
     private MazeConfig mazeConfig;
+    private static Direction lastDirection =  Direction.EAST ;
+    private static Direction newDirection = null;
+
+
 
     public PacmanController(MazeConfig mazeConfig) {
         this.mazeConfig = mazeConfig;

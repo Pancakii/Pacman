@@ -1,5 +1,7 @@
 package model;
 
+//TESTING
+
 import geometry.RealCoordinates;
 import config.*;
 
@@ -7,10 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-/**
- * Implements Pac-Man character using singleton pattern. FIXME: check whether singleton is really a good idea.
- * Yes it is, as there will be only one pacman in the whole game.
- */
+
 public final class PacMan implements Critter {
     private Direction direction = Direction.NONE;
     private RealCoordinates pos;
@@ -20,7 +19,7 @@ public final class PacMan implements Critter {
 
 
 
-	// We should be able to change the position
+	// We should be able to change the position 
 	// when we change the level.
     private PacMan()
 	{
@@ -107,8 +106,8 @@ public final class PacMan implements Critter {
     public void setPos(RealCoordinates pos) {
         this.pos = pos;
     }
-
-
+	
+	
 	// Eating energizer or pellets
 	public double distance(double[] p)
 	{
@@ -116,8 +115,12 @@ public final class PacMan implements Critter {
 		// depending on the cell position system.
 		return Math.sqrt(Math.pow( ((p[0] - pos.x()) + (p[1] - pos.y())), 2));
 	}
+	
+	public boolean eatBall(Cell cell, RealCoordinates cell_coordinates)
+	{
+		// Call this function for a cell that contains a pellet(energizer or normal)
 
-
+	
 	public void energizedTimerCount(long delta)
 	{
 		// This function decreases the timer of the energy buff.
