@@ -1,5 +1,7 @@
 package model;
 
+import gui.PacmanController;
+import javafx.scene.text.*;
 import config.MazeConfig;
 import geometry.IntCoordinates;
 import geometry.RealCoordinates;
@@ -65,6 +67,7 @@ public final class MazeState {
         PacMan.checknEatCell(getConfig(), this.gridState);
         eatGhosts();
         PacMan.INSTANCE.energizedTimerCount(deltaTns);
+        PacmanController.checknWalk(this.config);
     }
 
     /*
@@ -113,7 +116,7 @@ public final class MazeState {
     }
 
 
-    private static void addScore(int increment) {
+    public static void addScore(int increment) {
         score += increment;
     }
 

@@ -6,7 +6,6 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import model.MazeState;
-
 import java.util.ArrayList;
 import java.util.List;
 
