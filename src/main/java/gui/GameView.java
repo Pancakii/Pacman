@@ -38,10 +38,18 @@ public class GameView {
         var affichageScore = new Score();
         var afficheVie = new Vie();
         graphicsUpdaters = new ArrayList<>();
-        for (var critter : maze.getCritters()) addGraphics(critterFactory.makeGraphics(critter));
-        for (int x = 0; x < maze.getWidth(); x++)
-            for (int y = 0; y < maze.getHeight(); y++)
-                addGraphics(cellFactory.makeGraphics(maze, new IntCoordinates(x, y)));
+
+
+
+            for (var critter : maze.getCritters()) addGraphics(critterFactory.makeGraphics(critter));
+
+            for (int x = 0; x < maze.getWidth(); x++)
+                for (int y = 0; y < maze.getHeight(); y++)
+                    addGraphics(cellFactory.makeGraphics(maze, new IntCoordinates(x, y)));
+
+            addGraphics(affichageScore.displayScore(root));
+            addGraphics(afficheVie.remainingLife(root));
+
     }
 
     public void animate() {

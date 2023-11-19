@@ -115,6 +115,7 @@ public final class MazeState {
         return config.getCell(cell).isWall();
     }
 
+
     public static void addScore(int increment) {
         score += increment;
     }
