@@ -7,21 +7,18 @@ import model.PacMan;
 import geometry.RealCoordinates;
 import geometry.IntCoordinates;
 import javafx.scene.input.KeyEvent;
-import misc.Debug ;
+import misc.Debug;
 
 public class PacmanController {
     private MazeConfig mazeConfig;
-    private static Direction lastDirection =  Direction.EAST ;
     private static Direction newDirection = null;
-
-
+    private static Direction lastDirection = null;
 
     public PacmanController(MazeConfig mazeConfig) {
         this.mazeConfig = mazeConfig;
     }
 
     public void keyPressedHandler(KeyEvent event) {
-
         newDirection = null;
 
         switch (event.getCode()) {
@@ -43,24 +40,24 @@ public class PacmanController {
             RealCoordinates nextPos = PacMan.INSTANCE.getPos().plus(DirectionUtils.getVector(newDirection));
             IntCoordinates nextCell = nextPos.round();
 
-            if ( !mazeConfig.getCell(nextCell).isWall() ) {
-                    PacMan.INSTANCE.setDirection(newDirection);
+            if (!mazeConfig.getCell(nextCell).isWall()) {
+                PacMan.INSTANCE.setDirection(newDirection);
+                lastDirection = null; // Reset pending direction when setting a new direction
             } else {
-                lastDirection =newDirection;
+            	lastDirection = newDirection;
                 Debug.out(lastDirection.toString());
                 newDirection = null;
             }
         }
-
     }
 
-    public static void checknWalk ( MazeConfig mazeConfig){
-        if ( newDirection == null) {
+    public static void checknWalk(MazeConfig mazeConfig) {
+        if (newDirection == null && lastDirection != null) {
             RealCoordinates nextPos = PacMan.INSTANCE.getPos().plus(DirectionUtils.getVector(lastDirection));
             IntCoordinates nextCell = nextPos.round();
             if (!mazeConfig.getCell(nextCell).isWall()) {
                 PacMan.INSTANCE.setDirection(lastDirection);
-                //Debug.out("setDirectionlastDirection");
+                lastDirection = null;
             }
         }
     }
