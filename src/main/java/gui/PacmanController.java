@@ -66,11 +66,15 @@ public class PacmanController {
 
             }
         }
+        else
+        {
+            newDirection = lastDirection;
+        }
+
     }
 
     public static void checknWalk ( MazeConfig mazeConfig)
     {
-        Debug.out(newDirection + ", " + lastDirection);
         if ( newDirection == null)
         {
             RealCoordinates nextPos = PacMan.INSTANCE.getPos().plus(DirectionUtils.getVector(lastDirection));
