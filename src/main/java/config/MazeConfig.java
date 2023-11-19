@@ -20,8 +20,6 @@ public class MazeConfig {
     }
 
     private final Cell[][] grid;
-
-
     private final IntCoordinates pacManPos, blinkyPos, pinkyPos, inkyPos, clydePos;
 
     public IntCoordinates getPacManPos() {
@@ -51,6 +49,8 @@ public class MazeConfig {
     public int getHeight() {
         return grid.length;
     }
+
+    public Cell[][] getGrid() {return grid;}
 
     public boolean isWall(IntCoordinates pos) {
         return grid[Math.floorMod(pos.y(), getHeight())][Math.floorMod(pos.x(), getWidth())].isWall();
@@ -98,7 +98,7 @@ public class MazeConfig {
     // creation du tableau de tableau des cellules
     public static Cell[][] grid () throws Exception {
         String path = System.getProperty("user.dir") ;
-        File file ;
+        File file;
         try {
             file =new File(path+"/src/main/resources/Maze.txt");
         } catch (Exception e ){
@@ -147,7 +147,7 @@ public class MazeConfig {
                     maze[j][i] = Cellule(3);
                 }
             }
-            j++ ;
+            j++;
         }
         return maze;
     }
@@ -158,9 +158,9 @@ public class MazeConfig {
         						//(x, y)
                 new IntCoordinates(2, 1), // pacman
                 new IntCoordinates(9, 9), // blinky
-                new IntCoordinates(10, 9), // pinke
+                new IntCoordinates(10, 9), // pinky
                 new IntCoordinates(11, 9), // inky
-                new IntCoordinates(10, 9)  // clyde
+                new IntCoordinates(10, 10)  // clyde
         ) ;
     }
 

@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-
 public final class PacMan implements Critter {
     private Direction direction = Direction.NONE;
     private RealCoordinates pos;
@@ -94,7 +93,7 @@ public final class PacMan implements Critter {
 
     @Override
     public double getSpeed() {
-        return isEnergized() ? 6 : 4;
+        return isEnergized() ? 5 : 4;
     }
 
     @Override
@@ -111,7 +110,7 @@ public final class PacMan implements Critter {
     public void setPos(RealCoordinates pos) {
         this.pos = pos;
     }
-	
+
 
 
 	public void energizedTimerCount(long delta)

@@ -2,6 +2,7 @@ package pathfinding;
 
 import config.Cell;
 import geometry.RealCoordinates;
+import misc.Debug;
 
 import java.util.ArrayList;
 
@@ -220,6 +221,7 @@ public class Node
 
     public static ArrayList<RealCoordinates> getPath(RealCoordinates s, RealCoordinates e, Cell[][] grid)
     {
+        Debug.out("Start of getPath");
         ArrayList<RealCoordinates> res = new ArrayList<>();
         Node node = aStar(s, e, grid);
         while(node != null)
@@ -227,6 +229,7 @@ public class Node
             res.add(0, node.coordinates);
             node = node.parent;
         }
+        Debug.out("End of getPath");
         return res;
     }
 }

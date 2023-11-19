@@ -1,12 +1,12 @@
 package model;
 
+import config.Cell;
 import gui.PacmanController;
 import javafx.scene.text.*;
 import config.MazeConfig;
 import geometry.IntCoordinates;
 import geometry.RealCoordinates;
 import gui.GameOver;
-import misc.Debug;
 
 import java.util.List;
 import java.util.Map;
@@ -57,11 +57,15 @@ public final class MazeState {
     public void update(long deltaTns) {
     	this.Neighbours(deltaTns);
         pacmanUpdate(deltaTns);
+        updateGhosts(deltaTns);
         bonusUpdate(deltaTns);
     }
 
 
     /*
+    PACMAN FUNCTIONS
+
+
     Uses Pacman functions to update its state
      */
     private void pacmanUpdate(long deltaTns)
@@ -90,9 +94,14 @@ public final class MazeState {
         {
             if(PacMan.INSTANCE.isEnergized())
             {
-                for (Critter ghost : close_ghosts) {
-                    addScore(10);
-                    resetCritter(ghost);
+                for (Critter g : close_ghosts)
+                {
+                    Ghost ghost = (Ghost)g;
+                    if(!ghost.isEaten())
+                    {
+                        addScore(10);
+                        ghost.setEaten(true); // why the hell can't I just do that???
+                    }
                 }
             }
             else
@@ -101,6 +110,37 @@ public final class MazeState {
             }
         }
     }
+
+    /*
+    GHOST FUNCTIONS
+
+    Updates all ghosts
+     */
+    public void updateGhosts(long deltaTns)
+    {
+        for(Critter critter : critters)
+        {
+            if(critter instanceof Ghost)
+            {
+                updateGhost(critter, deltaTns);
+            }
+        }
+    }
+
+    // Updates one ghost
+    public void updateGhost(Critter critter, long deltaTns)
+    {
+        Ghost ghost = (Ghost) critter;
+        switch (ghost)
+        {
+            case BLINKY : ghost.getPath(config.getGrid(), config, deltaTns, config.getBlinkyPos().toRealCoordinates(1.0));
+            case INKY : ghost.getPath(config.getGrid(), config, deltaTns, config.getInkyPos().toRealCoordinates(1.0));
+            case PINKY : ghost.getPath(config.getGrid(), config, deltaTns, config.getPinkyPos().toRealCoordinates(1.0));
+            case CLYDE : ghost.getPath(config.getGrid(), config, deltaTns, config.getClydePos().toRealCoordinates(1.0));
+        }
+        ghost.followPath();
+    }
+
 
     private void Neighbours(long deltaTns) {
         for (var critter : critters) {
