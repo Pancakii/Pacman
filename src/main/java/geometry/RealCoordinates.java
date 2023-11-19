@@ -57,7 +57,7 @@ public record RealCoordinates(double x, double y) {
 
     public boolean smallDiff(RealCoordinates other)
     {
-        return Math.abs(x() - other.x()) < 0.2 && Math.abs(y() - other.y()) < 0.2;
+        return Math.abs(x() - other.x()) < 0.3 && Math.abs(y() - other.y()) < 0.3;
     }
 
     public RealCoordinates warp(int width, int height) {

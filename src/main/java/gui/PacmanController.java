@@ -48,36 +48,49 @@ public class PacmanController {
 
             if ( !mazeConfig.getCell(nextCell).isWall() )
             {
+                PacMan.INSTANCE.setDirection(newDirection);
                 if(PacMan.INSTANCE.getPos().smallDiff(nextPos))
                 {
-                    PacMan.INSTANCE.setDirection(newDirection);
+                    PacMan.INSTANCE.setPos(nextPos);
+                }
+                else
+                {
                     PacMan.INSTANCE.setPos(PacMan.INSTANCE.getPos().round().toRealCoordinates(1.0));
                 }
             }
             else
             {
                 lastDirection = newDirection;
-                //Debug.out(lastDirection.toString());
                 newDirection = null;
+                //Debug.out(lastDirection.toString());
+
             }
         }
     }
 
-    public static void checknWalk ( MazeConfig mazeConfig){
+    public static void checknWalk ( MazeConfig mazeConfig)
+    {
+        Debug.out(newDirection + ", " + lastDirection);
         if ( newDirection == null)
         {
             RealCoordinates nextPos = PacMan.INSTANCE.getPos().plus(DirectionUtils.getVector(lastDirection));
             nextPos = nextPos.round().toRealCoordinates(1.0);
             IntCoordinates nextCell = nextPos.round();
 
+            Debug.out(mazeConfig.getCell(nextCell).isWall() + ", " + nextCell);
             if (!mazeConfig.getCell(nextCell).isWall())
             {
+                PacMan.INSTANCE.setDirection(lastDirection);
                 if(PacMan.INSTANCE.getPos().smallDiff(nextPos))
                 {
-                    PacMan.INSTANCE.setDirection(lastDirection);
-                    PacMan.INSTANCE.setPos(PacMan.INSTANCE.getPos().round().toRealCoordinates(1.0));
-                    Debug.out("setDirectionlastDirection " + lastDirection);
+                    PacMan.INSTANCE.setPos(nextPos);
                 }
+                else
+                {
+                    PacMan.INSTANCE.setPos(PacMan.INSTANCE.getPos().round().toRealCoordinates(1.0));
+                }
+
+                Debug.out("setDirectionlastDirection " + lastDirection);
             }
         }
     }
