@@ -55,7 +55,7 @@ public final class MazeState {
 
 
     public void update(long deltaTns) {
-    	this.Neighbours(deltaTns);
+    	this.moveCritters(deltaTns);
         pacmanUpdate(deltaTns);
         updateGhosts(deltaTns);
         bonusUpdate(deltaTns);
@@ -131,6 +131,7 @@ public final class MazeState {
     public void updateGhost(Critter critter, long deltaTns)
     {
         Ghost ghost = (Ghost) critter;
+
         switch (ghost)
         {
             case BLINKY : ghost.getPath(config.getGrid(), config, deltaTns, config.getBlinkyPos().toRealCoordinates(1.0));
@@ -142,15 +143,28 @@ public final class MazeState {
     }
 
 
-    private void Neighbours(long deltaTns) {
+    private void moveCritters(long deltaTns) {
         for (var critter : critters) {
             var curPos = critter.getPos();
             var nextPos = critter.nextPos(deltaTns);
 
             // Vérifie si la nouvelle position est un mur
-            if (isWall(nextPos)) {
+            if (isWall(nextPos))
+            {
+
+                nextPos = curPos.round().toRealCoordinates(1.0);
+                /*
+                nextPos.plus((switch (critter.getDirection()) {
+                    case NONE -> RealCoordinates.ZERO;
+                    case NORTH -> RealCoordinates.SOUTH_UNIT;
+                    case EAST -> RealCoordinates.WEST_UNIT;
+                    case SOUTH -> RealCoordinates.NORTH_UNIT;
+                    case WEST -> RealCoordinates.EAST_UNIT;
+                }).times(1));
+                 */
+
                 critter.setDirection(Direction.NONE);
-                nextPos = curPos;  // Reste à la position actuelle
+                //nextPos = curPos;  // Reste à la position actuelle
             }
 
             critter.setPos(nextPos.warp(width, height));

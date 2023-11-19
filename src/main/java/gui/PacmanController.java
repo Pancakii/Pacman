@@ -43,24 +43,41 @@ public class PacmanController {
 
         if (newDirection != null) {
             RealCoordinates nextPos = PacMan.INSTANCE.getPos().plus(DirectionUtils.getVector(newDirection));
+            nextPos = nextPos.round().toRealCoordinates(1.0);
             IntCoordinates nextCell = nextPos.round();
 
-            if ( !mazeConfig.getCell(nextCell).isWall() ) {
+            if ( !mazeConfig.getCell(nextCell).isWall() )
+            {
+                if(PacMan.INSTANCE.getPos().smallDiff(nextPos))
+                {
                     PacMan.INSTANCE.setDirection(newDirection);
-            } else {
+                    PacMan.INSTANCE.setPos(PacMan.INSTANCE.getPos().round().toRealCoordinates(1.0));
+                }
+            }
+            else
+            {
                 lastDirection = newDirection;
+                //Debug.out(lastDirection.toString());
                 newDirection = null;
             }
         }
     }
 
     public static void checknWalk ( MazeConfig mazeConfig){
-        if ( newDirection == null) {
+        if ( newDirection == null)
+        {
             RealCoordinates nextPos = PacMan.INSTANCE.getPos().plus(DirectionUtils.getVector(lastDirection));
+            nextPos = nextPos.round().toRealCoordinates(1.0);
             IntCoordinates nextCell = nextPos.round();
-            if (!mazeConfig.getCell(nextCell).isWall()) {
-                PacMan.INSTANCE.setDirection(lastDirection);
-                //Debug.out("setDirectionlastDirection");
+
+            if (!mazeConfig.getCell(nextCell).isWall())
+            {
+                if(PacMan.INSTANCE.getPos().smallDiff(nextPos))
+                {
+                    PacMan.INSTANCE.setDirection(lastDirection);
+                    PacMan.INSTANCE.setPos(PacMan.INSTANCE.getPos().round().toRealCoordinates(1.0));
+                    Debug.out("setDirectionlastDirection " + lastDirection);
+                }
             }
         }
     }

@@ -55,6 +55,11 @@ public record RealCoordinates(double x, double y) {
         return new RealCoordinates(x, (int) Math.ceil(y));
     }
 
+    public boolean smallDiff(RealCoordinates other)
+    {
+        return Math.abs(x() - other.x()) < 0.2 && Math.abs(y() - other.y()) < 0.2;
+    }
+
     public RealCoordinates warp(int width, int height) {
         var rx = x;
         var ry = y;
