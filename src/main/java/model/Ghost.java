@@ -23,6 +23,10 @@ public enum Ghost implements Critter {
     private final double direction_timer_max = 10;
     private double direction_timer = 0;
 
+    private final double path_finding_timer_max = 2;
+
+    private double path_finding_timer = path_finding_timer_max;
+
     @Override
     public RealCoordinates getPos() {
         return pos;
@@ -58,9 +62,16 @@ public enum Ghost implements Critter {
 
     public void getPath(Cell[][] grid, MazeConfig mazeConfig, long delta, RealCoordinates base_coord)
     {
-        Debug.out("Start of getPath of " + this);
-        if(!eaten) {
+
+        double delta_double = (double) delta;
+        path_finding_timer -= delta_double / 1000000000;
+        if(!eaten && path_finding_timer <= 0)
+        {
+            //Debug.out("Start of getPath of " + this);
             // Getting the path to follow.
+
+            path_finding_timer = path_finding_timer_max;
+
             RealCoordinates pac_pos = PacMan.INSTANCE.getPos();
             if (this == BLINKY)
             {
@@ -100,7 +111,6 @@ public enum Ghost implements Critter {
                 RealCoordinates nextPos = pos.plus(DirectionUtils.getVector(direction));
                 IntCoordinates nextCell = nextPos.round();
 
-                double delta_double = (double) delta;
                 direction_timer -= delta_double / 1000000000;
 
                 // Handling cases if there's a wall or if the timer of random direction ended
@@ -124,25 +134,32 @@ public enum Ghost implements Critter {
                 // If eaten, go to the base
                 path = Node.getPath(this.pos, pac_pos, grid);
             }
+            //Debug.out("End of getPath of " + this);
         }
         else
         {
-            path = Node.getPath(this.pos, base_coord, grid);
+            if(path_finding_timer <= 0)
+            {
+                path_finding_timer = path_finding_timer_max;
+                path = Node.getPath(this.pos, base_coord, grid);
+            }
             if(path.size() <= 1)
             {
                 eaten = false;
             }
+            //Debug.out("End of getPath of " + this);
         }
-        Debug.out("End of getPath of " + this);
+
     }
 
 
 
     public void followPath()
     {
-        Debug.out("Start of followPath of " + this);
+
         if(!path.isEmpty())
         {
+            //Debug.out("Start of followPath of " + this);
             RealCoordinates to_follow = path.get(0);
             if (pos.round().same(to_follow.round()))
             {
@@ -162,7 +179,7 @@ public enum Ghost implements Critter {
                         direction = Direction.SOUTH;
                     }
                 }
-                else
+                else if (to_follow.y() == pos.y())
                 {
                     if(to_follow.x() > pos.x())
                     {
@@ -173,9 +190,14 @@ public enum Ghost implements Critter {
                         direction = Direction.EAST;
                     }
                 }
+                else
+                {
+
+                }
             }
+            //Debug.out("End of followPath of " + this);
         }
-        Debug.out("End of followPath of " + this);
+
     }
 
 
