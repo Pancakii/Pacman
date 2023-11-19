@@ -68,6 +68,10 @@ public class PacmanController {
 
             }
         }
+        else
+        {
+            newDirection = lastDirection;
+        }
 
     }
 
