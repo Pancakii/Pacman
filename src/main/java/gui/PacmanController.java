@@ -20,6 +20,10 @@ public class PacmanController {
         this.mazeConfig = mazeConfig;
     }
 
+    public static Direction getNewDirection() {
+        return newDirection;
+    }
+
     public void keyPressedHandler(KeyEvent event) {
 
         newDirection = null;
@@ -47,7 +51,7 @@ public class PacmanController {
                     PacMan.INSTANCE.setDirection(newDirection);
             } else {
                 lastDirection =newDirection;
-                Debug.out(lastDirection.toString());
+                //Debug.out(lastDirection.toString());
                 newDirection = null;
             }
         }

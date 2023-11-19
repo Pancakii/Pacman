@@ -53,7 +53,9 @@ public class MazeConfig {
     public int getHeight() {
         return grid.length;
     }
-    
+
+    public Cell[][] getGrid() {return grid;}
+
     public boolean isWall(IntCoordinates pos) {
         return grid[Math.floorMod(pos.y(), getHeight())][Math.floorMod(pos.x(), getWidth())].isWall();
     }

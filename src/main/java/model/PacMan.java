@@ -88,7 +88,7 @@ public final class PacMan implements Critter {
 
     @Override
     public double getSpeed() {
-        return isEnergized() ? 6 : 4;
+        return isEnergized() ? 5 : 4;
     }
 
     @Override
@@ -105,15 +105,6 @@ public final class PacMan implements Critter {
     public void setPos(RealCoordinates pos) {
         this.pos = pos;
     }
-
-
-	// Eating energizer or pellets
-	public double distance(double[] p)
-	{
-		// Distance calculator. Can be changed or not, 
-		// depending on the cell position system.
-		return Math.sqrt(Math.pow( ((p[0] - pos.x()) + (p[1] - pos.y())), 2));
-	}
 
 
 	public void energizedTimerCount(long delta)
