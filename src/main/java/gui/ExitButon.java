@@ -11,6 +11,9 @@ public class ExitButon implements EventHandler<ActionEvent> {
     public void handle(ActionEvent arg0) {
         Platform.exit();
     }
+
+
 }
+
 
 

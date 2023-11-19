@@ -2,22 +2,19 @@ package gui;
 
 
 import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.stage.Stage;
 
-import static gui.Menu.affichageMenu;
+import static gui.MenuDemarage.affichageMenuDemarage;
 
 
-public class App extends Application implements EventHandler<ActionEvent> {
+public class App extends Application {
+    public static Stage menu; //la seule fenetre du jeu
+
     @Override
     public void start(Stage primaryStage) {
-        affichageMenu();
+        affichageMenuDemarage(primaryStage);
 
     }
 
-    @Override
-    public void handle(ActionEvent event) {
 
-    }
 }

@@ -2,7 +2,6 @@ package gui;
 
 import geometry.IntCoordinates;
 import javafx.animation.AnimationTimer;
-import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import model.MazeState;
@@ -12,18 +11,16 @@ import java.util.List;
 
 public class GameView {
     // class parameters
-    private final MazeState maze;
+    public final MazeState maze;
     private final Pane gameRoot; // main node of the game
-
-
-
     private final List<GraphicsUpdater> graphicsUpdaters;
 
+    public List<GraphicsUpdater> getGraphicsUpdaters() {
+        return graphicsUpdaters;
+    }
 
     public void backGame(Stage stage){
-        stage.setTitle("Pacman2.0"); // Ajouter un nom a la page
-        Image icon = new Image("pacman.png");
-        stage.getIcons().add(icon); // Ajouter une icone a la page
+        stage.setTitle("Pacman"); // Ajouter un nom a la page
         stage.setResizable(false); // Ne plus pouvoir aggrandir/retrecir la page
         stage.setFullScreenExitHint ("Press esc for exit");
 
@@ -43,8 +40,6 @@ public class GameView {
         this.gameRoot = root;
 
         // pixels per cell
-        root.setMinWidth(maze.getWidth() * scale);
-        root.setMinHeight(maze.getHeight() * scale);
         root.setStyle("-fx-background-color: #000000");
         var critterFactory = new CritterGraphicsFactory(scale);
         var cellFactory = new CellGraphicsFactory(scale);

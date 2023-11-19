@@ -14,10 +14,10 @@ public class Score {
         Text point = new Text();
 
         point.setText("Score: " + MazeState.score);
-        point.setX(30);
-        point.setY(30); //La ou on place le score
-        point.setFont(Font.font(10)); //La taille de l'affichage
-        point.setFill(Color.YELLOW); //La couleur
+        point.setX(600);
+        point.setY(720); //La ou on place le score
+        point.setFont(Font.font(18)); //La taille de l'affichage
+        point.setFill(Color.WHITE); //La couleur
         return new GraphicsUpdater() {
             @Override
             public void update() {
