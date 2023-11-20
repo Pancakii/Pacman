@@ -19,6 +19,8 @@ public class MazeConfig {
     }
 
     private final Cell[][] grid;
+
+
     private final IntCoordinates pacManPos, blinkyPos, pinkyPos, inkyPos, clydePos;
 
     public IntCoordinates getPacManPos() {
