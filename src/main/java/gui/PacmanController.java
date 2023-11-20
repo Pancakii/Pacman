@@ -7,7 +7,6 @@ import model.PacMan;
 import geometry.RealCoordinates;
 import geometry.IntCoordinates;
 import javafx.scene.input.KeyEvent;
-import misc.Debug ;
 
 public class PacmanController {
     private MazeConfig mazeConfig;
@@ -18,10 +17,6 @@ public class PacmanController {
 
     public PacmanController(MazeConfig mazeConfig) {
         this.mazeConfig = mazeConfig;
-    }
-
-    public static Direction getNewDirection() {
-        return newDirection;
     }
 
     public void keyPressedHandler(KeyEvent event) {
@@ -77,17 +72,17 @@ public class PacmanController {
 
     public static void checknWalk ( MazeConfig mazeConfig)
     {
-        Debug.out(newDirection + ", " + lastDirection);
         if ( newDirection == null)
         {
             RealCoordinates nextPos = PacMan.INSTANCE.getPos().plus(DirectionUtils.getVector(lastDirection));
             nextPos = nextPos.round().toRealCoordinates(1.0);
             IntCoordinates nextCell = nextPos.round();
 
-            Debug.out(mazeConfig.getCell(nextCell).isWall() + ", " + nextCell);
+
             if (!mazeConfig.getCell(nextCell).isWall())
             {
                 PacMan.INSTANCE.setDirection(lastDirection);
+                newDirection = lastDirection;
                 if(PacMan.INSTANCE.getPos().smallDiff(nextPos))
                 {
                     PacMan.INSTANCE.setPos(nextPos);
@@ -96,8 +91,6 @@ public class PacmanController {
                 {
                     PacMan.INSTANCE.setPos(PacMan.INSTANCE.getPos().round().toRealCoordinates(1.0));
                 }
-
-                Debug.out("setDirectionlastDirection " + lastDirection);
             }
         }
     }
