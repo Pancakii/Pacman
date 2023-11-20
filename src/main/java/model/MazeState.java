@@ -5,7 +5,6 @@ import geometry.IntCoordinates;
 import geometry.RealCoordinates;
 import gui.App;
 import gui.GameOver;
-import gui.Jeu;
 
 import java.util.List;
 import java.util.Map;
@@ -127,10 +126,15 @@ public final class MazeState {
             App.menu.setHeight(500);
             App.menu.setWidth(500);
             GameOver.affichageGameOver(App.menu);
-            Jeu.resetJeu();
+            resetGame();
 
         }
         resetCritters();
+    }
+    public void resetGame(){
+        MazeState.lives = 3;
+        MazeState.score = 0;
+        //App.menu.setScene(null);
     }
 
     private void resetCritter(Critter critter) {

@@ -37,11 +37,7 @@ public class Jeu  implements EventHandler<ActionEvent> {
         gameView.backGame(App.menu);
 
     }
-    public static  void resetJeu(){
-        MazeState.lives = 3;
-        MazeState.score = 0;
 
-    }
     @Override
     public void handle(ActionEvent event) {
         try {

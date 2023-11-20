@@ -25,8 +25,8 @@ public class MenuDemarage implements EventHandler<ActionEvent> {
                 App.menu.setMinHeight(500);
                 App.menu.setMinWidth(500);
                 App.menu.setScene(scene);
-                parent.setStyle("-fx-background-color: #000000");
-
+                //Il y a du CSS dans le setStyke, lien de l'image, est ce que ca se repete, la taille et la position
+                parent.setStyle("-fx-background-image: url('background.jpeg'); -fx-background-repeat: no-repeat;-fx-background-size: 500 500;-fx-background-position: center center;");
                 // Ajouter un nom a la page
                 App.menu.setTitle("Menu");
                 // Ajouter une icone a la page`
