@@ -2,7 +2,6 @@ package pathfinding;
 
 import config.Cell;
 import geometry.RealCoordinates;
-import misc.Debug;
 
 import java.util.ArrayList;
 
@@ -58,7 +57,8 @@ public class Node
         neighbors = new ArrayList<>();
         // The function that adds neighbors.
         //NORD
-        if(coordinates.round().x() >= 1) {
+        if(coordinates.round().x() >= 1)
+        {
             if (!tab[coordinates.round().x() - 1][coordinates.round().y()].isWall()) //si neighbor n'est pas un mur
             {
                 Node node = new Node(new RealCoordinates(coordinates.x() - 1, coordinates.y()), this);
@@ -70,7 +70,8 @@ public class Node
             }
         }
         //EST
-        if(coordinates.round().y() <= tab[0].length-2) {
+        if(coordinates.round().y() <= tab[0].length-2)
+        {
             if (!tab[coordinates.round().x()][coordinates.round().y() + 1].isWall()) //si neighbor n'est pas un mur
             {
                 Node node = new Node(new RealCoordinates(coordinates.x(), coordinates.y() + 1), this);
@@ -82,7 +83,8 @@ public class Node
             }
         }
         //SUD
-        if(coordinates.round().x() <= tab.length-2) {
+        if(coordinates.round().x() <= tab.length-2)
+        {
             if (!tab[coordinates.round().x() + 1][coordinates.round().y()].isWall()) //si neighbor n'est pas un mur
             {
                 Node node = new Node(new RealCoordinates(coordinates.x() + 1, coordinates.y()), this);
@@ -94,7 +96,8 @@ public class Node
             }
         }
         //OUEST
-        if(coordinates.round().y() >= 1) {
+        if(coordinates.round().y() >= 1)
+        {
             if (!tab[coordinates.round().x()][coordinates.round().y() - 1].isWall()) //si neighbor n'est pas un mur
             {
                 Node node = new Node(new RealCoordinates(coordinates.x(), coordinates.y() - 1), this);
@@ -132,12 +135,8 @@ public class Node
             {
                 list.remove(n);
                 list.add(to_add);
-                return;
             }
-            else
-            {
-                return;
-            }
+            return;
         }
         list.add(to_add);
     }
@@ -170,13 +169,13 @@ public class Node
 
     public static void printArray(ArrayList<Node> a)
     {
-        //System.out.println();
-        //System.out.print("{");
+        System.out.println();
+        System.out.print("{");
         for (Node n : a)
         {
-            //System.out.print(" (" + n.coordinates.x() + ", " + n.coordinates.y() + ") ");
+            System.out.print(" (" + n.coordinates.x() + ", " + n.coordinates.y() + ") ");
         }
-        //System.out.println("}");
+        System.out.println("}");
     }
 
     public static void printArrayRC(ArrayList<RealCoordinates> a)
@@ -192,10 +191,21 @@ public class Node
 
     public static void printNodeAndNeighbors(Node n)
     {
-        //System.out.println("-------------------------------------");
-        //System.out.print("Node  (" + n.coordinates.x() + ", " + n.coordinates.y() + "), f = " + n.f);
+        System.out.println("-------------------------------------");
+        System.out.print("Node  (" + n.coordinates.x() + ", " + n.coordinates.y() + "), f = " + n.f);
         printArray(n.neighbors);
-        //System.out.println("-------------------------------------");
+        System.out.println("-------------------------------------");
+    }
+
+    public static void deleteWalls(Node node, Cell[][] grid)
+    {
+        for (Node n: node.neighbors)
+        {
+            if (grid[n.coordinates.round().x()][n.coordinates.round().y()].isWall())
+            {
+                node.neighbors.remove(n);
+            }
+        }
     }
 
 
@@ -204,6 +214,8 @@ public class Node
     {
         e = e.round().toRealCoordinates(1.0);
         // Setting the variables that will be used later
+        s = s.round().toRealCoordinates(1.0);
+        e = e.round().toRealCoordinates(1.0);
         Node start = new Node(s, null);
         Node end = new Node(e, null);
         ArrayList<Node> closedList = new ArrayList<>();
@@ -216,10 +228,12 @@ public class Node
 
         while(!openList.isEmpty())
         {
-            //System.out.println();
-            //System.out.println();
-            //System.out.println("===================================================");
-            //System.out.println("Start of big loop");
+            /*
+            System.out.println();
+            System.out.println();
+            System.out.println("===================================================");
+            System.out.println("Start of big loop");
+            */
             Node current = Node.findLowestCost(openList);
             openList.remove(current);
             if(Node.same(current, end))
@@ -228,14 +242,15 @@ public class Node
             }
 
             current.getNeighbors(grid);
+            Node.deleteWalls(current, grid);
             current.calculateTotal(e);
             addListDistinctive(closedList, current);
 
-            printNodeAndNeighbors(current);
+            //printNodeAndNeighbors(current);
             for(Node neighbor : current.neighbors)
             {
                 //System.out.println("In neighbor loop");
-                printNodeAndNeighbors(neighbor);
+                //printNodeAndNeighbors(neighbor);
                 neighbor.calculateTotal(e);
                 boolean flag = false;
                 for(Node c : closedList)
@@ -251,7 +266,7 @@ public class Node
                 {
                     neighbor.getNeighbors(grid);
                     //System.out.println("In neighbor flag");
-                    printNodeAndNeighbors(neighbor);
+                    //printNodeAndNeighbors(neighbor);
                     // if in open and new path shorter
                     Node checker = Node.sameIn(openList, neighbor);
                     if((checker != null && neighbor.f < checker.f))
@@ -271,7 +286,6 @@ public class Node
                         }
                         neighbor.calculateTotal(e);
                         openList.add(neighbor);
-
                     }
                 }
             }
@@ -289,7 +303,7 @@ public class Node
             res.add(0, node.coordinates);
             node = node.parent;
         }
-        printArrayRC(res);
+        //printArrayRC(res);
         return res;
     }
 }

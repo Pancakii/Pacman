@@ -19,10 +19,6 @@ public class PacmanController {
         this.mazeConfig = mazeConfig;
     }
 
-    public static Direction getNewDirection() {
-        return newDirection;
-    }
-
     public void keyPressedHandler(KeyEvent event) {
         newDirection = null;
 
@@ -81,10 +77,11 @@ public class PacmanController {
             nextPos = nextPos.round().toRealCoordinates(1.0);
             IntCoordinates nextCell = nextPos.round();
 
-            Debug.out(mazeConfig.getCell(nextCell).isWall() + ", " + nextCell);
+
             if (!mazeConfig.getCell(nextCell).isWall())
             {
                 PacMan.INSTANCE.setDirection(lastDirection);
+                newDirection = lastDirection;
                 if(PacMan.INSTANCE.getPos().smallDiff(nextPos))
                 {
                     PacMan.INSTANCE.setPos(nextPos);
@@ -93,8 +90,6 @@ public class PacmanController {
                 {
                     PacMan.INSTANCE.setPos(PacMan.INSTANCE.getPos().round().toRealCoordinates(1.0));
                 }
-
-                Debug.out("setDirectionlastDirection " + lastDirection);
             }
         }
     }

@@ -85,7 +85,7 @@ public enum Ghost implements Critter {
                 {
                     // Depending on the direction pacman is going and if there's a wall at that position,
                     // Choose a path
-                    if (PacmanController.getNewDirection() == DIR)
+                    if (PacMan.INSTANCE.getDirection() == DIR)
                     {
                         RealCoordinates nextPos = PacMan.INSTANCE.getPos().plus(DirectionUtils.getVector(DIR));
                         IntCoordinates nextCell = nextPos.round();
@@ -100,7 +100,7 @@ public enum Ghost implements Critter {
                         break;
                     }
                 }
-                if (PacmanController.getNewDirection() == Direction.NONE)
+                if (PacMan.INSTANCE.getDirection() == Direction.NONE)
                 {
                     path = Node.getPath(this.pos, pac_pos, grid);
                 }
