@@ -197,6 +197,10 @@ public enum Ghost implements Critter {
             }
             //Debug.out("End of followPath of " + this);
         }
+        else
+        {
+
+        }
 
     }
 
