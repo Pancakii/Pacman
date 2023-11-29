@@ -16,6 +16,8 @@ public final class PacMan implements Critter {
 	private final double energized_timer_max = 10;
 	private double energized_timer;
 
+	private static int countDot  ;
+
 
 
 	// We should be able to change the position 
@@ -41,11 +43,13 @@ public final class PacMan implements Critter {
 			if (grid.getCell(pacPos).aDot())// if the unentered cell contains a dot
 			{
 				MazeState.addScore(1);// add 1 to the score
+				countDot++;
 				grid_state[y][x] = true;// set the cell state "entered"
 			}
 			else if (grid.getCell(pacPos).aEnergizer())// if the unentered cell contains an energizer
 			{
 				MazeState.addScore(10);// add 10 to the score
+				countDot++;
 				INSTANCE.energized_timer = INSTANCE.energized_timer_max;// set the energizer timer
 				INSTANCE.setEnergized(true);// set energized true
 				grid_state[y][x] = true;// set the cell state "entered"
@@ -79,6 +83,7 @@ public final class PacMan implements Critter {
 		pos = new RealCoordinates(x, y);
 		energized = e;
 		energized_timer = 0;
+		countDot = 0 ;
 	}
 
     @Override
@@ -137,6 +142,19 @@ public final class PacMan implements Critter {
 		}
 	}
 
+	public static void eatBonus(){
+		var pacPos = PacMan.INSTANCE.getPos().round();// get pacman position
+		int x = pacPos.x(); // get x axis
+		int y = pacPos.y(); // get y axis
+        if ( x == 10 && y == 11 && Bonus.canHaveBonus()){
+			MazeState.addScore(Bonus.pointBonus());
+			Bonus.setHaveBonus(false);
+			setCountDot(0);
+		}
+	}
+
+
+
 
     public boolean isEnergized() {return energized;}
 
@@ -145,7 +163,15 @@ public final class PacMan implements Critter {
         this.energized = energized;
     }
 
-	public int getLevel() {
+	public static int getLevel() {
 		return 1;
+	}
+
+	public static int getCountDot() {
+		return countDot;
+	}
+
+	public static void setCountDot(int countDot) {
+		PacMan.countDot = countDot;
 	}
 }

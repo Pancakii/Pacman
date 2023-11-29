@@ -64,6 +64,7 @@ public class GameView {
             addGraphics(afficheVie.remainingLife(root));
             addGraphics(BonusFactory.afficheBonus());
 
+
     }
 
     public void animate() {

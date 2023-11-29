@@ -3,6 +3,8 @@ package gui;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import misc.Debug;
+import model.Bonus;
 import model.PacMan;
 
 public final class BonusGraphics {
@@ -29,12 +31,12 @@ public final class BonusGraphics {
         this.galaxian = new ImageView(new Image("BonusGalaxian.png" , scale*size , scale*size , true , true )) ;
         this.cloche = new ImageView(new Image("BonusCloche.png" , scale*size , scale*size , true , true )) ;
         this.cle = new ImageView(new Image("BonusCle.png" , scale*size , scale*size , true , true )) ;
-        this.instance = fraise ;
+        this.instance = null ;
     }
 
     public ImageView updateImageBonus (){
-        if ( PacMan.INSTANCE.getLevel()<=13) {
-            switch (PacMan.INSTANCE.getLevel()) {
+        if ( PacMan.getLevel()<=13) {
+            switch (PacMan.getLevel()) {
                 case 1 -> {
                     this.instance = this.cerise;
                     return this.cerise;
@@ -72,17 +74,20 @@ public final class BonusGraphics {
         return this.instance ;
     }
 
-    public ImageView getInstance (){
-        return this.instance ;
-    }
-
     public GraphicsUpdater afficheBonus (){
-        var image = this.instance ;
+        var image = updateImageBonus() ;
         return new GraphicsUpdater() {
             @Override
             public void update() {
-                image.setTranslateX((10+(1 - size) / 2) * scale) ;
-                image.setTranslateY((11+(1 - size) / 2) * scale );
+
+                if ( Bonus.appartionFruit()  ) {
+                    image.setTranslateX((10 + (1 - size) / 2) * scale);
+                    image.setTranslateY((11 + (1 - size) / 2) * scale);
+
+                } else {
+                    image.setTranslateX((-3 + (1 - size) / 2) * scale);
+                    image.setTranslateY((-3 + (1 - size) / 2) * scale);
+                }
             }
 
             @Override

@@ -6,6 +6,7 @@ import config.MazeConfig;
 import geometry.IntCoordinates;
 import geometry.RealCoordinates;
 import gui.GameOver;
+import misc.Debug;
 
 import java.util.List;
 import java.util.Map;
@@ -56,6 +57,7 @@ public final class MazeState {
     public void update(long deltaTns) {
     	this.Neighbours(deltaTns);
         pacmanUpdate(deltaTns);
+        bonusUpdate(deltaTns);
     }
 
 
@@ -68,6 +70,10 @@ public final class MazeState {
         eatGhosts();
         PacMan.INSTANCE.energizedTimerCount(deltaTns);
         PacmanController.checknWalk(this.config);
+    }
+    private void bonusUpdate(long deltaTns){
+        PacMan.eatBonus();
+        Bonus.INSTANCE.bonusTimer(deltaTns);
     }
 
     /*

@@ -166,7 +166,7 @@ public class MazeConfig {
                 new IntCoordinates(9, 9), // blinky
                 new IntCoordinates(10, 9), // pinke
                 new IntCoordinates(11, 9), // inky
-                new IntCoordinates(10, 10)  // clyde
+                new IntCoordinates(10, 9)  // clyde
         ) ;
     }
 
