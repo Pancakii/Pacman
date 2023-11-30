@@ -3,7 +3,6 @@ package model;
 import config.MazeConfig;
 import geometry.IntCoordinates;
 import geometry.RealCoordinates;
-import gui.App;
 import gui.GameOver;
 
 import java.util.List;
@@ -123,18 +122,17 @@ public final class MazeState {
     private void playerLost() {
         lives--;
         if(MazeState.lives == 0){
-            App.menu.setHeight(500);
-            App.menu.setWidth(500);
-            GameOver.affichageGameOver(App.menu);
+            GameOver.affichageGameOver();
             resetGame();
-
         }
         resetCritters();
     }
     public void resetGame(){
         MazeState.lives = 3;
         MazeState.score = 0;
-        //App.menu.setScene(null);
+        resetGridState();
+        resetCritters();
+
     }
 
     private void resetCritter(Critter critter) {
@@ -144,6 +142,14 @@ public final class MazeState {
 
     private void resetCritters() {
         for (var critter: critters) resetCritter(critter);
+    }
+
+    private void resetGridState(){
+        for(int i = 0; i< gridState.length;i++){
+            for(int j = 0; j< gridState.length;j++){
+                gridState[i][j] = false;
+            }
+        }
     }
 
     public MazeConfig getConfig() {

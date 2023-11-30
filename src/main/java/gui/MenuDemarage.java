@@ -4,27 +4,24 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-import javafx.stage.Stage;
 
 public class MenuDemarage implements EventHandler<ActionEvent> {
 
         private static Jeu jeu = new Jeu();
+        private static VBox parent = new VBox();
+        private static Scene scene;
 
-        public static void affichageMenuDemarage(Stage m)  {
-                App.menu = m;
-                //Initialisation du menu
-                VBox parent = new VBox();
-                Label lab = new Label();
-                Scene scene = new Scene(lab);
-                App.menu.setMinHeight(500);
-                App.menu.setMinWidth(500);
-                App.menu.setScene(scene);
+        public static void affichageMenuDemarage()  {
+
+                scene = new Scene(parent);
+                App.menu.setHeight(500);
+                App.menu.setWidth(500);
+
                 //Il y a du CSS dans le setStyke, lien de l'image, est ce que ca se repete, la taille et la position
                 parent.setStyle("-fx-background-image: url('background.jpeg'); -fx-background-repeat: no-repeat;-fx-background-size: 500 500;-fx-background-position: center center;");
                 // Ajouter un nom a la page
@@ -69,7 +66,7 @@ public class MenuDemarage implements EventHandler<ActionEvent> {
                 exitbouton.setOnAction(new ExitButon());
                 parent.getChildren().add(exitbouton);
 
-                App.menu.setScene(new Scene(parent));
+                App.menu.setScene(scene);
                 App.menu.show();
 
         }
@@ -77,6 +74,6 @@ public class MenuDemarage implements EventHandler<ActionEvent> {
 
         @Override
         public void handle(ActionEvent event) {
-                affichageMenuDemarage(App.menu);
+                affichageMenuDemarage();
         }
 }

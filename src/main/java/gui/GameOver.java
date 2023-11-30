@@ -2,31 +2,26 @@ package gui;
 
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-import javafx.stage.Stage;
 import model.MazeState;
 
 public class GameOver  {
+        private static VBox parent = new VBox();
+        private static Scene scene;
 
-        public static void affichageGameOver(Stage m){
-                App.menu = m;
-                //Initialisation du nouvel ecran
-                VBox parent = new VBox();
-                Label lab = new Label();
-                Scene scene = new Scene(lab);
+        public static void affichageGameOver(){
+                scene = new Scene(parent);
                 App.menu.setHeight(500);
                 App.menu.setWidth(500);
-                App.menu.setScene(scene);
                 //Il y a du CSS dans le setStyke, lien de l'image, est ce que ca se repete, la taille et la position
                 parent.setStyle("-fx-background-image: url('GOB.jpeg'); -fx-background-repeat: no-repeat;-fx-background-size: 500 500;-fx-background-position: center center;");
                 // Ajouter un nom a la page
                 App.menu.setTitle("GameOver");
                 // Ne plus pouvoir aggrandir/retrecir la page
-                App.menu.setResizable(false);
+
 
 
                 //affiche le score apres le game over
@@ -71,7 +66,7 @@ public class GameOver  {
                 exitbouton.setOnAction(new ExitButon());
                 parent.getChildren().add(exitbouton);
 
-                App.menu.setScene(new Scene(parent));
+                App.menu.setScene(scene);
                 App.menu.show();
 
     }

@@ -11,30 +11,54 @@ import model.MazeState;
 public class Jeu  implements EventHandler<ActionEvent> {
 
     private static GameView gameView;
-    private static Pane root;
+    private static Pane root = new Pane();
     private static PacmanController pacmanController;
-    private static Scene gameScene;
-    private static MazeState maze;
-    private ElementObservableListDecorator<Object> graphicsUpdaters;
 
-    public static GameView getGameView() {
-        return gameView;
+    static {
+        try {
+            pacmanController = new PacmanController(MazeConfig.make());
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
+    ;
+    private static Scene gameScene = new Scene(root);
+    private static MazeState maze;
+
+    static {
+        try {
+            maze = new MazeState(MazeConfig.make());
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    ;
+    private ElementObservableListDecorator<Object> graphicsUpdaters;
+
+    private static boolean lancer = false;
+
+
+
+
     public static void Game() throws Exception {
-        root = new Pane();
-        gameScene = new Scene(root);
-        pacmanController = new PacmanController(MazeConfig.make());
+        App.menu.setTitle("Pacman"); // Ajouter un nom a la page
+
         gameScene.setOnKeyPressed(pacmanController::keyPressedHandler);
         gameScene.setOnKeyReleased(pacmanController::keyReleasedHandler);
-        maze = new MazeState(MazeConfig.make());
         gameView = new GameView(maze, root, 35.0);
         App.menu.setWidth(maze.getWidth() * 35.0);
         App.menu.setHeight(maze.getHeight() * 36.0);
         App.menu.setScene(gameScene);
+
+        if(!lancer){
+            gameView.animate();
+
+        }
+
         App.menu.show();
-        gameView.animate();
-        gameView.backGame(App.menu);
+        lancer = true;
 
     }
 

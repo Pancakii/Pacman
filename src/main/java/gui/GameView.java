@@ -3,7 +3,6 @@ package gui;
 import geometry.IntCoordinates;
 import javafx.animation.AnimationTimer;
 import javafx.scene.layout.Pane;
-import javafx.stage.Stage;
 import model.MazeState;
 
 import java.util.ArrayList;
@@ -19,12 +18,7 @@ public class GameView {
         return graphicsUpdaters;
     }
 
-    public void backGame(Stage stage){
-        stage.setTitle("Pacman"); // Ajouter un nom a la page
-        stage.setResizable(false); // Ne plus pouvoir aggrandir/retrecir la page
-        stage.setFullScreenExitHint ("Press esc for exit");
 
-    }
     private void addGraphics(GraphicsUpdater updater) {
         gameRoot.getChildren().add(updater.getNode());
         graphicsUpdaters.add(updater);

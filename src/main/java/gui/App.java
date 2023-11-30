@@ -8,11 +8,14 @@ import static gui.MenuDemarage.affichageMenuDemarage;
 
 
 public class App extends Application {
-    public static Stage menu; //la seule fenetre du jeu
+    public static Stage menu = new Stage(); //la seule fenetre du jeu
 
     @Override
     public void start(Stage primaryStage) {
-        affichageMenuDemarage(primaryStage);
+        menu.setResizable(false); // Ne plus pouvoir aggrandir/retrecir la page
+        menu.setFullScreenExitHint ("Press esc for exit");
+
+        affichageMenuDemarage();
 
     }
 
