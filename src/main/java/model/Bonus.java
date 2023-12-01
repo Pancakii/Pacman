@@ -28,7 +28,6 @@ public class Bonus {
          bonusTimer = bonusTime;
     }
 
-
     // regarde si le fruit peut apparaitre dans la map
     public static boolean appartionFruit(){
         Debug.out(String.valueOf(PacMan.getCountDot()%70==0));
