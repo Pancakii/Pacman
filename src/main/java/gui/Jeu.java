@@ -1,28 +1,61 @@
 package gui;
 
+import com.sun.javafx.collections.ElementObservableListDecorator;
 import config.MazeConfig;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
-import javafx.stage.Stage;
 import model.MazeState;
 
 public class Jeu  implements EventHandler<ActionEvent> {
 
-    public void Game() throws Exception {
-        Stage primaryStage = new Stage();
-        var root = new Pane();
-        var gameScene = new Scene(root);
-        var pacmanController = new PacmanController(MazeConfig.make());
+    private static Pane root = new Pane();
+    private static PacmanController pacmanController;
+
+    static {
+        try {
+            pacmanController = new PacmanController(MazeConfig.make());
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    ;
+    private static Scene gameScene = new Scene(root);
+    private static MazeState maze;
+
+    static {
+        try {
+            maze = new MazeState(MazeConfig.make());
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    ;
+    private ElementObservableListDecorator<Object> graphicsUpdaters;
+
+    private static boolean lancer = false;
+
+    private static GameView gameView = new GameView(maze, root, 35.0);;
+
+    public static void Game() throws Exception {
+        App.menu.setTitle("Pacman"); // Ajouter un nom a la page
+
         gameScene.setOnKeyPressed(pacmanController::keyPressedHandler);
         gameScene.setOnKeyReleased(pacmanController::keyReleasedHandler);
-        var maze = new MazeState(MazeConfig.make());
-        var gameView = new GameView(maze, root, 35.0);
-        primaryStage.setScene(gameScene);
-        primaryStage.show();
-        gameView.animate();
-        gameView.backGame(primaryStage);
+        App.menu.setWidth(maze.getWidth() * 35.0);
+        App.menu.setHeight(maze.getHeight() * 36.0);
+        App.menu.setScene(gameScene);
+
+        if(!lancer){
+            gameView.animate();
+
+        }
+
+        App.menu.show();
+        lancer = true;
 
     }
 
@@ -31,7 +64,7 @@ public class Jeu  implements EventHandler<ActionEvent> {
         try {
             Game();
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
     }
 }

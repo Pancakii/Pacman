@@ -21,18 +21,20 @@ public final class CritterGraphicsFactory {
     private final ImageView clyde ;
     private final ImageView inky ;
     private final ImageView pinky ;
+    private final ImageView ghostWhenPacmanEnergized ;
     private ImageView instance ;
 
     public CritterGraphicsFactory(double scale) {
         this.scale = scale;
-        this.pacmanUp = new ImageView( new Image("PacmanUp.png",size*scale , size*scale , true ,true ) );
-        this.pacmanDown = new ImageView( new Image("PacmanDown.png",size*scale ,size*scale ,true,true ) ) ;
-        this.pacmanRight = new ImageView( new Image("PacmanRight.png",size*scale ,size*scale ,true,true ) ) ;
-        this.pacmanLeft = new ImageView( new Image("PacmanLeft.png",size*scale ,size*scale ,true,true ) ) ;
-        this.blinky = new ImageView( new Image ("ghost_blinky.png",size*scale,size*scale,true,true));
-        this.clyde = new ImageView( new Image ("ghost_clyde.png",size*scale,size*scale,true,true));
-        this.inky = new ImageView( new Image ("ghost_inky.png",size*scale,size*scale,true,true));
-        this.pinky =new ImageView( new Image ("ghost_pinky.png",size*scale,size*scale,true,true));
+        this.pacmanUp = new ImageView( new Image("PacmanUp.gif",size*scale , size*scale , true ,true ) );
+        this.pacmanDown = new ImageView( new Image("PacmanDown.gif",size*scale ,size*scale ,true,true ) ) ;
+        this.pacmanRight = new ImageView( new Image("PacmanRight.gif",size*scale ,size*scale ,true,true ) ) ;
+        this.pacmanLeft = new ImageView( new Image("PacmanLeft.gif",size*scale ,size*scale ,true,true ) ) ;
+        this.blinky = new ImageView( new Image ("Blinky.gif",size*scale,size*scale,true,true));
+        this.clyde = new ImageView( new Image ("Clyde.gif",size*scale,size*scale,true,true));
+        this.inky = new ImageView( new Image ("Inky.gif",size*scale,size*scale,true,true));
+        this.pinky =new ImageView( new Image ("Pinky.gif",size*scale,size*scale,true,true));
+        this.ghostWhenPacmanEnergized = new ImageView( new Image("GhostEnergized.gif",size*scale , size*scale , true ,true ) );
         this.instance = pacmanRight ;
     }
 
@@ -59,6 +61,39 @@ public final class CritterGraphicsFactory {
         return this.instance ;
     }
 
+    public ImageView updateImageGhost(Ghost ghost){
+        switch (ghost) {
+            case BLINKY -> {
+                if (PacMan.INSTANCE.getEnergized_timer() != 0) {
+                    return ghostWhenPacmanEnergized;
+                } else {
+                    return blinky;
+                }
+            }
+            case CLYDE -> {
+                if (PacMan.INSTANCE.getEnergized_timer() != 0) {
+                    return ghostWhenPacmanEnergized;
+                } else {
+                    return clyde;
+                }
+            }
+            case INKY -> {
+                if (PacMan.INSTANCE.getEnergized_timer() != 0) {
+                    return ghostWhenPacmanEnergized;
+                } else {
+                    return inky ;
+                }
+            }
+            case PINKY -> {
+                if (PacMan.INSTANCE.getEnergized_timer() != 0) {
+                    return ghostWhenPacmanEnergized;
+                } else {
+                    return pinky;
+                }
+            }
+        }
+        return ghostWhenPacmanEnergized ;
+    }
 
     public GraphicsUpdater makeGraphics(Critter critter) {
         var size = 0.7;
@@ -74,6 +109,8 @@ public final class CritterGraphicsFactory {
             public void update() {
                 if ( critter instanceof PacMan) {
                     image.setImage(updateImagePacman().getImage());
+                } else {
+                    image.setImage(updateImageGhost((Ghost) critter).getImage());
                 }
                 image.setTranslateX((critter.getPos().x() + (1 - size) / 2) * scale);
                 image.setTranslateY((critter.getPos().y() + (1 - size) / 2) * scale);
@@ -88,3 +125,12 @@ public final class CritterGraphicsFactory {
         };
     }
 }
+
+/*
+                switch ((Ghost) critter) {
+                    case BLINKY -> blinky ;
+                    case CLYDE -> clyde ;
+                    case INKY -> inky ;
+                    case PINKY -> pinky ;
+                }
+ */
