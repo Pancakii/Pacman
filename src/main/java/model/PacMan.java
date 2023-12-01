@@ -25,7 +25,7 @@ public final class PacMan implements Critter {
 	{
 		this(0.0, 0.0, false);
     }
-    
+
     public static final PacMan INSTANCE = new PacMan();
 
 
@@ -120,7 +120,16 @@ public final class PacMan implements Critter {
 	{
 		// Call this function for a cell that contains a pellet(energizer or normal)
 
-	
+
+	// Eating energizer or pellets
+	public double distance(double[] p)
+	{
+		// Distance calculator. Can be changed or not, 
+		// depending on the cell position system.
+		return Math.sqrt(Math.pow( ((p[0] - pos.x()) + (p[1] - pos.y())), 2));
+	}
+
+
 	public void energizedTimerCount(long delta)
 	{
 		// This function decreases the timer of the energy buff.

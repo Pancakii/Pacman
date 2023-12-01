@@ -7,7 +7,7 @@ import model.PacMan;
 import geometry.RealCoordinates;
 import geometry.IntCoordinates;
 import javafx.scene.input.KeyEvent;
-import misc.Debug ;
+import misc.Debug;
 
 public class PacmanController {
     private MazeConfig mazeConfig;

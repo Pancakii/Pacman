@@ -1,5 +1,6 @@
 package config;
 
+import javafx.scene.text.Text;
 import geometry.IntCoordinates;
 import java.io.* ;
 import static config.Cell.*;
