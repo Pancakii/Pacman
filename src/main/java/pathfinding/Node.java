@@ -166,42 +166,8 @@ public class Node
         return false;
     }
 
-
-    public static void printArray(ArrayList<Node> a)
-    {
-        System.out.println();
-        System.out.print("{");
-        for (Node n : a)
-        {
-            System.out.print(" (" + n.coordinates.x() + ", " + n.coordinates.y() + ") ");
-        }
-        System.out.println("}");
-    }
-
-    public static void printArrayRC(ArrayList<RealCoordinates> a)
-    {
-        System.out.println();
-        System.out.print("{");
-        for (RealCoordinates n : a)
-        {
-            System.out.print(" (" + n.x() + ", " + n.y() + ") ");
-        }
-        System.out.println("}");
-    }
-
-    public static void printNodeAndNeighbors(Node n)
-    {
-        System.out.println("-------------------------------------");
-        System.out.print("Node  (" + n.coordinates.x() + ", " + n.coordinates.y() + "), f = " + n.f);
-        printArray(n.neighbors);
-        System.out.println("-------------------------------------");
-    }
-
-
-
     public static Node aStar(RealCoordinates s, RealCoordinates e, Cell[][] grid)
     {
-        e = e.round().toRealCoordinates(1.0);
         // Setting the variables that will be used later
         s = s.round().toRealCoordinates(1.0);
         e = e.round().toRealCoordinates(1.0);
@@ -217,12 +183,6 @@ public class Node
 
         while(!openList.isEmpty())
         {
-            /*
-            System.out.println();
-            System.out.println();
-            System.out.println("===================================================");
-            System.out.println("Start of big loop");
-            */
             Node current = Node.findLowestCost(openList);
             openList.remove(current);
             if(Node.same(current, end))
@@ -234,11 +194,8 @@ public class Node
             current.calculateTotal(e);
             addListDistinctive(closedList, current);
 
-            //printNodeAndNeighbors(current);
             for(Node neighbor : current.neighbors)
             {
-                //System.out.println("In neighbor loop");
-                //printNodeAndNeighbors(neighbor);
                 neighbor.calculateTotal(e);
                 boolean flag = false;
                 for(Node c : closedList)
@@ -249,17 +206,13 @@ public class Node
                     }
                 }
 
-                //System.out.println("flag = " + flag);
                 if(!flag)
                 {
                     neighbor.getNeighbors(grid);
-                    //System.out.println("In neighbor flag");
-                    //printNodeAndNeighbors(neighbor);
                     // if in open and new path shorter
                     Node checker = Node.sameIn(openList, neighbor);
                     if((checker != null && neighbor.f < checker.f))
                     {
-                        //System.out.println("First if");
                         checker.f = neighbor.f;
                         checker.parent = current;
                     }
@@ -268,7 +221,6 @@ public class Node
                         //System.out.println("Second if");
                         if(checker != null && neighbor.f < checker.f)
                         {
-                            //System.out.println("Second.2 if");
                             checker.f = neighbor.f;
                             checker.parent = current;
                         }
@@ -291,7 +243,6 @@ public class Node
             res.add(0, node.coordinates);
             node = node.parent;
         }
-        //printArrayRC(res);
         return res;
     }
 }
