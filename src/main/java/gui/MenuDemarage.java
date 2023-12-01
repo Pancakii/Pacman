@@ -14,11 +14,10 @@ public class MenuDemarage implements EventHandler<ActionEvent> {
 
         private static Jeu jeu = new Jeu();
         private static VBox parent = new VBox();
-        private static Scene scene;
+        private static Scene scene = new Scene(parent);
+        private static boolean lancer = false;
 
         public static void affichageMenuDemarage()  {
-
-                scene = new Scene(parent);
                 App.menu.setHeight(500);
                 App.menu.setWidth(500);
 
@@ -32,43 +31,47 @@ public class MenuDemarage implements EventHandler<ActionEvent> {
                 // Ne plus pouvoir aggrandir/retrecir la page
                 App.menu.setResizable(false);
 
+                if(!lancer){
+                        //affichage du mesage Menu
+                        Text go = new Text();
+                        go.setText("Menu");
+                        go.setTranslateX(190);
+                        go.setTranslateY(40);
+                        go.setFont(Font.font(50));
+                        go.setFill(Color.YELLOW);
+                        parent.getChildren().add(go);
 
-                //affichage du mesage Menu
-                Text go = new Text();
-                go.setText("Menu");
-                go.setTranslateX(190);
-                go.setTranslateY(40);
-                go.setFont(Font.font(50));
-                go.setFill(Color.YELLOW);
-                parent.getChildren().add(go);
 
-                //bouton pour jouer
-                Button bouton = new Button(" Play "); //Le nom du bouton
-                bouton.setTranslateX(210);//Les coordonnées du bouton
-                bouton.setTranslateY(150);
-                bouton.setFont(Font.font(20));
-                bouton.setOnAction(jeu);
-                parent.getChildren().add(bouton);
+                        //bouton pour jouer
+                        Button bouton = new Button(" Play "); //Le nom du bouton
+                        bouton.setTranslateX(210);//Les coordonnées du bouton
+                        bouton.setTranslateY(150);
+                        bouton.setFont(Font.font(20));
+                        bouton.setOnAction(jeu);
+                        parent.getChildren().add(bouton);
 
-                //bouton pour les modes
-                Button menubouton = new Button("Mode");
-                menubouton.setTranslateX(210);
-                menubouton.setTranslateY(170);
-                menubouton.setFont(Font.font(20));
-                //App.mebouton.setOnAction();
-                parent.getChildren().add(menubouton);
+                        //bouton pour les modes
+                        Button menubouton = new Button("Mode");
+                        menubouton.setTranslateX(210);
+                        menubouton.setTranslateY(170);
+                        menubouton.setFont(Font.font(20));
+                        //App.mebouton.setOnAction();
+                        parent.getChildren().add(menubouton);
 
-                //bouton pour quitter tout lle programme
-                Button exitbouton = new Button(" Exit  ");
-                exitbouton.setTranslateX(210);
-                exitbouton.setTranslateY(190);
-                exitbouton.setFont(Font.font(20));
-                exitbouton.setOnAction(new ExitButon());
-                parent.getChildren().add(exitbouton);
+                        //bouton pour quitter tout lle programme
+                        Button exitbouton = new Button(" Exit  ");
+                        exitbouton.setTranslateX(210);
+                        exitbouton.setTranslateY(190);
+                        exitbouton.setFont(Font.font(20));
+                        exitbouton.setOnAction(new ExitButon());
+                        parent.getChildren().add(exitbouton);
+                }
+
+
 
                 App.menu.setScene(scene);
                 App.menu.show();
-
+                lancer = true;
         }
 
 

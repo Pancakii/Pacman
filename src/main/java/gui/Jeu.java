@@ -10,7 +10,6 @@ import model.MazeState;
 
 public class Jeu  implements EventHandler<ActionEvent> {
 
-    private static GameView gameView;
     private static Pane root = new Pane();
     private static PacmanController pacmanController;
 
@@ -39,15 +38,13 @@ public class Jeu  implements EventHandler<ActionEvent> {
 
     private static boolean lancer = false;
 
-
-
+    private static GameView gameView = new GameView(maze, root, 35.0);;
 
     public static void Game() throws Exception {
         App.menu.setTitle("Pacman"); // Ajouter un nom a la page
 
         gameScene.setOnKeyPressed(pacmanController::keyPressedHandler);
         gameScene.setOnKeyReleased(pacmanController::keyReleasedHandler);
-        gameView = new GameView(maze, root, 35.0);
         App.menu.setWidth(maze.getWidth() * 35.0);
         App.menu.setHeight(maze.getHeight() * 36.0);
         App.menu.setScene(gameScene);
