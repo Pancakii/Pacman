@@ -3,6 +3,8 @@ package gui;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import misc.Debug;
+import model.Bonus;
 import model.PacMan;
 
 public final class BonusGraphics {
@@ -16,7 +18,10 @@ public final class BonusGraphics {
     private final ImageView galaxian ;
     private final ImageView cloche ;
     private final ImageView cle ;
-    private ImageView instance ;
+    private ImageView instance  ;
+
+    private final double x  ;
+    private final double y ;
 
 
     public BonusGraphics(double scale ){
@@ -30,11 +35,15 @@ public final class BonusGraphics {
         this.cloche = new ImageView(new Image("BonusCloche.png" , scale*size , scale*size , true , true )) ;
         this.cle = new ImageView(new Image("BonusCle.png" , scale*size , scale*size , true , true )) ;
         this.instance = null ;
+        this.x = (10 + (1 - size) / 2) * scale ;
+        this.y = (11 + (1 - size) / 2) * scale ;
+
     }
 
+    // retourne une image en fonction du niveau du jeu
     public ImageView updateImageBonus (){
-        if ( PacMan.INSTANCE.getLevel()<=13) {
-            switch (PacMan.INSTANCE.getLevel()) {
+        if ( PacMan.getLevel()<=13) {
+            switch (PacMan.getLevel()) {
                 case 1 -> {
                     this.instance = this.cerise;
                     return this.cerise;
@@ -72,17 +81,15 @@ public final class BonusGraphics {
         return this.instance ;
     }
 
-    public ImageView getInstance (){
-        return this.instance ;
-    }
 
     public GraphicsUpdater afficheBonus (){
-        var image = this.instance ;
+        var image = updateImageBonus() ;
+        image.setTranslateX(x);
+        image.setTranslateY(y);
         return new GraphicsUpdater() {
             @Override
             public void update() {
-                image.setTranslateX((12+(1 - size) / 2) * scale) ;
-                image.setTranslateY((12+(1 - size) / 2) * scale );
+                image.setVisible(Bonus.appartionFruit());
             }
 
             @Override
@@ -91,8 +98,4 @@ public final class BonusGraphics {
             }
         };
     }
-
-
-
-
 }
