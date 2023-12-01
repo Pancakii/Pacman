@@ -1,12 +1,11 @@
 package config;
 
 import javafx.scene.text.Text;
+import geometry.RealCoordinates;
 import geometry.IntCoordinates;
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
-
 import static config.Cell.Cellule;
 
 public class MazeConfig {
@@ -52,6 +51,11 @@ public class MazeConfig {
 
     public int getHeight() {
         return grid.length;
+    }
+    
+    public boolean isWall(RealCoordinates position) {
+    	IntCoordinates pos = position.round();
+        return grid[Math.floorMod(pos.y(), getHeight())][Math.floorMod(pos.x(), getWidth())].isWall();
     }
     
     public boolean isWall(IntCoordinates pos) {

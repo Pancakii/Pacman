@@ -6,9 +6,9 @@ import config.MazeConfig;
 import geometry.IntCoordinates;
 import geometry.RealCoordinates;
 import gui.GameOver;
-
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import static model.Ghost.*;
 
@@ -20,7 +20,6 @@ public final class MazeState {
     private final List<Critter> critters;
     public static int score;
     public static int lives = 3;
-
     private final Map<Critter, RealCoordinates> initialPos;
 
 
@@ -52,12 +51,10 @@ public final class MazeState {
         return height;
     }
 
-
     public void update(long deltaTns) {
     	this.Neighbours(deltaTns);
         pacmanUpdate(deltaTns);
     }
-
 
     /*
     Uses Pacman functions to update its state
@@ -93,34 +90,45 @@ public final class MazeState {
             }
         }
     }
-
+    
     private void Neighbours(long deltaTns) {
         for (var critter : critters) {
             var curPos = critter.getPos();
             var nextPos = critter.nextPos(deltaTns);
 
-            // Vérifie si la nouvelle position est un mur
-            if (isWall(nextPos)) {
-                critter.setDirection(Direction.NONE);
-                nextPos = curPos;  // Reste à la position actuelle
-            }
+            // Print debug information
+            /*System.out.println("Current Position: " + curPos);
+            System.out.println("Next Position: " + nextPos);*/
 
-            critter.setPos(nextPos.warp(width, height));
+            // Check if the next position is valid
+            if (isValidPosition(nextPos, critter.getDirection())) {
+                critter.setPos(nextPos.warp(width, height));
+            }else {
+            	critter.setPos(nextPos.warp(width, height).round().toRealCoordinates(1.0));
+            }
         }
     }
 
-    //Vérifie si la nouvelle position est un mur
-    private boolean isWall(RealCoordinates position) {
-        IntCoordinates cell = position.round();
-        return config.getCell(cell).isWall();
-    }
+    private boolean isValidPosition(RealCoordinates pos, Direction direction) {
+        // Verifie si la prochaine position est un mur
+        if (config.isWall(pos)) {
+            return false;
+        }
 
+        // Verifie si les prochains basees sur la prochaine direction sont des murs
+        Set<IntCoordinates> curNeighbours = pos.intNeighbours();
+        for (IntCoordinates neighbour : curNeighbours) {
+            if (config.isWall(neighbour)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
 
     public static void addScore(int increment) {
         score += increment;
     }
-
-
 
     private void playerLost() {
         lives--;
