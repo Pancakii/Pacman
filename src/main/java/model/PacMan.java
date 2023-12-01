@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
+
 public final class PacMan implements Critter {
     private Direction direction = Direction.NONE;
     private RealCoordinates pos;
@@ -110,15 +111,7 @@ public final class PacMan implements Critter {
     public void setPos(RealCoordinates pos) {
         this.pos = pos;
     }
-
-
-	// Eating energizer or pellets
-	public double distance(double[] p)
-	{
-		// Distance calculator. Can be changed or not, 
-		// depending on the cell position system.
-		return Math.sqrt(Math.pow( ((p[0] - pos.x()) + (p[1] - pos.y())), 2));
-	}
+	
 
 
 	public void energizedTimerCount(long delta)

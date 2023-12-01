@@ -134,8 +134,16 @@ public final class MazeState {
         lives--;
         if(MazeState.lives == 0){
             GameOver.affichageGameOver();
+            resetGame();
         }
         resetCritters();
+    }
+    public void resetGame(){
+        MazeState.lives = 3;
+        MazeState.score = 0;
+        resetGridState();
+        resetCritters();
+
     }
 
     private void resetCritter(Critter critter) {
@@ -145,6 +153,14 @@ public final class MazeState {
 
     private void resetCritters() {
         for (var critter: critters) resetCritter(critter);
+    }
+
+    private void resetGridState(){
+        for(int i = 0; i< gridState.length;i++){
+            for(int j = 0; j< gridState.length;j++){
+                gridState[i][j] = false;
+            }
+        }
     }
 
     public MazeConfig getConfig() {
