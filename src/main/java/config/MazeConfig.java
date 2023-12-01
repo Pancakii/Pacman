@@ -1,5 +1,6 @@
 package config;
 
+import javafx.scene.text.Text;
 import geometry.IntCoordinates;
 
 import java.io.BufferedReader;
@@ -115,7 +116,7 @@ public class MazeConfig {
         String str;
         String firstLine = r.readLine(); 
         int maxCols = firstLine.length(); // Obtiens la longueur de la première ligne
-        int numRows = compteligne() + 1; // Utilise la fonction pour obtenir le nombre de lignes
+        int numRows = compteligne(); // Utilise la fonction pour obtenir le nombre de lignes
 
         // Initialise le tableau `maze` avec les dimensions appropriées
         Cell[][] maze = new Cell[numRows][maxCols];

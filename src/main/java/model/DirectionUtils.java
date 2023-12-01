@@ -13,8 +13,7 @@ public class DirectionUtils {
                 return RealCoordinates.SOUTH_UNIT;
             case WEST:
                 return RealCoordinates.WEST_UNIT;
-            default:
-                return RealCoordinates.ZERO;
         }
+        return RealCoordinates.ZERO;
     }
 }
