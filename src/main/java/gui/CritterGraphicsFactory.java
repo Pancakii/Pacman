@@ -1,5 +1,6 @@
 package gui;
 
+import javafx.application.Platform;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -22,6 +23,7 @@ public final class CritterGraphicsFactory {
     private final ImageView inky ;
     private final ImageView pinky ;
     private final ImageView ghostWhenPacmanEnergized ;
+    private final ImageView ghostWhenPacmanEnergizedEnd ;
     private ImageView instance ;
 
     public CritterGraphicsFactory(double scale) {
@@ -35,10 +37,11 @@ public final class CritterGraphicsFactory {
         this.inky = new ImageView( new Image ("Inky.gif",size*scale,size*scale,true,true));
         this.pinky =new ImageView( new Image ("Pinky.gif",size*scale,size*scale,true,true));
         this.ghostWhenPacmanEnergized = new ImageView( new Image("GhostEnergized.gif",size*scale , size*scale , true ,true ) );
+        this.ghostWhenPacmanEnergizedEnd = new ImageView( new Image("GhostEnergizedEnd.gif",size*scale , size*scale , true ,true ) );
         this.instance = pacmanRight ;
     }
 
-    // change les images de pacman en fonction de la direction de pacman
+    // retourne et change les images de pacman en fonction de la direction de pacman
     public ImageView updateImagePacman (){
          switch ( PacMan.INSTANCE.getDirection()) {
              case NORTH -> {
@@ -61,76 +64,72 @@ public final class CritterGraphicsFactory {
         return this.instance ;
     }
 
+    // retourne et change les images des fatomes en fonction de pacman s'il est energized ou pas
+    // les ghosts reste bleu entre 10 et 3 sec puis scintille entre 3 et 0 sec
     public ImageView updateImageGhost(Ghost ghost){
+        boolean energized = PacMan.INSTANCE.isEnergized();
+        double energizedTimer = PacMan.INSTANCE.getEnergized_timer();
         switch (ghost) {
             case BLINKY -> {
-                if (PacMan.INSTANCE.getEnergized_timer() != 0) {
+                if (energized && energizedTimer > 3) {
                     return ghostWhenPacmanEnergized;
-                } else {
+                } else if (energized && energizedTimer > 0) {
+                    return ghostWhenPacmanEnergizedEnd;
+                }else {
                     return blinky;
                 }
             }
             case CLYDE -> {
-                if (PacMan.INSTANCE.getEnergized_timer() != 0) {
+                if (energized && energizedTimer > 3) {
                     return ghostWhenPacmanEnergized;
-                } else {
+                } else if (energized && energizedTimer > 0) {
+                    return ghostWhenPacmanEnergizedEnd;
+                }else {
                     return clyde;
                 }
             }
             case INKY -> {
-                if (PacMan.INSTANCE.getEnergized_timer() != 0) {
+                if (energized && energizedTimer > 3) {
                     return ghostWhenPacmanEnergized;
-                } else {
-                    return inky ;
+                } else if (energized && energizedTimer > 0) {
+                    return ghostWhenPacmanEnergizedEnd;
+                }else {
+                    return inky;
                 }
             }
             case PINKY -> {
-                if (PacMan.INSTANCE.getEnergized_timer() != 0) {
+                if (energized && energizedTimer > 3) {
                     return ghostWhenPacmanEnergized;
+                } else if (energized && energizedTimer > 0) {
+                    return ghostWhenPacmanEnergizedEnd;
                 } else {
                     return pinky;
                 }
             }
         }
-        return ghostWhenPacmanEnergized ;
+        return ghostWhenPacmanEnergized;
     }
 
     public GraphicsUpdater makeGraphics(Critter critter) {
         var size = 0.7;
-        var image = (critter instanceof PacMan) ? updateImagePacman() :
-                switch ((Ghost) critter) {
-                    case BLINKY -> blinky ;
-                    case CLYDE -> clyde ;
-                    case INKY -> inky ;
-                    case PINKY -> pinky ;
-                };
+        var image = (critter instanceof PacMan) ? updateImagePacman() : updateImageGhost((Ghost) critter);
+        ImageView imageView = new ImageView(image.getImage());
         return new GraphicsUpdater() {
             @Override
             public void update() {
-                if ( critter instanceof PacMan) {
-                    image.setImage(updateImagePacman().getImage());
+                if (critter instanceof PacMan) {
+                    imageView.setImage(updateImagePacman().getImage());
                 } else {
-                    image.setImage(updateImageGhost((Ghost) critter).getImage());
+                    imageView.setImage(updateImageGhost((Ghost) critter).getImage());
                 }
-                image.setTranslateX((critter.getPos().x() + (1 - size) / 2) * scale);
-                image.setTranslateY((critter.getPos().y() + (1 - size) / 2) * scale);
-                // Debug.out("sprite updated");
-
+                imageView.setTranslateX((critter.getPos().x() + (1 - size) / 2) * scale);
+                imageView.setTranslateY((critter.getPos().y() + (1 - size) / 2) * scale);
             }
 
             @Override
             public Node getNode() {
-                return image;
+                return imageView;
             }
         };
     }
 }
-
-/*
-                switch ((Ghost) critter) {
-                    case BLINKY -> blinky ;
-                    case CLYDE -> clyde ;
-                    case INKY -> inky ;
-                    case PINKY -> pinky ;
-                }
- */
