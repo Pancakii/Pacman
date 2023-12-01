@@ -149,7 +149,7 @@ public final class PacMan implements Critter {
         if ( x == 10 && y == 11 && Bonus.canHaveBonus()){
 			MazeState.addScore(Bonus.pointBonus());
 			Bonus.setHaveBonus(false);
-			setCountDot(0);
+			Bonus.setBonusTimer(0);
 		}
 	}
 
@@ -171,7 +171,4 @@ public final class PacMan implements Critter {
 		return countDot;
 	}
 
-	public static void setCountDot(int countDot) {
-		PacMan.countDot = countDot;
-	}
 }

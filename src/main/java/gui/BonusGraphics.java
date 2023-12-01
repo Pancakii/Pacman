@@ -20,6 +20,9 @@ public final class BonusGraphics {
     private final ImageView cle ;
     private ImageView instance  ;
 
+    private final double x  ;
+    private final double y ;
+
 
     public BonusGraphics(double scale ){
         this.scale = scale;
@@ -32,6 +35,9 @@ public final class BonusGraphics {
         this.cloche = new ImageView(new Image("BonusCloche.png" , scale*size , scale*size , true , true )) ;
         this.cle = new ImageView(new Image("BonusCle.png" , scale*size , scale*size , true , true )) ;
         this.instance = null ;
+        this.x = (10 + (1 - size) / 2) * scale ;
+        this.y = (11 + (1 - size) / 2) * scale ;
+
     }
 
     public ImageView updateImageBonus (){
@@ -74,20 +80,15 @@ public final class BonusGraphics {
         return this.instance ;
     }
 
+
     public GraphicsUpdater afficheBonus (){
         var image = updateImageBonus() ;
+        image.setTranslateX(x);
+        image.setTranslateY(y);
         return new GraphicsUpdater() {
             @Override
             public void update() {
-
-                if ( Bonus.appartionFruit()  ) {
-                    image.setTranslateX((10 + (1 - size) / 2) * scale);
-                    image.setTranslateY((11 + (1 - size) / 2) * scale);
-
-                } else {
-                    image.setTranslateX((-3 + (1 - size) / 2) * scale);
-                    image.setTranslateY((-3 + (1 - size) / 2) * scale);
-                }
+                image.setVisible(Bonus.appartionFruit());
             }
 
             @Override

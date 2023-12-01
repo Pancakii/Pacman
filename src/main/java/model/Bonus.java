@@ -6,8 +6,6 @@ import misc.Debug;
 public class Bonus {
     private static boolean haveBonus ;
     private static double bonusTimer;
-    private static final double bonusTimeMax = 10 ;
-
     private static int point ;
     public static final Bonus INSTANCE = new Bonus();
 
@@ -26,10 +24,16 @@ public class Bonus {
         haveBonus = havebonus;
     }
 
+    public static void setBonusTimer (double bonusTime){
+         bonusTimer = bonusTime;
+    }
+
 
     // regarde si le fruit peut apparaitre dans la map
     public static boolean appartionFruit(){
-        if ( PacMan.getCountDot()>=70 ){
+        Debug.out(String.valueOf(PacMan.getCountDot()%70==0));
+        if ( PacMan.getCountDot()%70==0 && bonusTimer <= 10){
+            Debug.out("trfdfyugihj");
             haveBonus = true ;
         }
         return haveBonus ;
@@ -37,11 +41,11 @@ public class Bonus {
 
     public void bonusTimer(long delta){
         double delta_double = (double) delta ;
-        if(haveBonus) {
-            bonusTimer -= delta_double/1000000000;
-            if(bonusTimer <= 0) {
+        if(haveBonus && bonusTimer <= 10) {
+            bonusTimer += delta_double*1E-9;
+            if(bonusTimer>=10){
                 setHaveBonus(false);
-                bonusTimer= 0;
+                bonusTimer =0 ;
             }
         }
     }

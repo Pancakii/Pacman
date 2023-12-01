@@ -73,7 +73,9 @@ public final class MazeState {
     }
     private void bonusUpdate(long deltaTns){
         PacMan.eatBonus();
-        Bonus.INSTANCE.bonusTimer(deltaTns);
+        if ( Bonus.canHaveBonus()) {
+            Bonus.INSTANCE.bonusTimer(deltaTns);
+        }
     }
 
     /*
