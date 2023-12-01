@@ -149,7 +149,6 @@ public final class MazeState {
             // Vérifie si la nouvelle position est un mur
             if (isWall(nextPos))
             {
-
                 nextPos = curPos.round().toRealCoordinates(1.0);
                 critter.setDirection(Direction.NONE);
             }
