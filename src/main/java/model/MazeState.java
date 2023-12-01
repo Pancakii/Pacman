@@ -1,8 +1,6 @@
 package model;
 
-import config.Cell;
 import gui.PacmanController;
-import javafx.scene.text.*;
 import config.MazeConfig;
 import geometry.IntCoordinates;
 import geometry.RealCoordinates;
@@ -55,7 +53,7 @@ public final class MazeState {
 
 
     public void update(long deltaTns) {
-    	this.moveCritters(deltaTns);
+    	moveCritters(deltaTns);
         pacmanUpdate(deltaTns);
         updateGhosts(deltaTns);
         bonusUpdate(deltaTns);
@@ -100,7 +98,7 @@ public final class MazeState {
                     if(!ghost.isEaten())
                     {
                         addScore(10);
-                        ghost.setEaten(true); // why the hell can't I just do that???
+                        ghost.setEaten(true);
                     }
                 }
             }
@@ -153,18 +151,7 @@ public final class MazeState {
             {
 
                 nextPos = curPos.round().toRealCoordinates(1.0);
-                /*
-                nextPos.plus((switch (critter.getDirection()) {
-                    case NONE -> RealCoordinates.ZERO;
-                    case NORTH -> RealCoordinates.SOUTH_UNIT;
-                    case EAST -> RealCoordinates.WEST_UNIT;
-                    case SOUTH -> RealCoordinates.NORTH_UNIT;
-                    case WEST -> RealCoordinates.EAST_UNIT;
-                }).times(1));
-                 */
-
                 critter.setDirection(Direction.NONE);
-                //nextPos = curPos;  // Reste à la position actuelle
             }
 
             critter.setPos(nextPos.warp(width, height));

@@ -4,7 +4,6 @@ import config.Cell;
 import config.MazeConfig;
 import geometry.IntCoordinates;
 import geometry.RealCoordinates;
-import misc.Debug;
 import pathfinding.Node;
 
 import java.util.ArrayList;
@@ -99,7 +98,6 @@ public enum Ghost implements Critter {
         path_finding_timer -= delta_double / 1000000000;
         if((!eaten && path_finding_timer <= 0) || direction == Direction.NONE)
         {
-            // Debug.out("Start of getPath of " + this);
             // Getting the path to follow.
 
             path_finding_timer = path_finding_timer_max;
@@ -109,7 +107,6 @@ public enum Ghost implements Critter {
             if (this == BLINKY)
             {
                 path = Node.getPath(this.pos, pac_pos, grid);
-                Node.printArrayRC(path);
             }
             else if (this == INKY || this == PINKY)
             {
@@ -162,21 +159,18 @@ public enum Ghost implements Critter {
 
     public void followPath()
     {
-
         if(!path.isEmpty())
         {
-            Debug.out("Start of followPath of " + this);
             RealCoordinates to_follow = path.get(0);
-            Debug.out(pos.round() + " == " + to_follow.round());
             if (pos.round().same(to_follow.round()))
             {
-                Debug.out("deleting " + path.get(0));
+                // If in desired location, to pass to the other one we remove the current one
                 path.remove(0);
                 followPath();
-                return;
             }
             else
             {
+                // To find out where to move, we check x and y values.
                 if (to_follow.round().x() == pos.round().x())
                 {
                     if(to_follow.y() > pos.y())

@@ -1,6 +1,5 @@
 package model;
 
-//TESTING
 
 import geometry.RealCoordinates;
 import config.*;
