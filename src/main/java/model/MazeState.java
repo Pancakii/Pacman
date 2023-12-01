@@ -1,12 +1,10 @@
 package model;
 
-import gui.PacmanController;
-import javafx.scene.text.*;
 import config.MazeConfig;
 import geometry.IntCoordinates;
 import geometry.RealCoordinates;
 import gui.GameOver;
-import misc.Debug;
+import gui.PacmanController;
 
 import java.util.List;
 import java.util.Map;
@@ -143,6 +141,7 @@ public final class MazeState {
         MazeState.score = 0;
         resetGridState();
         resetCritters();
+        PacMan.setCountDot(0);
 
     }
 

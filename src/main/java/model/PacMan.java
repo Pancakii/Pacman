@@ -17,7 +17,7 @@ public final class PacMan implements Critter {
 	private final double energized_timer_max = 10;
 	private double energized_timer;
 
-	private static int countDot  ;
+	private static int countDot = 0 ;
 
 
 
@@ -84,7 +84,6 @@ public final class PacMan implements Critter {
 		pos = new RealCoordinates(x, y);
 		energized = e;
 		energized_timer = 0;
-		countDot = 0 ;
 	}
 
     @Override
@@ -166,4 +165,7 @@ public final class PacMan implements Critter {
 		return countDot;
 	}
 
+	public static void setCountDot(int countDot) {
+		PacMan.countDot = countDot;
+	}
 }

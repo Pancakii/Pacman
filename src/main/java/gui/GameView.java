@@ -33,7 +33,7 @@ public class GameView {
         this.gameRoot = root;
         // pixels per cell
         root.setStyle("-fx-background-color: #000000");
-        var critterFactory = new CritterGraphicsFactory(scale);
+        var critterFactory = new CritterGraphicsFactory();
         var cellFactory = new CellGraphicsFactory(scale);
         var BonusFactory = new BonusGraphics(scale) ;
         var affichageScore = new Score();
