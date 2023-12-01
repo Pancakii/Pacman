@@ -181,6 +181,17 @@ public enum Ghost implements Critter {
                 {
                     if(to_follow.y() > pos.y())
                     {
+                        direction = Direction.SOUTH;
+                    }
+                    else
+                    {
+                        direction = Direction.NORTH;
+                    }
+                }
+                else if (to_follow.round().y() == pos.round().y())
+                {
+                    if(to_follow.x() > pos.x())
+                    {
                         direction = Direction.EAST;
                     }
                     else
@@ -188,19 +199,7 @@ public enum Ghost implements Critter {
                         direction = Direction.WEST;
                     }
                 }
-                else if (to_follow.round().y() == pos.round().y())
-                {
-                    if(to_follow.x() > pos.x())
-                    {
-                        direction = Direction.NORTH;
-                    }
-                    else
-                    {
-                        direction = Direction.SOUTH;
-                    }
-                }
             }
-            //Debug.out("End of followPath of " + this);
         }
     }
 }

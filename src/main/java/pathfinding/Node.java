@@ -57,11 +57,11 @@ public class Node
         neighbors = new ArrayList<>();
         // The function that adds neighbors.
         //NORD
-        if(coordinates.round().x() >= 1)
+        if(coordinates.round().y() >= 1)
         {
-            if (!tab[coordinates.round().x() - 1][coordinates.round().y()].isWall()) //si neighbor n'est pas un mur
+            if (!tab[coordinates.round().y() - 1][coordinates.round().x()].isWall()) //si neighbor n'est pas un mur
             {
-                Node node = new Node(new RealCoordinates(coordinates.x() - 1, coordinates.y()), this);
+                Node node = new Node(new RealCoordinates(coordinates.x(), coordinates.y() - 1), this);
                 node.g = this.g + 1;
                 if(!Node.same(this, node))
                 {
@@ -70,22 +70,9 @@ public class Node
             }
         }
         //EST
-        if(coordinates.round().y() <= tab[0].length-2)
+        if(coordinates.round().x() <= tab[0].length-2)
         {
-            if (!tab[coordinates.round().x()][coordinates.round().y() + 1].isWall()) //si neighbor n'est pas un mur
-            {
-                Node node = new Node(new RealCoordinates(coordinates.x(), coordinates.y() + 1), this);
-                node.g = this.g + 1;
-                if(!Node.same(this, node))
-                {
-                    neighbors.add(node);
-                }
-            }
-        }
-        //SUD
-        if(coordinates.round().x() <= tab.length-2)
-        {
-            if (!tab[coordinates.round().x() + 1][coordinates.round().y()].isWall()) //si neighbor n'est pas un mur
+            if (!tab[coordinates.round().y()][coordinates.round().x() + 1].isWall()) //si neighbor n'est pas un mur
             {
                 Node node = new Node(new RealCoordinates(coordinates.x() + 1, coordinates.y()), this);
                 node.g = this.g + 1;
@@ -95,12 +82,25 @@ public class Node
                 }
             }
         }
-        //OUEST
-        if(coordinates.round().y() >= 1)
+        //SUD
+        if(coordinates.round().y() <= tab.length-2)
         {
-            if (!tab[coordinates.round().x()][coordinates.round().y() - 1].isWall()) //si neighbor n'est pas un mur
+            if (!tab[coordinates.round().y() + 1][coordinates.round().x()].isWall()) //si neighbor n'est pas un mur
             {
-                Node node = new Node(new RealCoordinates(coordinates.x(), coordinates.y() - 1), this);
+                Node node = new Node(new RealCoordinates(coordinates.x(), coordinates.y() + 1), this);
+                node.g = this.g + 1;
+                if(!Node.same(this, node))
+                {
+                    neighbors.add(node);
+                }
+            }
+        }
+        //OUEST
+        if(coordinates.round().x() >= 1)
+        {
+            if (!tab[coordinates.round().y()][coordinates.round().x() - 1].isWall()) //si neighbor n'est pas un mur
+            {
+                Node node = new Node(new RealCoordinates(coordinates.x() - 1, coordinates.y()), this);
                 node.g = this.g + 1;
                 if(!Node.same(this, node))
                 {
@@ -197,17 +197,6 @@ public class Node
         System.out.println("-------------------------------------");
     }
 
-    public static void deleteWalls(Node node, Cell[][] grid)
-    {
-        for (Node n: node.neighbors)
-        {
-            if (grid[n.coordinates.round().x()][n.coordinates.round().y()].isWall())
-            {
-                node.neighbors.remove(n);
-            }
-        }
-    }
-
 
 
     public static Node aStar(RealCoordinates s, RealCoordinates e, Cell[][] grid)
@@ -242,7 +231,6 @@ public class Node
             }
 
             current.getNeighbors(grid);
-            Node.deleteWalls(current, grid);
             current.calculateTotal(e);
             addListDistinctive(closedList, current);
 
