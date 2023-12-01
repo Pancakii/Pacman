@@ -1,8 +1,5 @@
 package model;
 
-import geometry.RealCoordinates;
-import misc.Debug;
-
 public class Bonus {
     private static boolean haveBonus ;
     private static double bonusTimer;
@@ -16,28 +13,31 @@ public class Bonus {
     }
 
 
+    // retourne si pacman peut manger un bonus ou pas
     public static boolean canHaveBonus() {
         return haveBonus;
     }
+
+    // change haveBonus
 
     public static void setHaveBonus(boolean havebonus) {
         haveBonus = havebonus;
     }
 
+    //change le temps du timer
     public static void setBonusTimer (double bonusTime){
          bonusTimer = bonusTime;
     }
 
-    // regarde si le fruit peut apparaitre dans la map
+    // regarde si le fruit peut apparaitre dans la map et retoune haveBonus
     public static boolean appartionFruit(){
-        Debug.out(String.valueOf(PacMan.getCountDot()%70==0));
         if ( PacMan.getCountDot()%70==0 && bonusTimer <= 10){
-            Debug.out("trfdfyugihj");
             haveBonus = true ;
         }
         return haveBonus ;
     }
 
+    // timer du bonus
     public void bonusTimer(long delta){
         double delta_double = (double) delta ;
         if(haveBonus && bonusTimer <= 10) {
@@ -49,7 +49,7 @@ public class Bonus {
         }
     }
 
-    //retourne le point de chaque
+    //retourne le point de chaque bonus
     public static int pointBonus(){
         switch (PacMan.getLevel()){
             case 1 -> {

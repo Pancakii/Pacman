@@ -64,49 +64,52 @@ public final class CritterGraphicsFactory {
     public ImageView updateImageGhost(Ghost ghost){
         switch (ghost) {
             case BLINKY -> {
-                if (!PacMan.INSTANCE.isEnergized()) {
-                    return blinky;
-                } else {
+                if (PacMan.INSTANCE.getEnergized_timer() != 0) {
                     return ghostWhenPacmanEnergized;
+                } else {
+                    return blinky;
                 }
             }
             case CLYDE -> {
-                if (!PacMan.INSTANCE.isEnergized()) {
-                    return clyde;
-                } else {
+                if (PacMan.INSTANCE.getEnergized_timer() != 0) {
                     return ghostWhenPacmanEnergized;
+                } else {
+                    return clyde;
                 }
             }
             case INKY -> {
-                if (!PacMan.INSTANCE.isEnergized()) {
-                    return inky;
-                } else {
+                if (PacMan.INSTANCE.getEnergized_timer() != 0) {
                     return ghostWhenPacmanEnergized;
+                } else {
+                    return inky ;
                 }
             }
             case PINKY -> {
-                if (!PacMan.INSTANCE.isEnergized()) {
-                    return pinky;
-                } else {
+                if (PacMan.INSTANCE.getEnergized_timer() != 0) {
                     return ghostWhenPacmanEnergized;
+                } else {
+                    return pinky;
                 }
             }
         }
         return ghostWhenPacmanEnergized ;
     }
 
-
     public GraphicsUpdater makeGraphics(Critter critter) {
         var size = 0.7;
-        var image = (critter instanceof PacMan) ? updateImagePacman() : updateImageGhost((Ghost) critter)
-;
+        var image = (critter instanceof PacMan) ? updateImagePacman() :
+                switch ((Ghost) critter) {
+                    case BLINKY -> blinky ;
+                    case CLYDE -> clyde ;
+                    case INKY -> inky ;
+                    case PINKY -> pinky ;
+                };
         return new GraphicsUpdater() {
             @Override
             public void update() {
                 if ( critter instanceof PacMan) {
                     image.setImage(updateImagePacman().getImage());
-                }
-                if (critter instanceof Ghost){
+                } else {
                     image.setImage(updateImageGhost((Ghost) critter).getImage());
                 }
                 image.setTranslateX((critter.getPos().x() + (1 - size) / 2) * scale);

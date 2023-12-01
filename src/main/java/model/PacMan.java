@@ -154,9 +154,11 @@ public final class PacMan implements Critter {
 	}
 
 
+	public double getEnergized_timer() {
+		return energized_timer;
+	}
 
-
-    public boolean isEnergized() {return energized;}
+	public boolean isEnergized() {return energized;}
 
     public void setEnergized(boolean energized)
 	{

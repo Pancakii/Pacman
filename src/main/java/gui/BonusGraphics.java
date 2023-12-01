@@ -40,6 +40,7 @@ public final class BonusGraphics {
 
     }
 
+    // retourne une image en fonction du niveau du jeu
     public ImageView updateImageBonus (){
         if ( PacMan.getLevel()<=13) {
             switch (PacMan.getLevel()) {
@@ -96,8 +97,5 @@ public final class BonusGraphics {
                 return image;
             }
         };
-    }
-    public double getSize() {
-        return size;
     }
 }
