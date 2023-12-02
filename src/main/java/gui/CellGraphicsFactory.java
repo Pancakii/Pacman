@@ -46,6 +46,14 @@ public class CellGraphicsFactory {
         		Wall.setX(0);
         		Wall.setFill(Color.BLUEVIOLET);
             	group.getChildren().add(Wall);
+        	}else if(cell.isWall() && cell.isPassable()) {
+        		var neWall = new Rectangle();
+        		neWall.setHeight(scale);
+        		neWall.setWidth(scale);
+        		neWall.setY(0);
+        		neWall.setX(0);
+        		neWall.setFill(Color.BLUE);
+            	group.getChildren().add(neWall);
         	}
         }
         
