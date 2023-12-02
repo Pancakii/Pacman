@@ -8,7 +8,7 @@ import geometry.IntCoordinates;
 import geometry.RealCoordinates;
 import gui.GameOver;
 import misc.Debug;
-
+import java.util.Set;
 import java.util.List;
 import java.util.Map;
 
@@ -73,6 +73,7 @@ public final class MazeState {
         PacMan.INSTANCE.energizedTimerCount(deltaTns);
         PacmanController.checknWalk(this.config);
     }
+    
     private void bonusUpdate(long deltaTns){
         PacMan.eatBonus();
         if ( Bonus.canHaveBonus()) {
@@ -117,28 +118,39 @@ public final class MazeState {
             var curPos = critter.getPos();
             var nextPos = critter.nextPos(deltaTns);
 
-            // Vérifie si la nouvelle position est un mur
-            if (isWall(nextPos)) {
-                critter.setDirection(Direction.NONE);
-                nextPos = curPos;  // Reste à la position actuelle
-            }
+            // Print debug information
+            /*System.out.println("Current Position: " + curPos);
+            System.out.println("Next Position: " + nextPos);*/
 
-            critter.setPos(nextPos.warp(width, height));
+            // Check if the next position is valid
+            if (isValidPosition(nextPos, critter.getDirection())) {
+                critter.setPos(nextPos.warp(width, height));
+            }else {
+            	critter.setPos(nextPos.warp(width, height).round().toRealCoordinates(1.0));
+            }
         }
     }
 
-    //Vérifie si la nouvelle position est un mur
-    private boolean isWall(RealCoordinates position) {
-        IntCoordinates cell = position.round();
-        return config.getCell(cell).isWall();
-    }
+    private boolean isValidPosition(RealCoordinates pos, Direction direction) {
+        // Verifie si la prochaine position est un mur
+        if (config.isWall(pos)) {
+            return false;
+        }
 
+        // Verifie si les prochains basees sur la prochaine direction sont des murs
+        Set<IntCoordinates> curNeighbours = pos.intNeighbours();
+        for (IntCoordinates neighbour : curNeighbours) {
+            if (config.isWall(neighbour)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
 
     public static void addScore(int increment) {
         score += increment;
     }
-
-
 
     private void playerLost() {
         lives--;
@@ -148,6 +160,7 @@ public final class MazeState {
         }
         resetCritters();
     }
+    
     public void resetGame(){
         MazeState.lives = 3;
         MazeState.score = 0;
