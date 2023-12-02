@@ -256,7 +256,7 @@ public class MazeConfig {
     public static MazeConfig make() throws Exception {
         return new MazeConfig(grid(),
         						//(x, y)
-                new IntCoordinates(2, 1), // pacman
+                new IntCoordinates(10, 15), // pacman
                 new IntCoordinates(10, 8), // blinky
                 new IntCoordinates(10, 9), // pinky
                 new IntCoordinates(9, 9), // inky

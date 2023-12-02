@@ -89,6 +89,8 @@ public final class MazeState {
             resetGridState();
             PacMan.setCountDotTotal(0);
             PacMan.setLevel(PacMan.getLevel()+1);
+			resetCritters();
+			
         }
     }
 
@@ -220,6 +222,10 @@ public final class MazeState {
     private void resetCritter(Critter critter) {
         critter.setDirection(Direction.NONE);
         critter.setPos(initialPos.get(critter));
+        if(critter instanceof PacMan)
+        {
+
+        }
     }
 
     private void resetCritters() {

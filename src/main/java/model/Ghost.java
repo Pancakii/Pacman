@@ -89,7 +89,7 @@ public enum Ghost implements Critter {
 
     public boolean can_it_find_path()
     {
-        int pellet_count = PacMan.getCountDot();
+        int pellet_count = PacMan.getCountDotTotal();
         return switch (this) {
             case BLINKY, PINKY -> true;
             case INKY -> pellet_count > 30;
