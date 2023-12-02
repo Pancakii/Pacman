@@ -65,6 +65,11 @@ public class MazeConfig {
 		return grid;
 	}
 	
+    public boolean isPassable(RealCoordinates position) {
+    	IntCoordinates pos = position.round();
+        return grid[Math.floorMod(pos.y(), getHeight())][Math.floorMod(pos.x(), getWidth())].isPassable();
+    }
+	
     public boolean isWall(RealCoordinates position) {
     	IntCoordinates pos = position.round();
         return grid[Math.floorMod(pos.y(), getHeight())][Math.floorMod(pos.x(), getWidth())].isWall();
@@ -226,6 +231,8 @@ public class MazeConfig {
                 maze[j][i] = Cellule(2);
             } else if (currentChar == '3') {
                 maze[j][i] = Cellule(3);
+            } else if (currentChar == '4') {
+                maze[j][i] = Cellule(4);
             }
         }
 
@@ -242,6 +249,8 @@ public class MazeConfig {
                     maze[j][i] = Cellule(2);
                 } else if (currentChar == '3') {
                     maze[j][i] = Cellule(3);
+                } else if (currentChar == '4') {
+                    maze[j][i] = Cellule(4);
                 }
             }
             j++;
