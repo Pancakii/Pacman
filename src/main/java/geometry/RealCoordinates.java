@@ -26,21 +26,14 @@ public record RealCoordinates(double x, double y) {
      * @return the coordinates of all integer squares that a unit square with current coordinates would intersect
       */
     public Set<IntCoordinates> intNeighbours() {
-        Set<IntCoordinates> neighbours = new HashSet<>();
-
-        int floorX = (int) Math.floor(x);
-        int floorY = (int) Math.floor(y);
-        int ceilX = (int) Math.ceil(x);
-        int ceilY = (int) Math.ceil(y);
-
-        neighbours.add(new IntCoordinates(floorX, floorY));
-        neighbours.add(new IntCoordinates(floorX, ceilY));
-        neighbours.add(new IntCoordinates(ceilX, floorY));
-        neighbours.add(new IntCoordinates(ceilX, ceilY));
-
-        return neighbours;
+        return new HashSet<>(List.of(
+                new IntCoordinates((int) Math.floor(x), (int) Math.floor(y)),
+                new IntCoordinates((int) Math.floor(x), (int) Math.ceil(y)),
+                new IntCoordinates((int) Math.ceil(x), (int) Math.floor(y)),
+                new IntCoordinates((int) Math.ceil(x), (int) Math.ceil(y))
+        )
+        );
     }
-
 
     public IntCoordinates round() {
         return new IntCoordinates((int) Math.round(x), (int) Math.round(y));
@@ -65,20 +58,46 @@ public record RealCoordinates(double x, double y) {
     public RealCoordinates warp(int width, int height) {
         var rx = x;
         var ry = y;
-        
-        while (Math.round(rx) < 0) {
+        while (Math.round(rx) < 0)
             rx += width;
-        }
-        while (Math.round(ry) < 0) {
+        while (Math.round(ry) < 0)
             ry += height;
-        }
-        while (Math.round(rx) >= width) {
+        while (Math.round(rx) >= width)
             rx -= width;
-        }
-        while (Math.round(ry) >= height) {
+        while (Math.round(rx) >= height)
             ry -= height;
-        }
-
         return new RealCoordinates(rx, ry);
     }
+    // regarde si il y a un mur a gauche
+    public IntCoordinates[] intNeighbourWest(){
+        return new IntCoordinates[]{
+                new IntCoordinates((int) Math.floor(x), (int) Math.floor(y)),
+                new IntCoordinates((int) Math.floor(x), (int) Math.ceil(y))
+        };
+    }
+
+    // regarde si il y a un mur a droite
+    public IntCoordinates[] intNeighbourEast(){
+        return new IntCoordinates[]{
+                new IntCoordinates((int) Math.ceil(x), (int) Math.ceil(y)),
+                new IntCoordinates((int) Math.ceil(x), (int) Math.floor(y))
+        };
+    }
+
+    // regarde si il y a un mur en haut
+    public IntCoordinates[] intNeighbourNorth(){
+        return new IntCoordinates[]{
+                new IntCoordinates((int) Math.floor(x), (int) Math.ceil(y)),
+                new IntCoordinates((int) Math.ceil(x), (int) Math.ceil(y))
+        } ;
+    }
+
+    // regarde si il y a un mur en bas
+    public IntCoordinates[] intNeighbourSouth(){
+        return new IntCoordinates[]{
+                new IntCoordinates((int) Math.floor(x), (int) Math.floor(y)),
+                new IntCoordinates((int) Math.ceil(x), (int) Math.floor(y))
+        };
+    }
+
 }
