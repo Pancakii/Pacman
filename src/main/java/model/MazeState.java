@@ -3,7 +3,7 @@ package model;
 import config.MazeConfig;
 import geometry.IntCoordinates;
 import geometry.RealCoordinates;
-import gui.GameOver;
+import gui.Windows.GameOver;
 import gui.PacmanController;
 
 import java.util.List;
@@ -19,9 +19,10 @@ public final class MazeState {
     private final List<Critter> critters;
     public static int score;
     public static int lives = 3;
-
     private final Map<Critter, RealCoordinates> initialPos;
-
+    public static String nickname = "Nobody";
+    private String[] tabNickname = new String[5];
+    private int[] tabScore = new int[5];
 
     public MazeState(MazeConfig config) {
         this.config = config;
@@ -51,6 +52,9 @@ public final class MazeState {
         return height;
     }
 
+    public static void setNickname(String name) {
+        nickname = name;
+    }
 
     public void update(long deltaTns) {
     	this.Neighbours(deltaTns);
@@ -131,6 +135,12 @@ public final class MazeState {
     private void playerLost() {
         lives--;
         if(MazeState.lives == 0){
+            ajoutScore(nickname,score);
+            for(int i = 0;i< tabNickname.length;i++){
+                System.out.println(tabNickname[i]);
+                System.out.println(tabScore[i]);
+            }
+
             GameOver.affichageGameOver();
             resetGame();
         }
@@ -169,4 +179,46 @@ public final class MazeState {
     public boolean getGridState(IntCoordinates pos) {
         return gridState[pos.y()][pos.x()];
     }
+
+    public boolean tryAddScore(int score){
+        for(int i = 0; i<tabScore.length;i++){
+            if(score>tabScore[i]){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void ajoutScoreDansLaListe(String name, int score, int position){
+        String[] tabNomF = new String[5];
+        int[] tabScoreF = new  int[5];
+
+        for(int p = 0;p<position;p++){
+            tabNomF[p] = this.tabNickname[p];
+            tabScoreF[p] = this.tabScore[p];
+        }
+        tabNomF[position] = this.tabNickname[position];
+        tabScoreF[position] = this.tabScore[position];
+
+        for(int i = position+1; i<tabScore.length;i++){
+            tabNomF[i] = this.tabNickname[i-1];
+            tabScoreF[i] = this.tabScore[i-1];
+        }
+        this.tabNickname = tabNomF;
+        this.tabScore = tabScoreF;
+
+    }
+    public void ajoutScore(String name, int score){
+        if(tryAddScore(score)){
+           int position = 0;
+           while(tabScore[position] > score && tabScore[position] != 0){
+                 position = position + 1;
+           }
+
+           ajoutScoreDansLaListe(name,score,position);
+        }
+
+    }
+
+
 }

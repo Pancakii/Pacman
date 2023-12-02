@@ -11,14 +11,14 @@ import model.PacMan;
 public final class CritterGraphicsFactory {
     private final double scale = 35.0;
     private final double  size = 0.7;
-    private final ImageView pacmanUp = new ImageView( new Image("PacmanUp.gif",size*scale , size*scale , true ,true ) );
-    ;
-    private final ImageView pacmanDown = new ImageView( new Image("PacmanDown.gif",size*scale ,size*scale ,true,true ) ) ;
-    ;
-    private final ImageView pacmanRight = new ImageView( new Image("PacmanRight.gif",size*scale ,size*scale ,true,true ) ) ;
-    ;
-    private final ImageView pacmanLeft = new ImageView( new Image("PacmanLeft.gif",size*scale ,size*scale ,true,true ) ) ;
-    ;
+    private final ImageView pacmanUp;
+
+    private final ImageView pacmanDown;
+
+    private final ImageView pacmanRight;
+
+    private final ImageView pacmanLeft;
+
     private final ImageView blinky ;
     private final ImageView clyde ;
     private final ImageView inky ;
@@ -27,6 +27,11 @@ public final class CritterGraphicsFactory {
     private ImageView affiche = new ImageView();
 
     public CritterGraphicsFactory() {
+        pacmanUp= new ImageView( new Image("PacmanUp.gif",size*scale , size*scale , true ,true ) );
+        pacmanDown  = new ImageView( new Image("PacmanDown.gif",size*scale ,size*scale ,true,true ) ) ;
+        pacmanLeft = new ImageView( new Image("PacmanLeft.gif",size*scale ,size*scale ,true,true ) ) ;
+        pacmanRight= new ImageView( new Image("PacmanRight.gif",size*scale ,size*scale ,true,true ) ) ;
+
         this.blinky = new ImageView( new Image ("Blinky.gif",size*scale,size*scale,true,true));
         this.clyde = new ImageView( new Image ("Clyde.gif",size*scale,size*scale,true,true));
         this.inky = new ImageView( new Image ("Inky.gif",size*scale,size*scale,true,true));

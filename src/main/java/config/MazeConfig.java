@@ -1,16 +1,21 @@
 package config;
 
-import javafx.scene.text.Text;
 import geometry.IntCoordinates;
-import java.io.* ;
-import static config.Cell.*;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+
+import static config.Cell.makeCellule;
 
 public class MazeConfig {
-    public MazeConfig(Cell[][] grid, IntCoordinates pacManPos, IntCoordinates blinkyPos, IntCoordinates pinkyPos,
-                      IntCoordinates inkyPos, IntCoordinates clydePos) {
+    public MazeConfig(final Cell[][] grid, final IntCoordinates pacManPos, final IntCoordinates blinkyPos, final IntCoordinates pinkyPos,
+                      final IntCoordinates inkyPos, final IntCoordinates clydePos) {
         this.grid = new Cell[grid.length][grid[0].length];
         for (int i = 0; i < getHeight(); i++) {
-            if (getWidth() >= 0) System.arraycopy(grid[i], 0, this.grid[i], 0, getHeight());
+            if (getWidth() >= 0) {
+                System.arraycopy(grid[i], 0, this.grid[i], 0, getHeight());
+            }
         }
         this.pacManPos = pacManPos;
         this.blinkyPos = blinkyPos;
@@ -61,49 +66,49 @@ public class MazeConfig {
     }
     // compte le nombre ligne dans le fichier Maze.txt
     public static int compteligne() throws Exception {
-        String path =System.getProperty("user.dir") ;
-        File file ;
+        String path = System.getProperty("user.dir");
+        File file;
         try {
-            file =new File(path+"/src/main/resources/Maze.txt");
-        } catch (Exception e ){
+            file = new File(path + "/src/main/resources/Maze.txt");
+        } catch (Exception e) {
             e.printStackTrace();
-            file =new File(path + "\\src\\main\\resources\\Maze.txt");
+            file = new File(path + "\\src\\main\\resources\\Maze.txt");
         }
         FileReader fr = new FileReader(file);
         BufferedReader r = new BufferedReader(fr);
         int ligne = 0;
-        while ( r.readLine()!= null) {
+        while (r.readLine() != null) {
             ligne++;
-        }fr.close();
+        } fr.close();
         return ligne;
     }
 
     //compte la longueur d'une ligne dans Maze.txt
-    public static int comptelongueur() throws Exception{
-        File file ;
-        String path =System.getProperty("user.dir") ;
+    public static int comptelongueur() throws Exception {
+        File file;
+        String path = System.getProperty("user.dir");
         try {
-            file =new File(path+"/src/main/resources/Maze.txt");
-        } catch (Exception e ){
+            file = new File(path + "/src/main/resources/Maze.txt");
+        } catch (Exception e){
             e.printStackTrace();
-            file =new File(path +"\\src\\main\\resources\\Maze.txt");
+            file = new File(path + "\\src\\main\\resources\\Maze.txt");
         }
         FileReader fr = new FileReader(file);
         BufferedReader r = new BufferedReader(fr);
         fr.close();
-        return  r.readLine().length() ;
+        return  r.readLine().length();
 
     }
 
     // creation du tableau de tableau des cellules
-    public static Cell[][] grid () throws Exception {
-        String path = System.getProperty("user.dir") ;
-        File file ;
+    public static Cell[][] grid() throws Exception {
+        String path = System.getProperty("user.dir");
+        File file;
         try {
-            file =new File(path+"/src/main/resources/Maze.txt");
-        } catch (Exception e ){
+            file = new File(path + "/src/main/resources/Maze.txt");
+        } catch (Exception e) {
             e.printStackTrace();
-            file =new File(path+"\\src\\main\\resources\\Maze.txt");
+            file = new File(path + "\\src\\main\\resources\\Maze.txt");
         }
 
         FileReader fr = new FileReader(file);
@@ -122,13 +127,13 @@ public class MazeConfig {
         for (int i = 0; i < maxCols; i++) {
             char currentChar = firstLine.charAt(i);
             if (currentChar == '0') {
-                maze[j][i] = Cellule(0);
+                maze[j][i] = makeCellule(0);
             } else if (currentChar == '1') {
-                maze[j][i] = Cellule(1);
+                maze[j][i] = makeCellule(1);
             } else if (currentChar == '2') {
-                maze[j][i] = Cellule(2);
+                maze[j][i] = makeCellule(2);
             } else if (currentChar == '3') {
-                maze[j][i] = Cellule(3);
+                maze[j][i] = makeCellule(3);
             }
         }
 
@@ -138,16 +143,16 @@ public class MazeConfig {
             for (int i = 0; i < str.length(); i++) {
                 char currentChar = str.charAt(i);
                 if (currentChar == '0') {
-                    maze[j][i] = Cellule(0);
+                    maze[j][i] = makeCellule(0);
                 } else if (currentChar == '1') {
-                    maze[j][i] = Cellule(1);
+                    maze[j][i] = makeCellule(1);
                 } else if (currentChar == '2') {
-                    maze[j][i] = Cellule(2);
+                    maze[j][i] = makeCellule(2);
                 } else if (currentChar == '3') {
-                    maze[j][i] = Cellule(3);
+                    maze[j][i] = makeCellule(3);
                 }
             }
-            j++ ;
+            j++;
         }
         return maze;
     }
@@ -161,7 +166,7 @@ public class MazeConfig {
                 new IntCoordinates(10, 9), // pinke
                 new IntCoordinates(11, 9), // inky
                 new IntCoordinates(10, 9)  // clyde
-        ) ;
+        );
     }
 
 }

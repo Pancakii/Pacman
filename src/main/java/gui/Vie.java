@@ -7,7 +7,7 @@ import javafx.scene.layout.Pane;
 
 public class Vie {
 
-    public GraphicsUpdater remainingLife(Pane root){
+    public GraphicsUpdater remainingLife(final Pane root) {
 
         //Initialissation des images de la vie
         Image imageNLF = new Image("CoeurVide.png");
@@ -19,20 +19,24 @@ public class Vie {
         ImageView vie = new ImageView(imageNLF);
 
         //Emplacement de l'affichage de la vie
-        vie.setFitHeight(20);
-        vie.setFitWidth(50);
-        vie.setX(500);
-        vie.setY(705);
+        final int fh = 20;
+        final int fw = 50;
+        final int cx = 500;
+        final int cy = 705;
+
+        vie.setFitHeight(fh);
+        vie.setFitWidth(fw);
+        vie.setX(cx);
+        vie.setY(cy);
 
         return new GraphicsUpdater() {
             @Override
             public void update() {
 
-                    switch (MazeState.lives){
-                        case 1 : vie.setImage(imageOneLF);break;
-                        case 2 : vie.setImage(imageTwo);break;
-                        case 3 : vie.setImage(imageThree);break;
-                        default: vie.setImage(imageNLF);break;
+                    switch (MazeState.lives) {
+                        case 1 : vie.setImage(imageOneLF); break;
+                        case 2 : vie.setImage(imageTwo); break;
+                        default: vie.setImage(imageThree); break;
 
                     }
 

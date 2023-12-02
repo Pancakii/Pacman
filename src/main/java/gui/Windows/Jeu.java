@@ -1,7 +1,10 @@
-package gui;
+package gui.Windows;
 
 import com.sun.javafx.collections.ElementObservableListDecorator;
 import config.MazeConfig;
+import gui.App;
+import gui.GameView;
+import gui.PacmanController;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;

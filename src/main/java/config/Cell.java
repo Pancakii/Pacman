@@ -1,7 +1,7 @@
 package config;
 
 public record Cell(boolean wall, Content initialContent) {
-    public enum Content {NOTHING, DOT, ENERGIZER}
+    public enum Content { NOTHING, DOT, ENERGIZER }
 
     // Méthode pour vérifier si la case est un mur
     public boolean isWall() {
@@ -23,15 +23,24 @@ public record Cell(boolean wall, Content initialContent) {
         return initialContent == Content.NOTHING;
     }
 
-    public static Cell Cellule(int i) {
+    @SuppressWarnings("checkstyle:MagicNumber")
+    public static Cell makeCellule(final int i) {
         // Mur
-        if (i == 0) return new Cell(true, Content.NOTHING);
+         if (i == 0) {
+            return new Cell(true, Content.NOTHING);
+         }
         // Case vide
-        if (i == 1) return new Cell(false, Content.NOTHING);
+         if (i == 1) {
+            return new Cell(false, Content.NOTHING);
+         }
         // Case avec un Dot
-        if (i == 2) return new Cell(false, Content.DOT);
+         if (i == 2) {
+            return new Cell(false, Content.DOT);
+         }
         // Case avec un energizer
-        if (i == 3) return new Cell(false, Content.ENERGIZER);
+         if (i == 3) {
+            return new Cell(false, Content.ENERGIZER);
+         }
 
         return null;
     }

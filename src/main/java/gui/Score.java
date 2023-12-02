@@ -9,14 +9,17 @@ import model.MazeState;
 
 public class Score {
 
-    public GraphicsUpdater displayScore(Pane root) {
+    public GraphicsUpdater displayScore(final Pane root) {
 
         Text point = new Text();
+        final int x = 600;
+        final int y = 720;
+        final int f = 18;
 
         point.setText("Score: " + MazeState.score);
-        point.setX(600);
-        point.setY(720); //La ou on place le score
-        point.setFont(Font.font(18)); //La taille de l'affichage
+        point.setX(x);
+        point.setY(y); //La ou on place le score
+        point.setFont(Font.font(f)); //La taille de l'affichage
         point.setFill(Color.WHITE); //La couleur
         return new GraphicsUpdater() {
             @Override

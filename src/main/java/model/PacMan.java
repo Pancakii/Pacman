@@ -14,7 +14,7 @@ public final class PacMan implements Critter {
     private Direction direction = Direction.NONE;
     private RealCoordinates pos;
     private boolean energized;
-	private final double energized_timer_max = 10;
+	private final double energized_timer_max = 5;
 	private double energized_timer;
 
 	private static int countDot = 0 ;
@@ -93,7 +93,7 @@ public final class PacMan implements Critter {
 
     @Override
     public double getSpeed() {
-        return isEnergized() ? 6 : 4;
+        return isEnergized() ? 4 : 3;
     }
 
     @Override
