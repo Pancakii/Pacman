@@ -3,7 +3,6 @@ package gui;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import misc.Debug;
 import model.Bonus;
 import model.PacMan;
 

@@ -27,8 +27,6 @@ public class Jeu  implements EventHandler<ActionEvent> {
 	
     private static Scene gameScene = new Scene(root);
     private static MazeState maze = new MazeState(mazeConfig);
-	
-    private ElementObservableListDecorator<Object> graphicsUpdaters;
 
     private static boolean lancer = false;
 

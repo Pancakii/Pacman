@@ -50,6 +50,11 @@ public enum Ghost implements Critter {
         return direction;
     }
 
+    public void resetPath()
+    {
+        path = new ArrayList<>();
+    }
+
     @Override
     public double getSpeed() {
         double res = PacMan.INSTANCE.isEnergized() ? 2.0 : 2.8;
@@ -198,7 +203,6 @@ public enum Ghost implements Critter {
     {
         Debug.out(this + " runs away from pacman");
         // Run away from pacman
-		path = new ArrayList<>();
 		
         path_finding_timer = path_finding_timer_max;
         RealCoordinates pacpos = PacMan.INSTANCE.getPos();

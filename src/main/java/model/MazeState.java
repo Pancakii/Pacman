@@ -6,6 +6,8 @@ import geometry.IntCoordinates;
 import geometry.RealCoordinates;
 import gui.GameOver;
 import misc.Debug;
+
+import java.util.ArrayList;
 import java.util.Set;
 import java.util.List;
 import java.util.Map;
@@ -147,6 +149,7 @@ public final class MazeState {
         if(ate_energizer)
         {
             ghost.frightened = true;
+            ghost.resetPath();
         }
         if(!PacMan.INSTANCE.isEnergized())
         {
@@ -181,16 +184,16 @@ public final class MazeState {
     }
 
     private boolean isValidPosition(RealCoordinates pos, Direction direction, Critter critter) {
-    	
+
         // Verifie si la prochaine position est un mur ou est passable
-        if (config.isWall(pos) || (critter == PacMan.INSTANCE && !config.isPassable(pos))) {
+        if (config.isWall(pos) ||  (critter == PacMan.INSTANCE && !config.isPassable(pos))) {
             return false;
         }
 
         // Verifie si les prochains basees sur la prochaine direction sont des murs
         Set<IntCoordinates> curNeighbours = pos.intNeighbours();
         for (IntCoordinates neighbour : curNeighbours) {
-            if (config.isWall(neighbour) || !config.getCell(neighbour).isPassable()) {
+            if (config.isWall(neighbour) || (critter == PacMan.INSTANCE && !config.isPassable(pos))) {
                 return false;
             }
         }

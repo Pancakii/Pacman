@@ -10,7 +10,7 @@ import model.PacMan;
 
 public final class CritterGraphicsFactory {
     private final double scale;
-    private final double  size = 0.7;
+    private final double size = 0.7;
     private final ImageView pacmanUp ;
     private final ImageView pacmanDown  ;
     private final ImageView pacmanRight ;

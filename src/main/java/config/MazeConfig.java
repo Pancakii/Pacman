@@ -117,46 +117,6 @@ public class MazeConfig {
         return (res[2] || res[0]) && (res[1] || res[3]);
     }
 
-    public ArrayList<IntCoordinates> waysPossible(IntCoordinates pos)
-    {
-        ArrayList<IntCoordinates> res = new ArrayList<>();
-        // x = i, y = j
-        //NORD
-        if(pos.x() >= 1)
-        {
-            if (!grid[pos.x() - 1][pos.y()].isWall()) //si neighbor n'est pas un mur
-            {
-                res.add(new IntCoordinates(pos.x() - 1, pos.y()));
-            }
-        }
-        //EST
-        if(pos.y() <= grid[0].length-2)
-        {
-            if (!grid[pos.x()][pos.y() + 1].isWall()) //si neighbor n'est pas un mur
-            {
-                res.add(new IntCoordinates(pos.x(), pos.y() + 1));
-            }
-        }
-        //SUD
-        if(pos.x() <= grid.length-2)
-        {
-            if (!grid[pos.x() + 1][pos.y()].isWall()) //si neighbor n'est pas un mur
-            {
-                res.add(new IntCoordinates(pos.x() + 1, pos.y()));
-            }
-        }
-        //OUEST
-        if(pos.y() >= 1)
-        {
-            if (!grid[pos.x()][pos.y() - 1].isWall()) //si neighbor n'est pas un mur
-            {
-                res.add(new IntCoordinates(pos.x(), pos.y() - 1));
-            }
-        }
-
-        return res;
-    }
-
     public Cell getCell(IntCoordinates pos) {
         return grid[Math.floorMod(pos.y(), getHeight())][Math.floorMod(pos.x(), getWidth())];
     }
@@ -178,23 +138,6 @@ public class MazeConfig {
             ligne++;
         }fr.close();
         return ligne;
-    }
-
-    //compte la longueur d'une ligne dans Maze.txt
-    public static int comptelongueur() throws Exception{
-        File file ;
-        String path =System.getProperty("user.dir") ;
-        try {
-            file =new File(path+"/src/main/resources/Maze.txt");
-        } catch (Exception e ){
-            e.printStackTrace();
-            file =new File(path +"\\src\\main\\resources\\Maze.txt");
-        }
-        FileReader fr = new FileReader(file);
-        BufferedReader r = new BufferedReader(fr);
-        fr.close();
-        return  r.readLine().length() ;
-
     }
 
     // creation du tableau de tableau des cellules

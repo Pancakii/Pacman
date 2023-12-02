@@ -7,7 +7,7 @@ import javafx.scene.layout.Pane;
 
 public class Vie {
 
-    public GraphicsUpdater remainingLife(Pane root){
+    public GraphicsUpdater remainingLife(){
 
         //Initialissation des images de la vie
         Image imageNLF = new Image("CoeurVide.png");

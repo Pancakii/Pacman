@@ -1,7 +1,6 @@
 package geometry;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 public record RealCoordinates(double x, double y) {
@@ -44,22 +43,6 @@ public record RealCoordinates(double x, double y) {
 
     public IntCoordinates round() {
         return new IntCoordinates((int) Math.round(x), (int) Math.round(y));
-    }
-
-    public RealCoordinates floorX() {
-        return new RealCoordinates((int) Math.floor(x), y);
-    }
-
-    public RealCoordinates floorY() {
-        return new RealCoordinates(x, (int) Math.floor(y));
-    }
-
-    public RealCoordinates ceilX() {
-        return new RealCoordinates((int) Math.ceil(x), y);
-    }
-
-    public RealCoordinates ceilY() {
-        return new RealCoordinates(x, (int) Math.ceil(y));
     }
 
     public boolean smallDiff(RealCoordinates other)
