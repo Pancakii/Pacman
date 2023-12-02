@@ -31,7 +31,7 @@ public class Bonus {
 
     // regarde si le fruit peut apparaitre dans la map et retoune haveBonus
     public static boolean appartionFruit(){
-        if ( PacMan.getCountDot()%70==0 && bonusTimer <= 10){
+        if ( PacMan.getCountDot()%70==0 && bonusTimer <= 10 && PacMan.getCountDot() != 0){
             haveBonus = true ;
         }
         return haveBonus ;
