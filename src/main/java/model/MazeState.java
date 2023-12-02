@@ -128,21 +128,22 @@ public final class MazeState {
     private boolean isValidPosition(RealCoordinates pos, Direction direction, Critter critter) {
     	
         // Verifie si la prochaine position est un mur ou est passable
-        if (config.isWall(pos) || (critter == PacMan.INSTANCE && !config.isPassable(pos))) {
+        if (config.isWall(pos) || 
+            (critter == PacMan.INSTANCE && !config.isPassable(pos)) || 
+            (critter != PacMan.INSTANCE && config.isWall(pos) && !config.isPassable(pos))) {
             return false;
         }
 
         // Verifie si les prochains basees sur la prochaine direction sont des murs
         Set<IntCoordinates> curNeighbours = pos.intNeighbours();
         for (IntCoordinates neighbour : curNeighbours) {
-            if (config.isWall(neighbour) || (critter == PacMan.INSTANCE && !config.isPassable(pos))) {
+            if (config.isWall(neighbour) && !config.isPassable(neighbour.toRealCoordinates(1.0))) {
                 return false;
             }
         }
 
         return true;
     }
-
 
     public static void addScore(int increment) {
         score += increment;
