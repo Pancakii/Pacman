@@ -38,7 +38,7 @@ public class CellGraphicsFactory {
         group.getChildren().add(dot);
         
         if (cell != null) {
-        	if (cell.isWall()) {
+        	if (cell.isWall() && !cell.isPassable()) {
         		var Wall = new Rectangle();
         		Wall.setHeight(scale);
         		Wall.setWidth(scale);
