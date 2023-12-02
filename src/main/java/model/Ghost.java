@@ -4,6 +4,7 @@ import config.Cell;
 import config.MazeConfig;
 import geometry.IntCoordinates;
 import geometry.RealCoordinates;
+import misc.Debug;
 import pathfinding.Node;
 
 import java.util.ArrayList;
@@ -15,12 +16,12 @@ public enum Ghost implements Critter {
     // Direct chase, goes in front, goes in front, random
 
     public boolean eaten = false;
+    public boolean frightened = false;
     private ArrayList<RealCoordinates> path = new ArrayList<>();
     private RealCoordinates pos;
     private Direction direction = Direction.NONE;
 
     private final double path_finding_timer_max = 0.3;
-
     private double path_finding_timer = 0;
 
     @Override
@@ -43,23 +44,63 @@ public enum Ghost implements Critter {
         return direction;
     }
 
-    public boolean isEaten() {
-        return eaten;
-    }
-
-    public void setEaten(boolean eaten) {
-        this.eaten = eaten;
-    }
-
     @Override
     public double getSpeed() {
-        return PacMan.INSTANCE.isEnergized() ? 2.9 : 3.8;
+        double res = PacMan.INSTANCE.isEnergized() ? 2.0 : 2.8;
+        if(eaten)
+        {
+            res = 8;
+        }
+        return res;
     }
 
+    public boolean can_it_find_path()
+    {
+        int pellet_count = PacMan.getCountDot();
+        return switch (this) {
+            case BLINKY, PINKY -> true;
+            case INKY -> pellet_count > 30;
+            case CLYDE -> pellet_count > 60;
+        };
+    }
 
+    private void getPathBLINKY(Cell[][] grid)
+    {
+        // Direct chase
+        RealCoordinates pac_pos = PacMan.INSTANCE.getPos();
+        path = Node.getPath(this.pos, pac_pos, grid);
+    }
 
+    private void getPathINKYPINKY(Cell[][] grid, MazeConfig mazeConfig)
+    {
+        RealCoordinates pac_pos = PacMan.INSTANCE.getPos();
+        // goes in front
+        for (Direction DIR : new Direction[]{Direction.NORTH, Direction.EAST, Direction.SOUTH, Direction.WEST})
+        {
+            // Depending on the direction pacman is going and if there's a wall at that position,
+            // Choose a path
+            if (PacMan.INSTANCE.getDirection() == DIR)
+            {
+                RealCoordinates nextPos = PacMan.INSTANCE.getPos().plus(DirectionUtils.getVector(DIR));
+                IntCoordinates nextCell = nextPos.round();
+                if (!mazeConfig.getCell(nextCell).isWall())
+                {
+                    path = Node.getPath(this.pos, nextPos, grid);
+                }
+                else
+                {
+                    path = Node.getPath(this.pos, pac_pos, grid);
+                }
+                break;
+            }
+        }
+        if (PacMan.INSTANCE.getDirection() == Direction.NONE)
+        {
+            path = Node.getPath(this.pos, pac_pos, grid);
+        }
+    }
 
-    public void getPathCLYDE(MazeConfig mazeConfig)
+    private void getPathCLYDE(MazeConfig mazeConfig)
     {
         // Random
         RealCoordinates nextPos = pos.plus(DirectionUtils.getVector(direction));
@@ -92,67 +133,106 @@ public enum Ghost implements Critter {
         }
     }
 
+    private void normalPath(Cell[][] grid, MazeConfig mazeConfig)
+    {
+        Debug.out(this + " follows pacman");
+        // Follow pacman
+        path_finding_timer = path_finding_timer_max;
+
+        switch (this)
+        {
+            case BLINKY:
+                getPathBLINKY(grid);
+                break;
+            case INKY, PINKY:
+                getPathINKYPINKY(grid, mazeConfig);
+                break;
+            case CLYDE:
+                getPathCLYDE(mazeConfig);
+                break;
+        }
+    }
+
+    private void frightenedPath(MazeConfig mazeConfig)
+    {
+        Debug.out(this + " runs away from pacman");
+        // Run away from pacman
+        path_finding_timer = path_finding_timer_max;
+        RealCoordinates pacpos = PacMan.INSTANCE.getPos();
+        if (pacpos.round().x() == pos.round().x())
+        {
+            if(pacpos.y() < pos.y())
+            {
+                direction = Direction.SOUTH;
+            }
+            else
+            {
+                direction = Direction.NORTH;
+            }
+        }
+        else if (pacpos.round().y() == pos.round().y())
+        {
+            if(pacpos.x() < pos.x())
+            {
+                direction = Direction.EAST;
+            }
+            else
+            {
+                direction = Direction.WEST;
+            }
+        }
+        RealCoordinates next = pos.plus(DirectionUtils.getVector(direction));
+        IntCoordinates nextcell = next.round();
+        if(mazeConfig.getCell(nextcell).isWall())
+        {
+            // If about to go towards a wall, go random instead
+            getPathCLYDE(mazeConfig);
+        }
+    }
+
+    private void eatenPath(Cell[][] grid, RealCoordinates base_coord)
+    {
+        // Return home because eaten
+        Debug.out(this + " returns to the base bc:\n" + "eaten = " + eaten + "\ncan be eaten: " + frightened + "\npath_finding_timer: " + path_finding_timer);
+        if (path_finding_timer <= 0)
+        {
+            // Get path to the base and renew timer
+            path_finding_timer = path_finding_timer_max;
+            path = Node.getPath(this.pos, base_coord, grid);
+        }
+        if (path.isEmpty())
+        {
+            // If arrived to the base, set eaten and can be eaten false
+            if(eaten)
+            {
+                frightened = false;
+            }
+            eaten = false;
+        }
+    }
+
     public void getPath(Cell[][] grid, MazeConfig mazeConfig, long delta, RealCoordinates base_coord)
     {
         double delta_double = (double) delta;
         path_finding_timer -= delta_double / 1000000000;
-        if((!eaten && path_finding_timer <= 0) || direction == Direction.NONE)
+        boolean bool = path_finding_timer <= 0 || direction == Direction.NONE || eaten || frightened;
+        // If not eaten, cant be eaten, the timer is up or the direction is none, find path to Pacman
+        // Also be allowed to get out of base
+        if(bool && can_it_find_path())
         {
-            // Getting the path to follow.
-
-            path_finding_timer = path_finding_timer_max;
-
-            RealCoordinates pac_pos = PacMan.INSTANCE.getPos();
-            // Direct chase, goes in front, goes in front, random
-            if (this == BLINKY)
+            if (!eaten && !frightened)
             {
-                path = Node.getPath(this.pos, pac_pos, grid);
+                normalPath(grid, mazeConfig);
             }
-            else if (this == INKY || this == PINKY)
+            else if(frightened)
             {
-                // goes in front
-                for (Direction DIR : new Direction[]{Direction.NORTH, Direction.EAST, Direction.SOUTH, Direction.WEST})
-                {
-                    // Depending on the direction pacman is going and if there's a wall at that position,
-                    // Choose a path
-                    if (PacMan.INSTANCE.getDirection() == DIR)
-                    {
-                        RealCoordinates nextPos = PacMan.INSTANCE.getPos().plus(DirectionUtils.getVector(DIR));
-                        IntCoordinates nextCell = nextPos.round();
-                        if (!mazeConfig.getCell(nextCell).isWall())
-                        {
-                            path = Node.getPath(this.pos, nextPos, grid);
-                        }
-                        else
-                        {
-                            path = Node.getPath(this.pos, pac_pos, grid);
-                        }
-                        break;
-                    }
-                }
-                if (PacMan.INSTANCE.getDirection() == Direction.NONE)
-                {
-                    path = Node.getPath(this.pos, pac_pos, grid);
-                }
+                frightenedPath(mazeConfig);
             }
-            else if (this == CLYDE)
+            else
             {
-                getPathCLYDE(mazeConfig);
+                eatenPath(grid, base_coord);
             }
         }
-        else
-        {
-            if(path_finding_timer <= 0)
-            {
-                path_finding_timer = path_finding_timer_max;
-                path = Node.getPath(this.pos, base_coord, grid);
-            }
-            if(path.size() <= 1)
-            {
-                eaten = false;
-            }
-        }
-
     }
 
 

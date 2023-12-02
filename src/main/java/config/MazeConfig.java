@@ -242,10 +242,10 @@ public class MazeConfig {
         return new MazeConfig(grid(),
         						//(x, y)
                 new IntCoordinates(2, 1), // pacman
-                new IntCoordinates(9, 9), // blinky
+                new IntCoordinates(10, 8), // blinky
                 new IntCoordinates(10, 9), // pinky
-                new IntCoordinates(11, 9), // inky
-                new IntCoordinates(10, 8)  // clyde
+                new IntCoordinates(9, 9), // inky
+                new IntCoordinates(11, 9)  // clyde
         ) ;
     }
 

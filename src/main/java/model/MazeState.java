@@ -54,8 +54,8 @@ public final class MazeState {
 
     public void update(long deltaTns) {
     	moveCritters(deltaTns);
-        pacmanUpdate(deltaTns);
-        updateGhosts(deltaTns);
+        boolean ate_energizer = updatePacman(deltaTns);
+        updateGhosts(deltaTns, ate_energizer);
         bonusUpdate(deltaTns);
     }
 
@@ -66,12 +66,13 @@ public final class MazeState {
 
     Uses Pacman functions to update its state
      */
-    private void pacmanUpdate(long deltaTns)
+    private boolean updatePacman(long deltaTns)
     {
-        PacMan.checknEatCell(getConfig(), this.gridState);
+        boolean ate_energizer = PacMan.checknEatCell(getConfig(), this.gridState);
         eatGhosts();
         PacMan.INSTANCE.energizedTimerCount(deltaTns);
         PacmanController.checknWalk(this.config);
+        return ate_energizer;
     }
     private void bonusUpdate(long deltaTns){
         PacMan.eatBonus();
@@ -90,21 +91,20 @@ public final class MazeState {
         List<Critter> close_ghosts = PacMan.INSTANCE.closeGhosts(critters);
         if(!close_ghosts.isEmpty())
         {
-            if(PacMan.INSTANCE.isEnergized())
+            for (Critter g : close_ghosts)
             {
-                for (Critter g : close_ghosts)
+                Ghost ghost = (Ghost)g;
+                if(ghost.frightened && PacMan.INSTANCE.isEnergized())
                 {
-                    Ghost ghost = (Ghost)g;
-                    if(!ghost.isEaten())
-                    {
-                        addScore(10);
-                        ghost.setEaten(true);
-                    }
+                    addScore(10);
+                    ghost.eaten = true;
+                    ghost.frightened = false;
                 }
-            }
-            else
-            {
-                playerLost();
+                else if(!ghost.frightened && !ghost.eaten)
+                {
+                    playerLost();
+                    break;
+                }
             }
         }
     }
@@ -114,21 +114,25 @@ public final class MazeState {
 
     Updates all ghosts
      */
-    public void updateGhosts(long deltaTns)
+    public void updateGhosts(long deltaTns, boolean ate_energizer)
     {
         for(Critter critter : critters)
         {
             if(critter instanceof Ghost)
             {
-                updateGhost(critter, deltaTns);
+                updateGhost(critter, deltaTns, ate_energizer);
             }
         }
     }
 
     // Updates one ghost
-    public void updateGhost(Critter critter, long deltaTns)
+    public void updateGhost(Critter critter, long deltaTns, boolean ate_energizer)
     {
         Ghost ghost = (Ghost) critter;
+        if(ate_energizer)
+        {
+            ghost.frightened = true;
+        }
 
         switch (ghost)
         {
