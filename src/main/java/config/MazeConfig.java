@@ -8,6 +8,13 @@ import java.io.File;
 import java.io.FileReader;
 import static config.Cell.Cellule;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.util.ArrayList;
+
+import static config.Cell.Cellule;
+
 public class MazeConfig {
     public MazeConfig(Cell[][] grid, IntCoordinates pacManPos, IntCoordinates blinkyPos, IntCoordinates pinkyPos,
                       IntCoordinates inkyPos, IntCoordinates clydePos) {
@@ -52,19 +59,62 @@ public class MazeConfig {
     public int getHeight() {
         return grid.length;
     }
-    
+	
+	public Cell[][] getGrid()
+	{
+		return grid;
+	}
+	
     public boolean isPassable(RealCoordinates position) {
     	IntCoordinates pos = position.round();
         return grid[Math.floorMod(pos.y(), getHeight())][Math.floorMod(pos.x(), getWidth())].isPassable();
     }
-    
+	
     public boolean isWall(RealCoordinates position) {
     	IntCoordinates pos = position.round();
         return grid[Math.floorMod(pos.y(), getHeight())][Math.floorMod(pos.x(), getWidth())].isWall();
     }
-    
     public boolean isWall(IntCoordinates pos) {
         return grid[Math.floorMod(pos.y(), getHeight())][Math.floorMod(pos.x(), getWidth())].isWall();
+    }
+
+    public boolean isIntersection(IntCoordinates pos)
+    {
+        boolean[] res = new boolean[4];
+        //NORD
+        if(pos.x() >= 1)
+        {
+            if (!grid[pos.x() - 1][pos.y()].isWall()) //si neighbor n'est pas un mur
+            {
+                res[0] = true;
+            }
+        }
+        //EST
+        if(pos.y() <= grid[0].length-2)
+        {
+            if (!grid[pos.x()][pos.y() + 1].isWall()) //si neighbor n'est pas un mur
+            {
+                res[1] = true;
+            }
+        }
+        //SUD
+        if(pos.x() <= grid.length-2)
+        {
+            if (!grid[pos.x() + 1][pos.y()].isWall()) //si neighbor n'est pas un mur
+            {
+                res[2] = true;
+            }
+        }
+        //OUEST
+        if(pos.y() >= 1)
+        {
+            if (!grid[pos.x()][pos.y() - 1].isWall()) //si neighbor n'est pas un mur
+            {
+                res[3] = true;
+            }
+        }
+
+        return (res[2] || res[0]) && (res[1] || res[3]);
     }
 
     public Cell getCell(IntCoordinates pos) {
@@ -88,23 +138,6 @@ public class MazeConfig {
             ligne++;
         }fr.close();
         return ligne;
-    }
-
-    //compte la longueur d'une ligne dans Maze.txt
-    public static int comptelongueur() throws Exception{
-        File file ;
-        String path =System.getProperty("user.dir") ;
-        try {
-            file =new File(path+"/src/main/resources/Maze.txt");
-        } catch (Exception e ){
-            e.printStackTrace();
-            file =new File(path +"\\src\\main\\resources\\Maze.txt");
-        }
-        FileReader fr = new FileReader(file);
-        BufferedReader r = new BufferedReader(fr);
-        fr.close();
-        return  r.readLine().length() ;
-
     }
 
     // creation du tableau de tableau des cellules
@@ -175,11 +208,11 @@ public class MazeConfig {
     public static MazeConfig make() throws Exception {
         return new MazeConfig(grid(),
         						//(x, y)
-                new IntCoordinates(2, 1), // pacman
-                new IntCoordinates(9, 9), // blinky
-                new IntCoordinates(10, 9), // pinke
-                new IntCoordinates(11, 9), // inky
-                new IntCoordinates(10, 10)  // clyde
+                new IntCoordinates(10, 15), // pacman
+                new IntCoordinates(10, 8), // blinky
+                new IntCoordinates(10, 9), // pinky
+                new IntCoordinates(9, 9), // inky
+                new IntCoordinates(11, 9)  // clyde
         ) ;
     }
 

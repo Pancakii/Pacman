@@ -1,13 +1,11 @@
 package model;
 
-//TESTING
 
 import geometry.RealCoordinates;
 import config.*;
 
 import java.util.ArrayList;
 import java.util.List;
-
 
 
 public final class PacMan implements Critter {
@@ -33,7 +31,7 @@ public final class PacMan implements Critter {
     public static final PacMan INSTANCE = new PacMan();
 
 
-    public static void checknEatCell(MazeConfig grid, boolean[][] grid_state)
+    public static boolean checknEatCell(MazeConfig grid, boolean[][] grid_state)
 	{
 		/*
 		Check if pacman is in a new cell, if so eat the content
@@ -58,8 +56,10 @@ public final class PacMan implements Critter {
 				INSTANCE.energized_timer = INSTANCE.energized_timer_max;// set the energizer timer
 				INSTANCE.setEnergized(true);// set energized true
 				grid_state[y][x] = true;// set the cell state "entered"
+				return true;
 			}
 		}
+		return false;
     }
 
 	public List<Critter> closeGhosts(List<Critter> critters)
@@ -100,7 +100,7 @@ public final class PacMan implements Critter {
 
     @Override
     public double getSpeed() {
-        return isEnergized() ? 6 : 4;
+        return isEnergized() ? 4 : 3;
     }
 
     @Override
@@ -117,7 +117,7 @@ public final class PacMan implements Critter {
     public void setPos(RealCoordinates pos) {
         this.pos = pos;
     }
-	
+
 
 
 	public void energizedTimerCount(long delta)

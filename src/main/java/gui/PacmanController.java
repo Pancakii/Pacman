@@ -7,12 +7,13 @@ import model.PacMan;
 import geometry.RealCoordinates;
 import geometry.IntCoordinates;
 import javafx.scene.input.KeyEvent;
-import misc.Debug;
 
 public class PacmanController {
     private MazeConfig mazeConfig;
+    private static Direction lastDirection =  Direction.EAST ;
     private static Direction newDirection = null;
-    private static Direction lastDirection = null;
+
+
 
     public PacmanController(MazeConfig mazeConfig) {
         this.mazeConfig = mazeConfig;
@@ -38,25 +39,48 @@ public class PacmanController {
 
         if (newDirection != null) {
             RealCoordinates nextPos = PacMan.INSTANCE.getPos().plus(DirectionUtils.getVector(newDirection));
+            nextPos = nextPos.round().toRealCoordinates(1.0);
             IntCoordinates nextCell = nextPos.round();
 
-            if (!mazeConfig.getCell(nextCell).isWall()) {
+            if ( !mazeConfig.getCell(nextCell).isWall() )
+            {
                 PacMan.INSTANCE.setDirection(newDirection);
                 lastDirection = null; // Reset pending direction when setting a new direction
             } else {
             	lastDirection = newDirection;
                 newDirection = null;
+                //Debug.out(lastDirection.toString());
+
             }
         }
+        else
+        {
+            newDirection = lastDirection;
+        }
+
     }
 
-    public static void checknWalk(MazeConfig mazeConfig) {
-        if (newDirection == null && lastDirection != null) {
+    public static void checknWalk ( MazeConfig mazeConfig)
+    {
+        if ( newDirection == null)
+        {
             RealCoordinates nextPos = PacMan.INSTANCE.getPos().plus(DirectionUtils.getVector(lastDirection));
+            nextPos = nextPos.round().toRealCoordinates(1.0);
             IntCoordinates nextCell = nextPos.round();
-            if (!mazeConfig.getCell(nextCell).isWall()) {
+
+
+            if (!mazeConfig.getCell(nextCell).isWall())
+            {
                 PacMan.INSTANCE.setDirection(lastDirection);
-                lastDirection = null;
+                newDirection = lastDirection;
+                if(PacMan.INSTANCE.getPos().smallDiff(nextPos))
+                {
+                    PacMan.INSTANCE.setPos(nextPos);
+                }
+                else
+                {
+                    PacMan.INSTANCE.setPos(PacMan.INSTANCE.getPos().round().toRealCoordinates(1.0));
+                }
             }
         }
     }

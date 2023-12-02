@@ -11,30 +11,22 @@ import model.MazeState;
 public class Jeu  implements EventHandler<ActionEvent> {
 
     private static Pane root = new Pane();
-    private static PacmanController pacmanController;
+
+    private static MazeConfig mazeConfig;
 
     static {
         try {
-            pacmanController = new PacmanController(MazeConfig.make());
+            mazeConfig = MazeConfig.make();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
 
-    ;
+    private static PacmanController pacmanController = new PacmanController(mazeConfig);
+
+	
     private static Scene gameScene = new Scene(root);
-    private static MazeState maze;
-
-    static {
-        try {
-            maze = new MazeState(MazeConfig.make());
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    ;
-    private ElementObservableListDecorator<Object> graphicsUpdaters;
+    private static MazeState maze = new MazeState(mazeConfig);
 
     private static boolean lancer = false;
 

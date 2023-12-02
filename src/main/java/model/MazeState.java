@@ -6,6 +6,8 @@ import geometry.IntCoordinates;
 import geometry.RealCoordinates;
 import gui.GameOver;
 import misc.Debug;
+
+import java.util.ArrayList;
 import java.util.Set;
 import java.util.List;
 import java.util.Map;
@@ -54,22 +56,27 @@ public final class MazeState {
 
 
     public void update(long deltaTns) {
-    	this.Neighbours(deltaTns);
-        pacmanUpdate(deltaTns);
+    	moveCritters(deltaTns);
+        boolean ate_energizer = updatePacman(deltaTns);
+        updateGhosts(deltaTns, ate_energizer);
         bonusUpdate(deltaTns);
         updateMap();
     }
 
 
     /*
+    PACMAN FUNCTIONS
+
+
     Uses Pacman functions to update its state
      */
-    private void pacmanUpdate(long deltaTns)
+    private boolean updatePacman(long deltaTns)
     {
-        PacMan.checknEatCell(getConfig(), this.gridState);
+        boolean ate_energizer = PacMan.checknEatCell(getConfig(), this.gridState);
         eatGhosts();
         PacMan.INSTANCE.energizedTimerCount(deltaTns);
         PacmanController.checknWalk(this.config);
+        return ate_energizer;
     }
     
     private void bonusUpdate(long deltaTns){
@@ -84,6 +91,8 @@ public final class MazeState {
             resetGridState();
             PacMan.setCountDotTotal(0);
             PacMan.setLevel(PacMan.getLevel()+1);
+			resetCritters();
+			
         }
     }
 
@@ -97,23 +106,71 @@ public final class MazeState {
         List<Critter> close_ghosts = PacMan.INSTANCE.closeGhosts(critters);
         if(!close_ghosts.isEmpty())
         {
-            if(PacMan.INSTANCE.isEnergized())
+            for (Critter g : close_ghosts)
             {
-                for (Critter ghost : close_ghosts) {
+                Ghost ghost = (Ghost)g;
+                if(ghost.frightened && PacMan.INSTANCE.isEnergized())
+                {
+                    Debug.out(">>>>>>>>>>>>>>>>>>>>>>>Pacman ate " + ghost);
                     addScore(10);
-                    resetCritter(ghost);
+                    ghost.eaten = true;
+                    ghost.frightened = false;
                 }
-            }
-            else
-            {
-                playerLost();
+                if(!ghost.frightened && !ghost.eaten)
+                {
+                    Debug.out("==============================Pacman died==============================");
+                    playerLost();
+                    break;
+                }
             }
         }
     }
 
-    private void Neighbours(long deltaTns) {
+    /*
+    GHOST FUNCTIONS
+
+    Updates all ghosts
+     */
+    public void updateGhosts(long deltaTns, boolean ate_energizer)
+    {
+        for(Critter critter : critters)
+        {
+            if(critter instanceof Ghost)
+            {
+                updateGhost(critter, deltaTns, ate_energizer);
+            }
+        }
+    }
+
+    // Updates one ghost
+    public void updateGhost(Critter critter, long deltaTns, boolean ate_energizer)
+    {
+        Ghost ghost = (Ghost) critter;
+        if(ate_energizer)
+        {
+            ghost.frightened = true;
+            ghost.resetPath();
+        }
+        if(!PacMan.INSTANCE.isEnergized())
+        {
+            ghost.frightened = false;
+        }
+
+        ghost.scatterChaseTimer(deltaTns);
+
+        switch (ghost)
+        {
+            case BLINKY : ghost.getPath(config.getGrid(), config, deltaTns, config.getInkyPos().toRealCoordinates(1.0));
+            case INKY : ghost.getPath(config.getGrid(), config, deltaTns, config.getInkyPos().toRealCoordinates(1.0));
+            case PINKY : ghost.getPath(config.getGrid(), config, deltaTns, config.getPinkyPos().toRealCoordinates(1.0));
+            case CLYDE : ghost.getPath(config.getGrid(), config, deltaTns, config.getClydePos().toRealCoordinates(1.0));
+        }
+        ghost.followPath();
+    }
+
+
+    private void moveCritters(long deltaTns) {
         for (var critter : critters) {
-            var curPos = critter.getPos();
             var nextPos = critter.nextPos(deltaTns);
 
             // Check if the next position is valid
@@ -126,7 +183,7 @@ public final class MazeState {
     }
 
     private boolean isValidPosition(RealCoordinates pos, Direction direction, Critter critter) {
-    	
+
         // Verifie si la prochaine position est un mur ou est passable
         if (config.isWall(pos) || 
             (critter == PacMan.INSTANCE && !config.isPassable(pos)) || 

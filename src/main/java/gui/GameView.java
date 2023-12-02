@@ -13,11 +13,6 @@ public class GameView {
     private final Pane gameRoot; // main node of the game
     private final List<GraphicsUpdater> graphicsUpdaters;
 
-    public List<GraphicsUpdater> getGraphicsUpdaters() {
-        return graphicsUpdaters;
-    }
-
-
     private void addGraphics(GraphicsUpdater updater) {
         gameRoot.getChildren().add(updater.getNode());
         graphicsUpdaters.add(updater);
@@ -49,7 +44,7 @@ public class GameView {
                     addGraphics(cellFactory.makeGraphics(maze, new IntCoordinates(x, y)));
 
             addGraphics(affichageScore.displayScore(root));
-            addGraphics(afficheVie.remainingLife(root));
+            addGraphics(afficheVie.remainingLife());
             addGraphics(BonusFactory.afficheBonus());
 
 
