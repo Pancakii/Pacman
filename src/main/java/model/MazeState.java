@@ -107,14 +107,14 @@ public final class MazeState {
                 Ghost ghost = (Ghost)g;
                 if(ghost.frightened && PacMan.INSTANCE.isEnergized())
                 {
-                    Debug.out("Pacman ate" + ghost);
+                    Debug.out(">>>>>>>>>>>>>>>>>>>>>>>Pacman ate " + ghost);
                     addScore(10);
                     ghost.eaten = true;
                     ghost.frightened = false;
                 }
                 if(!ghost.frightened && !ghost.eaten)
                 {
-                    Debug.out("Pacman died");
+                    Debug.out("==============================Pacman died==============================");
                     playerLost();
                     break;
                 }

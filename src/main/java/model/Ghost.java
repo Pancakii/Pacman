@@ -198,6 +198,8 @@ public enum Ghost implements Critter {
     {
         Debug.out(this + " runs away from pacman");
         // Run away from pacman
+		path = new ArrayList<>();
+		
         path_finding_timer = path_finding_timer_max;
         RealCoordinates pacpos = PacMan.INSTANCE.getPos();
         if (pacpos.round().x() == pos.round().x())
@@ -243,12 +245,16 @@ public enum Ghost implements Critter {
         }
         if (path.isEmpty())
         {
+			// Either arrived at base or Pacman follow location
             // If arrived to the base, set eaten and can be eaten false
-            if(eaten)
-            {
-                frightened = false;
-            }
-            eaten = false;
+			if(pos.round().same(base_coord.round()))
+			{
+				if(eaten)
+				{
+					frightened = false;
+				}
+				eaten = false;
+			}
         }
     }
 

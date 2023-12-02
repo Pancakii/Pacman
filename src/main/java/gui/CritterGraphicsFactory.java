@@ -68,38 +68,70 @@ public final class CritterGraphicsFactory {
         double energizedTimer = PacMan.INSTANCE.getEnergized_timer();
         switch (ghost) {
             case BLINKY -> {
-                if (energized && energizedTimer > 3) {
-                    return ghostWhenPacmanEnergized;
-                } else if (energized && energizedTimer > 0) {
-                    return ghostWhenPacmanEnergizedEnd;
-                }else {
+				if(ghost.frightened)
+				{
+					if (energized && energizedTimer > 3) 
+					{
+						return ghostWhenPacmanEnergized;
+					} 
+					else if (energized && energizedTimer > 0) 
+					{
+						return ghostWhenPacmanEnergizedEnd;
+					}
+				}
+				else 
+				{
                     return blinky;
                 }
             }
             case CLYDE -> {
-                if (energized && energizedTimer > 3) {
-                    return ghostWhenPacmanEnergized;
-                } else if (energized && energizedTimer > 0) {
-                    return ghostWhenPacmanEnergizedEnd;
-                }else {
+                if(ghost.frightened)
+				{
+					if (energized && energizedTimer > 3) 
+					{
+						return ghostWhenPacmanEnergized;
+					} 
+					else if (energized && energizedTimer > 0) 
+					{
+						return ghostWhenPacmanEnergizedEnd;
+					}
+				}
+				else 
+				{
                     return clyde;
                 }
             }
             case INKY -> {
-                if (energized && energizedTimer > 3) {
-                    return ghostWhenPacmanEnergized;
-                } else if (energized && energizedTimer > 0) {
-                    return ghostWhenPacmanEnergizedEnd;
-                }else {
+                if(ghost.frightened)
+				{
+					if (energized && energizedTimer > 3) 
+					{
+						return ghostWhenPacmanEnergized;
+					} 
+					else if (energized && energizedTimer > 0) 
+					{
+						return ghostWhenPacmanEnergizedEnd;
+					}
+				}
+				else 
+				{
                     return inky;
                 }
             }
             case PINKY -> {
-                if (energized && energizedTimer > 3) {
-                    return ghostWhenPacmanEnergized;
-                } else if (energized && energizedTimer > 0) {
-                    return ghostWhenPacmanEnergizedEnd;
-                } else {
+                if(ghost.frightened)
+				{
+					if (energized && energizedTimer > 3) 
+					{
+						return ghostWhenPacmanEnergized;
+					} 
+					else if (energized && energizedTimer > 0) 
+					{
+						return ghostWhenPacmanEnergizedEnd;
+					}
+				}
+				else 
+				{
                     return pinky;
                 }
             }
