@@ -1,5 +1,6 @@
 package model;
 
+import gui.BonusGraphics;
 import gui.PacmanController;
 import javafx.scene.text.*;
 import config.MazeConfig;
@@ -58,6 +59,7 @@ public final class MazeState {
     	this.Neighbours(deltaTns);
         pacmanUpdate(deltaTns);
         bonusUpdate(deltaTns);
+        updateMap();
     }
 
 
@@ -75,6 +77,14 @@ public final class MazeState {
         PacMan.eatBonus();
         if ( Bonus.canHaveBonus()) {
             Bonus.INSTANCE.bonusTimer(deltaTns);
+        }
+    }
+
+    public void updateMap(){
+        if ( PacMan.getCountDotTotal()==PacMan.getDotTotal()){
+            resetGridState();
+            PacMan.setCountDotTotal(0);
+            PacMan.setLevel(PacMan.getLevel()+1);
         }
     }
 
