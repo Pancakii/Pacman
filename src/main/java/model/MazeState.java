@@ -116,35 +116,33 @@ public final class MazeState {
             var curPos = critter.getPos();
             var nextPos = critter.nextPos(deltaTns);
 
-            // Print debug information
-            /*System.out.println("Current Position: " + curPos);
-            System.out.println("Next Position: " + nextPos);*/
-
             // Check if the next position is valid
-            if (isValidPosition(nextPos, critter.getDirection())) {
+            if (isValidPosition(nextPos, critter.getDirection(), critter)) {
                 critter.setPos(nextPos.warp(width, height));
-            }else {
-            	critter.setPos(nextPos.warp(width, height).round().toRealCoordinates(1.0));
+            } else {
+                critter.setPos(nextPos.warp(width, height).round().toRealCoordinates(1.0));
             }
         }
     }
 
-    private boolean isValidPosition(RealCoordinates pos, Direction direction) {
-        // Verifie si la prochaine position est un mur
-        if (config.isWall(pos)) {
+    private boolean isValidPosition(RealCoordinates pos, Direction direction, Critter critter) {
+    	
+        // Verifie si la prochaine position est un mur ou est passable
+        if (config.isWall(pos) || (critter == PacMan.INSTANCE && !config.isPassable(pos))) {
             return false;
         }
 
         // Verifie si les prochains basees sur la prochaine direction sont des murs
         Set<IntCoordinates> curNeighbours = pos.intNeighbours();
         for (IntCoordinates neighbour : curNeighbours) {
-            if (config.isWall(neighbour)) {
+            if (config.isWall(neighbour) || !config.getCell(neighbour).isPassable()) {
                 return false;
             }
         }
 
         return true;
     }
+
 
     public static void addScore(int increment) {
         score += increment;
