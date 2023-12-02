@@ -176,6 +176,9 @@ public final class PacMan implements Critter {
 		return countDot;
 	}
 
+	public static void setCountDot(int countDot) {
+		PacMan.countDot = countDot;
+	}
 	public static int getCountDotTotal() {
 		return countDotTotal;
 	}

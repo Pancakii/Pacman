@@ -1,6 +1,5 @@
 package model;
 
-import gui.BonusGraphics;
 import gui.PacmanController;
 import config.MazeConfig;
 import geometry.IntCoordinates;
@@ -214,7 +213,8 @@ public final class MazeState {
         MazeState.score = 0;
         resetGridState();
         resetCritters();
-
+        PacMan.setLevel(1);
+        PacMan.setCountDot(0);
     }
 
     private void resetCritter(Critter critter) {
