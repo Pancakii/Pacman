@@ -185,8 +185,7 @@ public final class MazeState {
     private boolean isValidPosition(RealCoordinates pos, Direction direction, Critter critter) {
 
         // Verifie si la prochaine position est un mur ou est passable
-        if (config.isWall(pos) || 
-            (critter == PacMan.INSTANCE && !config.isPassable(pos)) || 
+        if 	(critter == PacMan.INSTANCE && config.isWall(pos) || 
             (critter != PacMan.INSTANCE && config.isWall(pos) && !config.isPassable(pos))) {
             return false;
         }
