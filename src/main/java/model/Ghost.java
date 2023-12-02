@@ -24,6 +24,12 @@ public enum Ghost implements Critter {
     private final double path_finding_timer_max = 0.3;
     private double path_finding_timer = 0;
 
+    private final double scatter_timer_max = 7;
+    private double scatter_timer = scatter_timer_max;
+
+    private final double chase_timer_max = 20;
+    private double chase_timer = 0;
+
     @Override
     public RealCoordinates getPos() {
         return pos;
@@ -52,6 +58,33 @@ public enum Ghost implements Critter {
             res = 8;
         }
         return res;
+    }
+
+    public void scatterChaseTimer(long d)
+    {
+        // sets one of the values to 0 and the other to the max, or just does time stuff
+        double delta = (double) d;
+        // Work on either chase or scatter timer, depending on values
+        if(chase_timer > 0)
+        {
+            chase_timer -= delta;
+            if (chase_timer <= 0)
+            {
+                // If enters this if block, it means its scatter's turn
+                chase_timer = 0;
+                scatter_timer = scatter_timer_max;
+            }
+        }
+        else
+        {
+            scatter_timer -= delta;
+            if (scatter_timer <= 0)
+            {
+                // If enters this if block, it means its chase's turn
+                scatter_timer = 0;
+                chase_timer = chase_timer_max;
+            }
+        }
     }
 
     public boolean can_it_find_path()
@@ -135,21 +168,29 @@ public enum Ghost implements Critter {
 
     private void normalPath(Cell[][] grid, MazeConfig mazeConfig)
     {
-        Debug.out(this + " follows pacman");
-        // Follow pacman
+        // Follow pacman using own behavior
         path_finding_timer = path_finding_timer_max;
 
-        switch (this)
+        // If chase time, then chase pacman. If not, move randomly around the map
+        if(chase_timer > 0)
         {
-            case BLINKY:
-                getPathBLINKY(grid);
-                break;
-            case INKY, PINKY:
-                getPathINKYPINKY(grid, mazeConfig);
-                break;
-            case CLYDE:
-                getPathCLYDE(mazeConfig);
-                break;
+            Debug.out(this + " follows pacman");
+            switch (this) {
+                case BLINKY:
+                    getPathBLINKY(grid);
+                    break;
+                case INKY, PINKY:
+                    getPathINKYPINKY(grid, mazeConfig);
+                    break;
+                case CLYDE:
+                    getPathCLYDE(mazeConfig);
+                    break;
+            }
+        }
+        else
+        {
+            Debug.out(this + " goes randomly");
+            getPathCLYDE(mazeConfig);
         }
     }
 
@@ -213,6 +254,7 @@ public enum Ghost implements Critter {
 
     public void getPath(Cell[][] grid, MazeConfig mazeConfig, long delta, RealCoordinates base_coord)
     {
+        Debug.out(this + "\nfrightened: " + frightened + "\neaten: " + eaten);
         double delta_double = (double) delta;
         path_finding_timer -= delta_double / 1000000000;
         boolean bool = path_finding_timer <= 0 || direction == Direction.NONE || eaten || frightened;

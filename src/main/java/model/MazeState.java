@@ -5,6 +5,7 @@ import config.MazeConfig;
 import geometry.IntCoordinates;
 import geometry.RealCoordinates;
 import gui.GameOver;
+import misc.Debug;
 
 import java.util.List;
 import java.util.Map;
@@ -96,12 +97,14 @@ public final class MazeState {
                 Ghost ghost = (Ghost)g;
                 if(ghost.frightened && PacMan.INSTANCE.isEnergized())
                 {
+                    Debug.out("Pacman ate" + ghost);
                     addScore(10);
                     ghost.eaten = true;
                     ghost.frightened = false;
                 }
-                else if(!ghost.frightened && !ghost.eaten)
+                if(!ghost.frightened && !ghost.eaten)
                 {
+                    Debug.out("Pacman died");
                     playerLost();
                     break;
                 }
@@ -133,10 +136,16 @@ public final class MazeState {
         {
             ghost.frightened = true;
         }
+        if(!PacMan.INSTANCE.isEnergized())
+        {
+            ghost.frightened = false;
+        }
+
+        ghost.scatterChaseTimer(deltaTns);
 
         switch (ghost)
         {
-            case BLINKY : ghost.getPath(config.getGrid(), config, deltaTns, config.getBlinkyPos().toRealCoordinates(1.0));
+            case BLINKY : ghost.getPath(config.getGrid(), config, deltaTns, config.getInkyPos().toRealCoordinates(1.0));
             case INKY : ghost.getPath(config.getGrid(), config, deltaTns, config.getInkyPos().toRealCoordinates(1.0));
             case PINKY : ghost.getPath(config.getGrid(), config, deltaTns, config.getPinkyPos().toRealCoordinates(1.0));
             case CLYDE : ghost.getPath(config.getGrid(), config, deltaTns, config.getClydePos().toRealCoordinates(1.0));
