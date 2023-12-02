@@ -5,7 +5,6 @@ import config.MazeConfig;
 import geometry.IntCoordinates;
 import geometry.RealCoordinates;
 import gui.GameOver;
-import misc.Debug;
 
 import java.util.List;
 import java.util.Map;
@@ -143,7 +142,6 @@ public final class MazeState {
         if(MazeState.lives == 0){
             GameOver.affichageGameOver();
             resetGame();
-            Debug.out(""+PacMan.getCountDot());
         }
         resetCritters();
     }
