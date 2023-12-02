@@ -14,12 +14,14 @@ public final class PacMan implements Critter {
     private boolean energized;
 	private final double energized_timer_max = 10;
 	private double energized_timer;
-
+	private static int  level  ;
 	private static int countDot  ;
+	private static int countDotTotal  ;
+	private static final int dotTotal = 151 ;
 
 
 
-	// We should be able to change the position 
+	// We should be able to change the position
 	// when we change the level.
     private PacMan()
 	{
@@ -43,12 +45,14 @@ public final class PacMan implements Critter {
 			{
 				MazeState.addScore(1);// add 1 to the score
 				countDot++;
+				countDotTotal++;
 				grid_state[y][x] = true;// set the cell state "entered"
 			}
 			else if (grid.getCell(pacPos).aEnergizer())// if the unentered cell contains an energizer
 			{
 				MazeState.addScore(10);// add 10 to the score
 				countDot++;
+				countDotTotal++ ;
 				INSTANCE.energized_timer = INSTANCE.energized_timer_max;// set the energizer timer
 				INSTANCE.setEnergized(true);// set energized true
 				grid_state[y][x] = true;// set the cell state "entered"
@@ -84,7 +88,9 @@ public final class PacMan implements Critter {
 		pos = new RealCoordinates(x, y);
 		energized = e;
 		energized_timer = 0;
+		level = 1 ;
 		countDot = 0 ;
+		countDotTotal = 0 ;
 	}
 
     @Override
@@ -159,11 +165,26 @@ public final class PacMan implements Critter {
     }
 
 	public static int getLevel() {
-		return 1;
+		return level ;
+	}
+
+	public static void setLevel(int levels) {
+		level = levels;
 	}
 
 	public static int getCountDot() {
 		return countDot;
 	}
 
+	public static int getCountDotTotal() {
+		return countDotTotal;
+	}
+
+	public static int getDotTotal() {
+		return dotTotal;
+	}
+
+	public static void setCountDotTotal(int countDotTotal) {
+		PacMan.countDotTotal = countDotTotal;
+	}
 }

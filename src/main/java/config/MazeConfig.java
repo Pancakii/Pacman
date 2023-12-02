@@ -1,8 +1,12 @@
 package config;
 
+import javafx.scene.text.Text;
+import geometry.RealCoordinates;
 import geometry.IntCoordinates;
-import java.io.* ;
-import static config.Cell.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import static config.Cell.Cellule;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -55,9 +59,16 @@ public class MazeConfig {
     public int getHeight() {
         return grid.length;
     }
-
-    public Cell[][] getGrid() {return grid;}
-
+	
+	public Cell[][] getGrid()
+	{
+		return grid;
+	}
+	
+    public boolean isWall(RealCoordinates position) {
+    	IntCoordinates pos = position.round();
+        return grid[Math.floorMod(pos.y(), getHeight())][Math.floorMod(pos.x(), getWidth())].isWall();
+    }
     public boolean isWall(IntCoordinates pos) {
         return grid[Math.floorMod(pos.y(), getHeight())][Math.floorMod(pos.x(), getWidth())].isWall();
     }
@@ -144,6 +155,7 @@ public class MazeConfig {
     public Cell getCell(IntCoordinates pos) {
         return grid[Math.floorMod(pos.y(), getHeight())][Math.floorMod(pos.x(), getWidth())];
     }
+    
     // compte le nombre ligne dans le fichier Maze.txt
     public static int compteligne() throws Exception {
         String path =System.getProperty("user.dir") ;
@@ -194,7 +206,7 @@ public class MazeConfig {
         FileReader fr = new FileReader(file);
         BufferedReader r = new BufferedReader(fr);
         String str;
-        String firstLine = r.readLine();
+        String firstLine = r.readLine(); 
         int maxCols = firstLine.length(); // Obtiens la longueur de la première ligne
         int numRows = compteligne(); // Utilise la fonction pour obtenir le nombre de lignes
 
@@ -234,8 +246,11 @@ public class MazeConfig {
             }
             j++;
         }
+        
         return maze;
     }
+
+    
     // configuration du maze
     // placement de pacman et des ghost a fixer
     public static MazeConfig make() throws Exception {

@@ -52,38 +52,14 @@ public class Bonus {
     //retourne le point de chaque bonus
     public static int pointBonus(){
         switch (PacMan.getLevel()){
-            case 1 -> {
-                point = 100 ;
-                return point ;
-            }
-            case 2 -> {
-                point = 300 ;
-                return point ;
-            }
-            case 3, 4 -> {
-                point = 500 ;
-                return point ;
-            }
-            case 5, 6 -> {
-                point = 700 ;
-                return point ;
-            }
-            case 7, 8 -> {
-                point = 1000 ;
-                return point ;
-            }
-            case 9, 10 -> {
-                point = 2000 ;
-                return point ;
-            }
-            case 11, 12 -> {
-                point = 3000 ;
-                return point ;
-            }
-            case 13 -> {
-                point = 5000 ;
-                return point ;
-            }
+            case 1 -> point = 100 ;
+            case 2 -> point = 300 ;
+            case 3, 4 -> point = 500 ;
+            case 5, 6 -> point = 700 ;
+            case 7, 8 -> point = 1000 ;
+            case 9, 10 -> point = 2000 ;
+            case 11, 12 -> point = 3000 ;
+            case 13 -> point = 5000 ;
         }
         return point ;
     }

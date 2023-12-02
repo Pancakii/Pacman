@@ -45,18 +45,9 @@ public class PacmanController {
             if ( !mazeConfig.getCell(nextCell).isWall() )
             {
                 PacMan.INSTANCE.setDirection(newDirection);
-                if(PacMan.INSTANCE.getPos().smallDiff(nextPos))
-                {
-                    PacMan.INSTANCE.setPos(nextPos);
-                }
-                else
-                {
-                    PacMan.INSTANCE.setPos(PacMan.INSTANCE.getPos().round().toRealCoordinates(1.0));
-                }
-            }
-            else
-            {
-                lastDirection = newDirection;
+                lastDirection = null; // Reset pending direction when setting a new direction
+            } else {
+            	lastDirection = newDirection;
                 newDirection = null;
                 //Debug.out(lastDirection.toString());
 
