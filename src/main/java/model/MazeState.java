@@ -1,8 +1,6 @@
 package model;
 
-import gui.BonusGraphics;
 import gui.PacmanController;
-import javafx.scene.text.*;
 import config.MazeConfig;
 import geometry.IntCoordinates;
 import geometry.RealCoordinates;
@@ -166,7 +164,8 @@ public final class MazeState {
         MazeState.score = 0;
         resetGridState();
         resetCritters();
-
+        PacMan.setLevel(1);
+        PacMan.setCountDot(0);
     }
 
     private void resetCritter(Critter critter) {
