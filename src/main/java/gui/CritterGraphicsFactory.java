@@ -1,14 +1,11 @@
 package gui;
 
-import javafx.application.Platform;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import model.Critter;
-import model.Direction;
 import model.Ghost;
 import model.PacMan;
-import misc.Debug;
 
 
 public final class CritterGraphicsFactory {

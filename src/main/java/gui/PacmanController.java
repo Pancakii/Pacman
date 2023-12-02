@@ -45,7 +45,6 @@ public class PacmanController {
                 lastDirection = null; // Reset pending direction when setting a new direction
             } else {
             	lastDirection = newDirection;
-                Debug.out(lastDirection.toString());
                 newDirection = null;
             }
         }

@@ -34,7 +34,7 @@ public final class BonusGraphics {
         this.galaxian = new ImageView(new Image("BonusGalaxian.png" , scale*size , scale*size , true , true )) ;
         this.cloche = new ImageView(new Image("BonusCloche.png" , scale*size , scale*size , true , true )) ;
         this.cle = new ImageView(new Image("BonusCle.png" , scale*size , scale*size , true , true )) ;
-        this.instance = null ;
+        this.instance = cerise ;
         this.x = (10 + (1 - size) / 2) * scale ;
         this.y = (11 + (1 - size) / 2) * scale ;
 
@@ -42,59 +42,34 @@ public final class BonusGraphics {
 
     // retourne une image en fonction du niveau du jeu
     public ImageView updateImageBonus (){
-        if ( PacMan.getLevel()<=13) {
             switch (PacMan.getLevel()) {
-                case 1 -> {
-                    this.instance = this.cerise;
-                    return this.cerise;
-                }
-                case 2 -> {
-                    this.instance = this.fraise;
-                    return this.fraise;
-                }
-                case 3, 4 -> {
-                    this.instance = this.orange;
-                    return this.orange;
-                }
-                case 5, 6 -> {
-                    this.instance = this.pomme;
-                    return this.pomme;
-                }
-                case 7, 8 -> {
-                    this.instance = this.melon;
-                    return this.melon;
-                }
-                case 9, 10 -> {
-                    this.instance = this.galaxian;
-                    return this.galaxian;
-                }
-                case 11, 12 -> {
-                    this.instance = this.cloche;
-                    return this.cloche;
-                }
-                case 13 -> {
-                    this.instance = this.cle;
-                    return this.cle;
-                }
+                case 1 -> this.instance = this.cerise;
+                case 2 -> this.instance = this.fraise;
+                case 3, 4 -> this.instance = this.orange;
+                case 5, 6 -> this.instance = this.pomme;
+                case 7, 8 -> this.instance = this.melon;
+                case 9, 10 -> this.instance = this.galaxian;
+                case 11, 12 -> this.instance = this.cloche;
+                case 13 -> this.instance = this.cle;
             }
-        }
         return this.instance ;
     }
 
 
     public GraphicsUpdater afficheBonus (){
-        var image = updateImageBonus() ;
-        image.setTranslateX(x);
-        image.setTranslateY(y);
+        ImageView imageView = new ImageView( updateImageBonus().getImage());
+        imageView.setTranslateX(x);
+        imageView.setTranslateY(y);
         return new GraphicsUpdater() {
             @Override
             public void update() {
-                image.setVisible(Bonus.appartionFruit());
+                imageView.setImage(updateImageBonus().getImage());
+                imageView.setVisible(Bonus.appartionFruit());
             }
 
             @Override
             public Node getNode() {
-                return image;
+                return imageView;
             }
         };
     }
