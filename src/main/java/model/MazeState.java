@@ -135,7 +135,7 @@ public final class MazeState {
         // Verifie si les prochains basees sur la prochaine direction sont des murs
         Set<IntCoordinates> curNeighbours = pos.intNeighbours();
         for (IntCoordinates neighbour : curNeighbours) {
-            if (config.isWall(neighbour) || !config.getCell(neighbour).isPassable()) {
+            if (config.isWall(neighbour) || (critter == PacMan.INSTANCE && !config.isPassable(pos))) {
                 return false;
             }
         }
