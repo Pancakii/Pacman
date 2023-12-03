@@ -1,6 +1,7 @@
 package gui;
 
 import com.sun.javafx.collections.ElementObservableListDecorator;
+import javafx.scene.input.KeyCode;
 import config.MazeConfig;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -8,10 +9,8 @@ import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import model.MazeState;
 
-public class Jeu  implements EventHandler<ActionEvent> {
-
+public class Jeu implements EventHandler<ActionEvent> {
     private static Pane root = new Pane();
-
     private static MazeConfig mazeConfig;
 
     static {
@@ -23,32 +22,33 @@ public class Jeu  implements EventHandler<ActionEvent> {
     }
 
     private static PacmanController pacmanController = new PacmanController(mazeConfig);
-
-	
     private static Scene gameScene = new Scene(root);
     private static MazeState maze = new MazeState(mazeConfig);
-
     private static boolean lancer = false;
-
-    private static GameView gameView = new GameView(maze, root, 35.0);;
+    private static GameView gameView = new GameView(maze, root, 35.0, maze.getWidth() - 75, (maze.getHeight() * 18.0)/2);
 
     public static void Game() throws Exception {
         App.menu.setTitle("Pacman"); // Ajouter un nom a la page
 
-        gameScene.setOnKeyPressed(pacmanController::keyPressedHandler);
+        gameScene.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.SPACE) {
+                gameView.togglePause();
+            } else {
+                pacmanController.keyPressedHandler(event);
+            }
+        });
+
         gameScene.setOnKeyReleased(pacmanController::keyReleasedHandler);
         App.menu.setWidth(maze.getWidth() * 35.0);
         App.menu.setHeight(maze.getHeight() * 36.0);
         App.menu.setScene(gameScene);
 
-        if(!lancer){
+        if (!lancer) {
             gameView.animate();
-
         }
 
         App.menu.show();
         lancer = true;
-
     }
 
     @Override
