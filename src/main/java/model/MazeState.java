@@ -54,12 +54,14 @@ public final class MazeState {
     }
 
 
-    public void update(long deltaTns) {
-    	moveCritters(deltaTns);
-        boolean ate_energizer = updatePacman(deltaTns);
-        updateGhosts(deltaTns, ate_energizer);
-        bonusUpdate(deltaTns);
-        updateMap();
+    public void update(long deltaTns, boolean pause) {
+    	if(!pause) {
+    		moveCritters(deltaTns);
+            boolean ate_energizer = updatePacman(deltaTns);
+            updateGhosts(deltaTns, ate_energizer);
+            bonusUpdate(deltaTns);
+            updateMap();
+    	}
     }
 
 
@@ -169,7 +171,7 @@ public final class MazeState {
     private void moveCritters(long deltaTns) {
         for (var critter : critters) {
             var nextPos = critter.nextPos(deltaTns, PacMan.getLevel());
-
+			
             // Check if the next position is valid
             if (isValidPosition(nextPos, critter)) {
                 critter.setPos(nextPos.warp(width, height));
@@ -182,8 +184,8 @@ public final class MazeState {
     private boolean isValidPosition(RealCoordinates pos, Critter critter) {
 
         // Verifie si la prochaine position est un mur ou est passable
-        if 	(critter == PacMan.INSTANCE && !config.isPassable(pos) ||
-            (critter != PacMan.INSTANCE && config.isWall(pos))) {
+        if 	(critter == PacMan.INSTANCE && config.isWall(pos) || 
+            (critter != PacMan.INSTANCE && config.isWall(pos) && !config.isPassable(pos))) {
             return false;
         }
 
