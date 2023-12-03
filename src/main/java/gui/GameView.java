@@ -53,12 +53,12 @@ public class GameView {
             addGraphics(afficheVie.remainingLife());
 		    addGraphics(BonusFactory.afficheBonus());
 		
-		// Créer le texte de pause
+		// Crée le texte de pause
 		pauseText = new Text("Pause");
 		pauseText.setFont(Font.font(200));
 	    pauseText.setFill(Color.rgb(255, 165, 0));
 		
-	    // Créer le background du texte
+	    // Crée le background du texte et de ses valeurs
 	     backgroundRect = new Rectangle(maze.getWidth() * 40.0, 200); 
 	     backgroundRect.setFill(Color.rgb(15, 5, 107, 0.9)); // Définir la couleur du fond avec une opacité de 50%
 
@@ -66,15 +66,16 @@ public class GameView {
 	    pauseText.setVisible(false);
 		backgroundRect.setVisible(false);
 	    
-	    //Centre le texte + background
+	    //Centrer le texte
 	    StackPane centerPane = new StackPane();
 	    centerPane.getChildren().addAll(backgroundRect, pauseText);
 	    StackPane.setAlignment(pauseText, Pos.CENTER);
 	    centerPane.setLayoutX(pauseTextX);
         centerPane.setLayoutY(pauseTextY);
 
-	    // Ajoute le StackPane au root
-	    root.getChildren().add(centerPane);      
+	    // Ajouter le StackPane au root
+	    root.getChildren().add(centerPane);
+	        
     }
 
     public void animate() {
@@ -99,7 +100,7 @@ public class GameView {
     
     public void togglePause() {
         isPaused = !isPaused;
-        // Afficher ou masquer le texte de pause en fonction de l'état de pause
+        // Affiche ou masque le texte de pause en fonction de l'état de pause
         pauseText.setVisible(isPaused);
         backgroundRect.setVisible(isPaused);
     }
