@@ -42,7 +42,7 @@ public class PacmanController {
             nextPos = nextPos.round().toRealCoordinates(1.0);
             IntCoordinates nextCell = nextPos.round();
 
-            if ( !mazeConfig.getCell(nextCell).isPassable() )
+            if ( mazeConfig.getCell(nextCell).isPassable() )
             {
                 PacMan.INSTANCE.setDirection(newDirection);
                 lastDirection = null; // Reset pending direction when setting a new direction
@@ -68,7 +68,7 @@ public class PacmanController {
             IntCoordinates nextCell = nextPos.round();
 
 
-            if (!mazeConfig.getCell(nextCell).isPassable())
+            if (mazeConfig.getCell(nextCell).isPassable())
             {
                 PacMan.INSTANCE.setDirection(lastDirection);
                 newDirection = lastDirection;
