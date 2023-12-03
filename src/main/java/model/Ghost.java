@@ -56,12 +56,21 @@ public enum Ghost implements Critter {
 
     @Override
     public double getSpeed() {
-        double res = frightened ? 2.0 : 2.8;
+        double res = frightened ? 2.0 * nearWormWall() : 2.8 * nearWormWall();
         if(eaten)
         {
             res = 8;
         }
         return res;
+    }
+
+    public double nearWormWall()
+    {
+        if(pos.round().y() == 9 && (pos.round().x() < 5 || pos.round().x() > 15))
+        {
+            return 0.5;
+        }
+        return 1.0;
     }
 
     public void scatterChaseTimer(long d)
