@@ -5,9 +5,8 @@ import config.MazeConfig;
 import geometry.IntCoordinates;
 import geometry.RealCoordinates;
 import gui.GameOver;
-import misc.Debug;
 
-import java.util.ArrayList;
+
 import java.util.Set;
 import java.util.List;
 import java.util.Map;
@@ -111,14 +110,12 @@ public final class MazeState {
                 Ghost ghost = (Ghost)g;
                 if(!ghost.eaten && ghost.frightened && PacMan.INSTANCE.isEnergized())
                 {
-                    Debug.out(">>>>>>>>>>>>>>>>>>>>>>>Pacman ate " + ghost);
                     addScore(200);
                     ghost.eaten = true;
                     ghost.frightened = false;
                 }
                 if(!ghost.frightened && !ghost.eaten)
                 {
-                    Debug.out("==============================Pacman died==============================");
                     playerLost();
                     break;
                 }
@@ -206,7 +203,7 @@ public final class MazeState {
     }
 
     private void playerLost() {
-        lives--;
+        MazeState.lives--;
         if(MazeState.lives == 0){
             GameOver.affichageGameOver();
             resetGame();
@@ -226,6 +223,12 @@ public final class MazeState {
     private void resetCritter(Critter critter) {
         critter.setDirection(Direction.NONE);
         critter.setPos(initialPos.get(critter));
+        if(critter instanceof Ghost)
+        {
+            ((Ghost) critter).frightened = false;
+            ((Ghost) critter).eaten = false;
+
+        }
     }
 
     private void resetCritters() {
