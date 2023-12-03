@@ -168,10 +168,10 @@ public final class MazeState {
 
     private void moveCritters(long deltaTns) {
         for (var critter : critters) {
-            var nextPos = critter.nextPos(deltaTns);
+            var nextPos = critter.nextPos(deltaTns, PacMan.getLevel());
 
             // Check if the next position is valid
-            if (isValidPosition(nextPos, critter.getDirection(), critter)) {
+            if (isValidPosition(nextPos, critter)) {
                 critter.setPos(nextPos.warp(width, height));
             } else {
                 critter.setPos(nextPos.warp(width, height).round().toRealCoordinates(1.0));
@@ -179,7 +179,7 @@ public final class MazeState {
         }
     }
 
-    private boolean isValidPosition(RealCoordinates pos, Direction direction, Critter critter) {
+    private boolean isValidPosition(RealCoordinates pos, Critter critter) {
 
         // Verifie si la prochaine position est un mur ou est passable
         if 	(critter == PacMan.INSTANCE && !config.isPassable(pos) ||

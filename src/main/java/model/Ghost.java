@@ -56,7 +56,7 @@ public enum Ghost implements Critter {
 
     @Override
     public double getSpeed() {
-        double res = PacMan.INSTANCE.isEnergized() ? 2.0 : 2.8;
+        double res = frightened ? 2.0 : 2.8;
         if(eaten)
         {
             res = 8;
@@ -201,39 +201,8 @@ public enum Ghost implements Critter {
     {
         // Run away from pacman
         path_finding_timer = path_finding_timer_max;
-
-        RealCoordinates pacpos = PacMan.INSTANCE.getPos();
-        if (pacpos.round().x() == pos.round().x())
-        {
-            if(pacpos.round().y() < pos.round().y())
-            {
-                direction = Direction.SOUTH;
-            }
-            else if (pacpos.round().y() > pos.round().y())
-            {
-                direction = Direction.NORTH;
-            }
-        }
-        else if (pacpos.round().y() == pos.round().y())
-        {
-            if(pacpos.round().x() < pos.round().x())
-            {
-                direction = Direction.EAST;
-            }
-            else if(pacpos.round().x() > pos.round().x())
-            {
-                direction = Direction.WEST;
-            }
-        }
-        RealCoordinates next = pos.plus(DirectionUtils.getVector(direction));
-        IntCoordinates nextcell = next.round();
-        if(mazeConfig.getCell(nextcell).isWall())
-        {
-            // If about to go towards a wall, go random instead
-            direction = Direction.NONE;
-            resetPath();
-            getPathCLYDE(mazeConfig);
-        }
+        resetPath();
+        getPathCLYDE(mazeConfig);
     }
 
     private void eatenPath(Cell[][] grid, RealCoordinates base_coord)

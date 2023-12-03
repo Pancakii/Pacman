@@ -14,10 +14,10 @@ public final class PacMan implements Critter {
     private boolean energized;
 	private final double energized_timer_max = 10;
 	private double energized_timer;
-	private static int  level  ;
-	private static int countDot  ;
-	private static int countDotTotal  ;
-	private static final int dotTotal = 151 ;
+	private static int level;
+	private static int countDot;
+	private static int countDotTotal;
+	private static final int dotTotal = 151;
 
 
 
