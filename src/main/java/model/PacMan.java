@@ -14,10 +14,10 @@ public final class PacMan implements Critter {
     private boolean energized;
 	private final double energized_timer_max = 10;
 	private double energized_timer;
-	private static int  level  ;
-	private static int countDot  ;
-	private static int countDotTotal  ;
-	private static final int dotTotal = 151 ;
+	private static int level;
+	private static int countDot;
+	private static int countDotTotal;
+	private static final int dotTotal = 151;
 
 
 
@@ -43,14 +43,14 @@ public final class PacMan implements Critter {
 		{
 			if (grid.getCell(pacPos).aDot())// if the unentered cell contains a dot
 			{
-				MazeState.addScore(1);// add 1 to the score
+				MazeState.addScore(10);// add 1 to the score
 				countDot++;
 				countDotTotal++;
 				grid_state[y][x] = true;// set the cell state "entered"
 			}
 			else if (grid.getCell(pacPos).aEnergizer())// if the unentered cell contains an energizer
 			{
-				MazeState.addScore(10);// add 10 to the score
+				MazeState.addScore(50);// add 10 to the score
 				countDot++;
 				countDotTotal++ ;
 				INSTANCE.energized_timer = INSTANCE.energized_timer_max;// set the energizer timer

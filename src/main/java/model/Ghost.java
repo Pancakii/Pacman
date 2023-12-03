@@ -4,7 +4,6 @@ import config.Cell;
 import config.MazeConfig;
 import geometry.IntCoordinates;
 import geometry.RealCoordinates;
-import misc.Debug;
 import pathfinding.Node;
 
 import java.util.ArrayList;
@@ -57,7 +56,7 @@ public enum Ghost implements Critter {
 
     @Override
     public double getSpeed() {
-        double res = PacMan.INSTANCE.isEnergized() ? 2.0 : 2.8;
+        double res = frightened ? 2.0 : 2.8;
         if(eaten)
         {
             res = 8;
@@ -140,35 +139,35 @@ public enum Ghost implements Critter {
 
     private void getPathCLYDE(MazeConfig mazeConfig)
     {
-        // Random
-        RealCoordinates nextPos = pos.plus(DirectionUtils.getVector(direction));
-        IntCoordinates nextCell = nextPos.round();
+            // Random
+            RealCoordinates nextPos = pos.plus(DirectionUtils.getVector(direction));
+            IntCoordinates nextCell = nextPos.round();
 
-        RealCoordinates currPost = pos.plus(DirectionUtils.getVector(Direction.NONE));
-        IntCoordinates currCell = currPost.round();
+            RealCoordinates currPost = pos.plus(DirectionUtils.getVector(Direction.NONE));
+            IntCoordinates currCell = currPost.round();
 
-        // Handling cases if there's a wall or if in intersection and if the timer of random direction ended
-        boolean bool = mazeConfig.getCell(nextCell).isWall() || mazeConfig.isIntersection(currCell);
-        int[] base_out_coordinates = {10, 9};
-        if(currCell.x() == base_out_coordinates[0] && currCell.y() == base_out_coordinates[1])
-        {
-            direction = Direction.NORTH;
-        }
-        else if (bool || direction == Direction.NONE)// adding also if direction is none, so it doesn't stop moving
-        {
-            ArrayList<Direction> direcs = new ArrayList<>();
-            for (Direction DIR : new Direction[]{Direction.NORTH, Direction.EAST, Direction.SOUTH, Direction.WEST})
+            // Handling cases if there's a wall or if in intersection and if the timer of random direction ended
+            boolean bool = mazeConfig.getCell(nextCell).isWall() || mazeConfig.isIntersection(currCell) && path_finding_timer <= 0;
+            int[] base_out_coordinates = {10, 9};
+            if (currCell.x() == base_out_coordinates[0] && currCell.y() == base_out_coordinates[1])
             {
-                nextPos = pos.plus(DirectionUtils.getVector(DIR));
-                nextCell = nextPos.round();
-                if(!mazeConfig.getCell(nextCell).isWall())
-                {
-                    direcs.add(DIR);
-                }
+                direction = Direction.NORTH;
             }
-            int choice = new Random().nextInt(direcs.size());
-            direction = direcs.get(choice);
-        }
+            else if (bool || direction == Direction.NONE)// adding also if direction is none, so it doesn't stop moving
+            {
+                ArrayList<Direction> direcs = new ArrayList<>();
+                for (Direction DIR : new Direction[]{Direction.NORTH, Direction.EAST, Direction.SOUTH, Direction.WEST})
+                {
+                    nextPos = pos.plus(DirectionUtils.getVector(DIR));
+                    nextCell = nextPos.round();
+                    if (!mazeConfig.getCell(nextCell).isWall())
+                    {
+                        direcs.add(DIR);
+                    }
+                }
+                int choice = new Random().nextInt(direcs.size());
+                direction = direcs.get(choice);
+            }
     }
 
     private void normalPath(Cell[][] grid, MazeConfig mazeConfig)
@@ -179,7 +178,6 @@ public enum Ghost implements Critter {
         // If chase time, then chase pacman. If not, move randomly around the map
         if(chase_timer > 0)
         {
-            Debug.out(this + " follows pacman");
             switch (this) {
                 case BLINKY:
                     getPathBLINKY(grid);
@@ -194,53 +192,22 @@ public enum Ghost implements Critter {
         }
         else
         {
-            Debug.out(this + " goes randomly");
+            resetPath();
             getPathCLYDE(mazeConfig);
         }
     }
 
     private void frightenedPath(MazeConfig mazeConfig)
     {
-        Debug.out(this + " runs away from pacman");
         // Run away from pacman
-		
         path_finding_timer = path_finding_timer_max;
-        RealCoordinates pacpos = PacMan.INSTANCE.getPos();
-        if (pacpos.round().x() == pos.round().x())
-        {
-            if(pacpos.y() < pos.y())
-            {
-                direction = Direction.SOUTH;
-            }
-            else
-            {
-                direction = Direction.NORTH;
-            }
-        }
-        else if (pacpos.round().y() == pos.round().y())
-        {
-            if(pacpos.x() < pos.x())
-            {
-                direction = Direction.EAST;
-            }
-            else
-            {
-                direction = Direction.WEST;
-            }
-        }
-        RealCoordinates next = pos.plus(DirectionUtils.getVector(direction));
-        IntCoordinates nextcell = next.round();
-        if(mazeConfig.getCell(nextcell).isWall())
-        {
-            // If about to go towards a wall, go random instead
-            getPathCLYDE(mazeConfig);
-        }
+        resetPath();
+        getPathCLYDE(mazeConfig);
     }
 
     private void eatenPath(Cell[][] grid, RealCoordinates base_coord)
     {
         // Return home because eaten
-        Debug.out(this + " returns to the base bc:\n" + "eaten = " + eaten + "\ncan be eaten: " + frightened + "\npath_finding_timer: " + path_finding_timer);
         if (path_finding_timer <= 0)
         {
             // Get path to the base and renew timer
@@ -264,7 +231,6 @@ public enum Ghost implements Critter {
 
     public void getPath(Cell[][] grid, MazeConfig mazeConfig, long delta, RealCoordinates base_coord)
     {
-        Debug.out(this + "\nfrightened: " + frightened + "\neaten: " + eaten);
         double delta_double = (double) delta;
         path_finding_timer -= delta_double / 1000000000;
         boolean bool = path_finding_timer <= 0 || direction == Direction.NONE || eaten || frightened;

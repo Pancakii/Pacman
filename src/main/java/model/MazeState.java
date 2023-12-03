@@ -5,9 +5,8 @@ import config.MazeConfig;
 import geometry.IntCoordinates;
 import geometry.RealCoordinates;
 import gui.GameOver;
-import misc.Debug;
 
-import java.util.ArrayList;
+
 import java.util.Set;
 import java.util.List;
 import java.util.Map;
@@ -111,16 +110,14 @@ public final class MazeState {
             for (Critter g : close_ghosts)
             {
                 Ghost ghost = (Ghost)g;
-                if(ghost.frightened && PacMan.INSTANCE.isEnergized())
+                if(!ghost.eaten && ghost.frightened && PacMan.INSTANCE.isEnergized())
                 {
-                    Debug.out(">>>>>>>>>>>>>>>>>>>>>>>Pacman ate " + ghost);
-                    addScore(10);
+                    addScore(200);
                     ghost.eaten = true;
                     ghost.frightened = false;
                 }
                 if(!ghost.frightened && !ghost.eaten)
                 {
-                    Debug.out("==============================Pacman died==============================");
                     playerLost();
                     break;
                 }
@@ -173,10 +170,10 @@ public final class MazeState {
 
     private void moveCritters(long deltaTns) {
         for (var critter : critters) {
-            var nextPos = critter.nextPos(deltaTns);
-
-            // Verifie si la position est valide
-            if (isValidPosition(nextPos, critter.getDirection(), critter)) {
+            var nextPos = critter.nextPos(deltaTns, PacMan.getLevel());
+			
+            // Check if the next position is valid
+            if (isValidPosition(nextPos, critter)) {
                 critter.setPos(nextPos.warp(width, height));
             } else {
                 critter.setPos(nextPos.warp(width, height).round().toRealCoordinates(1.0));
@@ -184,7 +181,7 @@ public final class MazeState {
         }
     }
 
-    private boolean isValidPosition(RealCoordinates pos, Direction direction, Critter critter) {
+    private boolean isValidPosition(RealCoordinates pos, Critter critter) {
 
         // Verifie si la prochaine position est un mur ou est passable
         if 	(critter == PacMan.INSTANCE && config.isWall(pos) || 
@@ -208,7 +205,7 @@ public final class MazeState {
     }
 
     private void playerLost() {
-        lives--;
+        MazeState.lives--;
         if(MazeState.lives == 0){
             GameOver.affichageGameOver();
             resetGame();
@@ -228,6 +225,12 @@ public final class MazeState {
     private void resetCritter(Critter critter) {
         critter.setDirection(Direction.NONE);
         critter.setPos(initialPos.get(critter));
+        if(critter instanceof Ghost)
+        {
+            ((Ghost) critter).frightened = false;
+            ((Ghost) critter).eaten = false;
+
+        }
     }
 
     private void resetCritters() {
