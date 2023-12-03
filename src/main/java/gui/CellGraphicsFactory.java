@@ -8,8 +8,6 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import model.MazeState;
 
-import static config.Cell.Content.DOT;
-
 public class CellGraphicsFactory {
     private final double scale;
 
@@ -46,7 +44,7 @@ public class CellGraphicsFactory {
         		Wall.setX(0);
         		Wall.setFill(Color.BLUEVIOLET);
             	group.getChildren().add(Wall);
-        	}else if(cell.isWall() && cell.isPassable()) {
+        	}else if(!cell.isWall() && !cell.isPassable()) {
         		var neWall = new Rectangle();
         		neWall.setHeight(scale);
         		neWall.setWidth(scale);

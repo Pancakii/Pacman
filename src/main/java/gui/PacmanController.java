@@ -9,7 +9,7 @@ import geometry.IntCoordinates;
 import javafx.scene.input.KeyEvent;
 
 public class PacmanController {
-    private MazeConfig mazeConfig;
+    private final MazeConfig mazeConfig;
     private static Direction lastDirection =  Direction.EAST ;
     private static Direction newDirection = null;
 
@@ -42,14 +42,13 @@ public class PacmanController {
             nextPos = nextPos.round().toRealCoordinates(1.0);
             IntCoordinates nextCell = nextPos.round();
 
-            if ( !mazeConfig.getCell(nextCell).isWall() )
+            if ( !mazeConfig.getCell(nextCell).isPassable() )
             {
                 PacMan.INSTANCE.setDirection(newDirection);
                 lastDirection = null; // Reset pending direction when setting a new direction
             } else {
             	lastDirection = newDirection;
                 newDirection = null;
-                //Debug.out(lastDirection.toString());
 
             }
         }
@@ -69,7 +68,7 @@ public class PacmanController {
             IntCoordinates nextCell = nextPos.round();
 
 
-            if (!mazeConfig.getCell(nextCell).isWall())
+            if (!mazeConfig.getCell(nextCell).isPassable())
             {
                 PacMan.INSTANCE.setDirection(lastDirection);
                 newDirection = lastDirection;
