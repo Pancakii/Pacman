@@ -55,12 +55,14 @@ public final class MazeState {
     }
 
 
-    public void update(long deltaTns) {
-    	moveCritters(deltaTns);
-        boolean ate_energizer = updatePacman(deltaTns);
-        updateGhosts(deltaTns, ate_energizer);
-        bonusUpdate(deltaTns);
-        updateMap();
+    public void update(long deltaTns, boolean pause) {
+    	if(!pause) {
+    		moveCritters(deltaTns);
+            boolean ate_energizer = updatePacman(deltaTns);
+            updateGhosts(deltaTns, ate_energizer);
+            bonusUpdate(deltaTns);
+            updateMap();
+    	}
     }
 
 
@@ -173,7 +175,7 @@ public final class MazeState {
         for (var critter : critters) {
             var nextPos = critter.nextPos(deltaTns);
 
-            // Check if the next position is valid
+            // Verifie si la position est valide
             if (isValidPosition(nextPos, critter.getDirection(), critter)) {
                 critter.setPos(nextPos.warp(width, height));
             } else {
