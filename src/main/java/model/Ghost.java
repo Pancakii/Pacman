@@ -196,6 +196,7 @@ public enum Ghost implements Critter {
         {
             Debug.out(this + " goes randomly");
             getPathCLYDE(mazeConfig);
+            resetPath();
         }
     }
 
@@ -208,22 +209,22 @@ public enum Ghost implements Critter {
         RealCoordinates pacpos = PacMan.INSTANCE.getPos();
         if (pacpos.round().x() == pos.round().x())
         {
-            if(pacpos.y() < pos.y())
+            if(pacpos.round().y() < pos.round().y())
             {
                 direction = Direction.SOUTH;
             }
-            else
+            else if (pacpos.round().y() > pos.round().y())
             {
                 direction = Direction.NORTH;
             }
         }
-        else if (pacpos.round().y() == pos.round().y())
+        if (pacpos.round().y() == pos.round().y())
         {
-            if(pacpos.x() < pos.x())
+            if(pacpos.round().x() < pos.round().x())
             {
                 direction = Direction.EAST;
             }
-            else
+            else if(pacpos.round().x() > pos.round().x())
             {
                 direction = Direction.WEST;
             }

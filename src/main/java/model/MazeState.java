@@ -109,10 +109,10 @@ public final class MazeState {
             for (Critter g : close_ghosts)
             {
                 Ghost ghost = (Ghost)g;
-                if(ghost.frightened && PacMan.INSTANCE.isEnergized())
+                if(!ghost.eaten && ghost.frightened && PacMan.INSTANCE.isEnergized())
                 {
                     Debug.out(">>>>>>>>>>>>>>>>>>>>>>>Pacman ate " + ghost);
-                    addScore(10);
+                    addScore(200);
                     ghost.eaten = true;
                     ghost.frightened = false;
                 }
