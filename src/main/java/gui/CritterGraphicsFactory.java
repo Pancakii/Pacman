@@ -21,6 +21,7 @@ public final class CritterGraphicsFactory {
     private final ImageView pinky ;
     private final ImageView ghostWhenPacmanEnergized ;
     private final ImageView ghostWhenPacmanEnergizedEnd ;
+    private final ImageView eyeGhost ;
     private ImageView instance ;
 
     public CritterGraphicsFactory(double scale) {
@@ -35,6 +36,7 @@ public final class CritterGraphicsFactory {
         this.pinky =new ImageView( new Image ("Pinky.gif",size*scale,size*scale,true,true));
         this.ghostWhenPacmanEnergized = new ImageView( new Image("GhostEnergized.gif",size*scale , size*scale , true ,true ) );
         this.ghostWhenPacmanEnergizedEnd = new ImageView( new Image("GhostEnergizedEnd.gif",size*scale , size*scale , true ,true ) );
+        this.eyeGhost = new ImageView(new Image("eyeGhost.jpg",scale*size , scale*size , true , true ));
         this.instance = pacmanRight ;
     }
 
@@ -61,8 +63,12 @@ public final class CritterGraphicsFactory {
         return this.instance ;
     }
 
-    // retourne et change les images des fatomes en fonction de pacman s'il est energized ou pas
-    // les ghosts reste bleu entre 10 et 3 sec puis scintille entre 3 et 0 sec
+    /**
+     *  les ghosts reste bleu entre 10 et 3 sec puis scintille entre 3 et 0 sec
+     *  les ghosts se transforme en yeux quand il est mangées
+     * @param ghost
+     * @return ImageView  (change les images des fatomes en fonction de pacman s'il est energized ou pas et si il est mangées ou pas)
+     */
     public ImageView updateImageGhost(Ghost ghost){
         boolean energized = PacMan.INSTANCE.isEnergized();
         double energizedTimer = PacMan.INSTANCE.getEnergized_timer();
@@ -79,6 +85,9 @@ public final class CritterGraphicsFactory {
 						return ghostWhenPacmanEnergizedEnd;
 					}
 				}
+                else if (ghost.eaten){
+                    return eyeGhost ;
+                }
 				else 
 				{
                     return blinky;
@@ -96,6 +105,9 @@ public final class CritterGraphicsFactory {
 						return ghostWhenPacmanEnergizedEnd;
 					}
 				}
+                else if (ghost.eaten){
+                    return eyeGhost ;
+                }
 				else 
 				{
                     return clyde;
@@ -113,6 +125,9 @@ public final class CritterGraphicsFactory {
 						return ghostWhenPacmanEnergizedEnd;
 					}
 				}
+                else if (ghost.eaten){
+                    return eyeGhost ;
+                }
 				else 
 				{
                     return inky;
@@ -130,6 +145,9 @@ public final class CritterGraphicsFactory {
 						return ghostWhenPacmanEnergizedEnd;
 					}
 				}
+                else if (ghost.eaten){
+                    return eyeGhost ;
+                }
 				else 
 				{
                     return pinky;
