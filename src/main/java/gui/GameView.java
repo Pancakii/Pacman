@@ -27,6 +27,7 @@ public class GameView {
     }
 
     /**
+     * Classe qui s'occupe de créer le jeu Pacman
      * @param maze  le "modèle" de cette vue (le labyrinthe et tout ce qui s'y trouve)
      * @param root  le nœud racine dans la scène JavaFX dans lequel le jeu sera affiché
      * @param scale le nombre de pixels représentant une unité du labyrinthe
@@ -74,10 +75,12 @@ public class GameView {
         centerPane.setLayoutY(pauseTextY);
 
 	    // Ajouter le StackPane au root
-	    root.getChildren().add(centerPane);
-	        
+	    root.getChildren().add(centerPane);	        
     }
-
+    
+    /**
+     * Méthode qui anime le jeu
+     */
     public void animate() {
         new AnimationTimer() {
             long last = 0;
@@ -98,6 +101,10 @@ public class GameView {
         }.start();
     }
     
+    /**
+     * Méthode qui vérifie si le jeu est en pause 
+     * (oui) affiche le texte de pause (non) n'affiche pas le texte de pause
+     */
     public void togglePause() {
         isPaused = !isPaused;
         // Affiche ou masque le texte de pause en fonction de l'état de pause

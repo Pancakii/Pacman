@@ -65,15 +65,31 @@ public class MazeConfig {
 		return grid;
 	}
 	
+	/**
+	 * Méthode qui vérifie si la prochaine case est "passable" 
+	 * @param position	Position du critter
+	 * @return (true) prochaine case est "passable" (false) sinon non
+	 */
     public boolean isPassable(RealCoordinates position) {
     	IntCoordinates pos = position.round();
         return grid[Math.floorMod(pos.y(), getHeight())][Math.floorMod(pos.x(), getWidth())].isPassable();
     }
 	
+    /**
+     * Méthode qui vérifie si la prochaine case est un mur en RealCoordinates
+     * @param position	Position du critter
+     * @return (true) c'est un mur (false) ce n'est pas un mur
+     */
     public boolean isWall(RealCoordinates position) {
     	IntCoordinates pos = position.round();
         return grid[Math.floorMod(pos.y(), getHeight())][Math.floorMod(pos.x(), getWidth())].isWall();
     }
+    
+    /**
+     * Méthode qui vérifie si la prochaine case est un mur en IntCoordinates
+     * @param position	Position du critter
+     * @return (true) c'est un mur (false) ce n'est pas un mur
+     */
     public boolean isWall(IntCoordinates pos) {
         return grid[Math.floorMod(pos.y(), getHeight())][Math.floorMod(pos.x(), getWidth())].isWall();
     }
@@ -121,7 +137,10 @@ public class MazeConfig {
         return grid[Math.floorMod(pos.y(), getHeight())][Math.floorMod(pos.x(), getWidth())];
     }
     
-    // compte le nombre ligne dans le fichier Maze.txt
+    /**
+     * Méthode qui compte le nombre de ligne du fichier Maze.txt
+     * @return Retourne un entier qui correspond aux nombres de ligne du fichier Maze.txt
+     */
     public static int compteligne() throws Exception {
         String path =System.getProperty("user.dir") ;
         File file ;
@@ -140,7 +159,10 @@ public class MazeConfig {
         return ligne;
     }
 
-    // creation du tableau de tableau des cellules
+    /**
+     * Méthode qui crée un tableau de cellule
+     * @return Retourne un tableau de cellule
+     */
     public static Cell[][] grid () throws Exception {
         String path = System.getProperty("user.dir") ;
         File file;

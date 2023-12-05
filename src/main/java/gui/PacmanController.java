@@ -18,7 +18,11 @@ public class PacmanController {
     public PacmanController(MazeConfig mazeConfig) {
         this.mazeConfig = mazeConfig;
     }
-
+    
+    /**
+     * Méthode qui s'occupe de récupérer et de transmettre la touche de l'utilisateur
+     * @param event	Récupére la touche appuyer par l'utilisateur
+     */
     public void keyPressedHandler(KeyEvent event) {
         newDirection = null;
 
@@ -42,24 +46,25 @@ public class PacmanController {
             nextPos = nextPos.round().toRealCoordinates(1.0);
             IntCoordinates nextCell = nextPos.round();
 
-            if ( mazeConfig.getCell(nextCell).isPassable() )
+            if (mazeConfig.getCell(nextCell).isPassable())
             {
                 PacMan.INSTANCE.setDirection(newDirection);
                 lastDirection = null; // Reset pending direction when setting a new direction
             } else {
             	lastDirection = newDirection;
                 newDirection = null;
-
             }
-        }
-        else
-        {
+            
+        } else {
             newDirection = lastDirection;
         }
-
     }
-
-    public static void checknWalk ( MazeConfig mazeConfig)
+    
+    /** 
+     * Vérifie si la dernière mauvaise direction peut-être utilisées (= direction vers un mur)
+     * @param mazeConfig	Donnée de la configuration de la maze
+     */
+    public static void checknWalk (MazeConfig mazeConfig)
     {
         if ( newDirection == null)
         {
