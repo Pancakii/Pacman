@@ -67,6 +67,7 @@ public class Bonus {
      * Retourne le point de chaque bonus
      * @return point
      */
+
     public static int pointBonus(){
         switch (PacMan.getLevel()){
             case 1 -> point = 100 ;
