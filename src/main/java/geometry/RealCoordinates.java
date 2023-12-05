@@ -21,9 +21,9 @@ public record RealCoordinates(double x, double y) {
     }
 
     /**
-     *
-     * @return the coordinates of all integer squares that a unit square with current coordinates would intersect
-      */
+     * Méthode qui renvoie un ensemble IntCoordinates
+     * @return Renvoie un ensemble IntCoordinates correspondant aux voisins de notre position
+     */
     public Set<IntCoordinates> intNeighbours() {
         Set<IntCoordinates> neighbours = new HashSet<>();
 
@@ -49,7 +49,14 @@ public record RealCoordinates(double x, double y) {
     {
         return Math.abs(x() - other.x()) < 0.05 && Math.abs(y() - other.y()) < 0.05;
     }
-
+    
+    
+    /**
+     * Méthode qui délimite les zones "hors limites"
+     * @param width   largeur du plateau de jeu
+     * @param height	longeur du plateau de jeu
+     * @return Renvoie des nouvelles coordonnées (RealCoordinates) "appropriées" 
+     */
     public RealCoordinates warp(int width, int height) {
         var rx = x;
         var ry = y;

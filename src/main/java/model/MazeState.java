@@ -53,7 +53,11 @@ public final class MazeState {
         return height;
     }
 
-
+    /**
+     * Méthode servant à mettre à jour le jeu
+     * @param deltaTns	Donnée utiliser pour le calcul de la prochaine position des critters
+     * @param pause	Vérification si l'utilisateur a mis le jeu en pause
+     */
     public void update(long deltaTns, boolean pause) {
     	if(!pause) {
     		moveCritters(deltaTns);
@@ -167,7 +171,10 @@ public final class MazeState {
         ghost.followPath();
     }
 
-
+    /**
+     * Méthode servant à mettre à jour la position des critters
+     * @param deltaTns	Donnée utiliser pour le calcul de la prochaine position des critters
+     */
     private void moveCritters(long deltaTns) {
         for (var critter : critters) {
             var nextPos = critter.nextPos(deltaTns, PacMan.getLevel());
@@ -180,16 +187,22 @@ public final class MazeState {
             }
         }
     }
-
+    
+    /**
+     * Méthode qui vérifié si le prochain position pris par le critter est valide
+     * @param pos	Coordonnées de la prochaine position du critter
+     * @param critter	Terme qui regroupe les fantômes et pacman(= le joueur)
+     * @return (true) si le mouvement du critter est valide ou (false) à l'inverse
+     */
     private boolean isValidPosition(RealCoordinates pos, Critter critter) {
 
-        // Verifie si la prochaine position est un mur ou est passable
+        // Vérifie si la prochaine position est un mur ou est passable
         if 	(critter == PacMan.INSTANCE && config.isWall(pos) || 
             (critter != PacMan.INSTANCE && config.isWall(pos) && !config.isPassable(pos))) {
             return false;
         }
 
-        // Verifie si les prochains basees sur la prochaine direction sont des murs
+        // Vérifie si les prochaines positions basées sur la prochaine direction sont des murs
         Set<IntCoordinates> curNeighbours = pos.intNeighbours();
         for (IntCoordinates neighbour : curNeighbours) {
             if (config.isWall(neighbour) && !config.isPassable(neighbour.toRealCoordinates(1.0))) {
