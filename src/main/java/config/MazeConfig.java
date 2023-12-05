@@ -94,6 +94,12 @@ public class MazeConfig {
         return grid[Math.floorMod(pos.y(), getHeight())][Math.floorMod(pos.x(), getWidth())].isWall();
     }
 
+    /**
+     *  Regarde si la case est une intersection
+     * @param pos
+     * @return true si intersection
+     */
+
     public boolean isIntersection(IntCoordinates pos)
     {
         boolean[] res = new boolean[4];
@@ -225,9 +231,10 @@ public class MazeConfig {
         return maze;
     }
 
-    
-    // configuration du maze
-    // placement de pacman et des ghost a fixer
+    /**
+     * @return initialisation d'un MazeConfig
+     * @throws Exception
+     */
     public static MazeConfig make() throws Exception {
         return new MazeConfig(grid(),
         						//(x, y)

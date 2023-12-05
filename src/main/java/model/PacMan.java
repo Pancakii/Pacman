@@ -141,6 +141,9 @@ public final class PacMan implements Critter {
 		}
 	}
 
+	/**
+	 *  Regarde si le bonus peut être mangées par pacman
+	 */
 	public static void eatBonus(){
 		var pacPos = PacMan.INSTANCE.getPos().round();// get pacman position
 		int x = pacPos.x(); // get x axis
@@ -164,28 +167,61 @@ public final class PacMan implements Critter {
         this.energized = energized;
     }
 
+	/**
+	 * retourne le level
+	 * @return level
+	 */
 	public static int getLevel() {
 		return level ;
 	}
 
-	public static void setLevel(int levels) {
-		level = levels;
+	/**
+	 * Change le level
+	 * @param level
+	 */
+
+	public static void setLevel(int level) {
+		PacMan.level = level;
 	}
 
+	/**
+	 * Retourne le countDot
+	 * @return countDot
+	 */
 	public static int getCountDot() {
 		return countDot;
 	}
 
+	/**
+	 *  Change le countDot
+	 * @param countDot
+	 */
+
 	public static void setCountDot(int countDot) {
 		PacMan.countDot = countDot;
 	}
+
+	/**
+	 * Retourne le nombre total de dots mangé
+	 * @return countDotTotal
+	 */
 	public static int getCountDotTotal() {
 		return countDotTotal;
 	}
 
+	/**
+	 * Retourne le nombre de dots au total
+	 * @return dotTotal
+	 */
+
 	public static int getDotTotal() {
 		return dotTotal;
 	}
+
+	/**
+	 * Change le nombre total de dots mangé
+	 * @param countDotTotal
+	 */
 
 	public static void setCountDotTotal(int countDotTotal) {
 		PacMan.countDotTotal = countDotTotal;

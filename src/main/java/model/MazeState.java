@@ -70,7 +70,7 @@ public final class MazeState {
     }
 
 
-    /*
+    /**
     PACMAN FUNCTIONS
 
 
@@ -84,25 +84,31 @@ public final class MazeState {
         PacmanController.checknWalk(this.config);
         return ate_energizer;
     }
-    
+
+    /**
+     *  Affiche si le bonus peut apparaitre
+     * @param deltaTns
+     */
     private void bonusUpdate(long deltaTns){
-        PacMan.eatBonus();
-        if ( Bonus.canHaveBonus()) {
-            Bonus.INSTANCE.bonusTimer(deltaTns);
+        PacMan.eatBonus(); // vérifie s'il peut manger un fruit
+        if ( Bonus.canHaveBonus()) { // vérifie si le bonus peut être manger
+            Bonus.INSTANCE.bonusTimer(deltaTns); // lance le timer du bonus
         }
     }
 
+    /**
+     *  Met à jour la map quand tout les dots sont mangées
+     */
     public void updateMap(){
-        if ( PacMan.getCountDotTotal()==PacMan.getDotTotal()){
-            resetGridState();
-            PacMan.setCountDotTotal(0);
-            PacMan.setLevel(PacMan.getLevel()+1);
-			resetCritters();
-            Debug.out(PacMan.getCountDotTotal()+"");
+        if ( PacMan.getCountDotTotal()==PacMan.getDotTotal()){ // regarde si les dots sont tous mangées
+            resetGridState(); // reset la map
+            PacMan.setCountDotTotal(0); // reset le compteur de dot
+            PacMan.setLevel(PacMan.getLevel()+1); // augmente le niveau
+			resetCritters(); // reset les critters ( Pacman et Ghosts )
         }
     }
 
-    /*
+    /**
      * Si pacman entre dans une case où il y a un fantôme
      * on vérifie s'il est énergiser
      * Oui : Gagne 10pts et tue le fantôme
@@ -130,10 +136,9 @@ public final class MazeState {
         }
     }
 
-    /*
-    GHOST FUNCTIONS
-
-    Updates all ghosts
+    /**
+    *GHOST FUNCTIONS
+    *Updates all ghosts
      */
     public void updateGhosts(long deltaTns, boolean ate_energizer)
     {

@@ -14,7 +14,10 @@ public class PacmanController {
     private static Direction newDirection = null;
 
 
-
+    /**
+     * Initialisation de PacmanController avec l'attribut mazeConfig
+     * @param mazeConfig
+     */
     public PacmanController(MazeConfig mazeConfig) {
         this.mazeConfig = mazeConfig;
     }
