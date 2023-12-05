@@ -24,6 +24,11 @@ public final class CritterGraphicsFactory {
     private final ImageView eyeGhost ;
     private ImageView instance ;
 
+    /**
+     * Initialisation du scale, des images des critters ( avec leur taille )
+     * @param scale
+     */
+
     public CritterGraphicsFactory(double scale) {
         this.scale = scale;
         this.pacmanUp = new ImageView( new Image("PacmanUp.gif",size*scale , size*scale , true ,true ) );
@@ -40,7 +45,11 @@ public final class CritterGraphicsFactory {
         this.instance = pacmanRight ;
     }
 
-    // retourne et change les images de pacman en fonction de la direction de pacman
+
+    /**
+     * Retourne et change les images de pacman en fonction de la direction de pacman
+     * @return instance
+     */
     public ImageView updateImagePacman (){
          switch ( PacMan.INSTANCE.getDirection()) {
              case NORTH -> {
@@ -76,11 +85,11 @@ public final class CritterGraphicsFactory {
             case BLINKY -> {
 				if(ghost.frightened)
 				{
-					if (energized && energizedTimer > 3) 
+					if (energized && energizedTimer > 3)
 					{
 						return ghostWhenPacmanEnergized;
-					} 
-					else if (energized && energizedTimer > 0) 
+					}
+					else if (energized && energizedTimer > 0)
 					{
 						return ghostWhenPacmanEnergizedEnd;
 					}
@@ -88,7 +97,7 @@ public final class CritterGraphicsFactory {
                 else if (ghost.eaten){
                     return eyeGhost ;
                 }
-				else 
+				else
 				{
                     return blinky;
                 }
@@ -96,11 +105,11 @@ public final class CritterGraphicsFactory {
             case CLYDE -> {
                 if(ghost.frightened)
 				{
-					if (energized && energizedTimer > 3) 
+					if (energized && energizedTimer > 3)
 					{
 						return ghostWhenPacmanEnergized;
-					} 
-					else if (energized && energizedTimer > 0) 
+					}
+					else if (energized && energizedTimer > 0)
 					{
 						return ghostWhenPacmanEnergizedEnd;
 					}
@@ -108,7 +117,7 @@ public final class CritterGraphicsFactory {
                 else if (ghost.eaten){
                     return eyeGhost ;
                 }
-				else 
+				else
 				{
                     return clyde;
                 }
@@ -116,11 +125,11 @@ public final class CritterGraphicsFactory {
             case INKY -> {
                 if(ghost.frightened)
 				{
-					if (energized && energizedTimer > 3) 
+					if (energized && energizedTimer > 3)
 					{
 						return ghostWhenPacmanEnergized;
-					} 
-					else if (energized && energizedTimer > 0) 
+					}
+					else if (energized && energizedTimer > 0)
 					{
 						return ghostWhenPacmanEnergizedEnd;
 					}
@@ -128,7 +137,7 @@ public final class CritterGraphicsFactory {
                 else if (ghost.eaten){
                     return eyeGhost ;
                 }
-				else 
+				else
 				{
                     return inky;
                 }
@@ -136,11 +145,11 @@ public final class CritterGraphicsFactory {
             case PINKY -> {
                 if(ghost.frightened)
 				{
-					if (energized && energizedTimer > 3) 
+					if (energized && energizedTimer > 3)
 					{
 						return ghostWhenPacmanEnergized;
-					} 
-					else if (energized && energizedTimer > 0) 
+					}
+					else if (energized && energizedTimer > 0)
 					{
 						return ghostWhenPacmanEnergizedEnd;
 					}
@@ -148,7 +157,7 @@ public final class CritterGraphicsFactory {
                 else if (ghost.eaten){
                     return eyeGhost ;
                 }
-				else 
+				else
 				{
                     return pinky;
                 }
@@ -157,6 +166,11 @@ public final class CritterGraphicsFactory {
         return ghostWhenPacmanEnergized;
     }
 
+    /**
+     * Affiche le graphisme du criiter en temps réel
+     * @param critter
+     * @return imageView
+     */
     public GraphicsUpdater makeGraphics(Critter critter) {
         var size = 0.7;
         var image = (critter instanceof PacMan) ? updateImagePacman() : updateImageGhost((Ghost) critter);

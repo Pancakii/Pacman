@@ -20,7 +20,11 @@ public class GameView {
     private final Pane gameRoot; // main node of the game
     private final List<GraphicsUpdater> graphicsUpdaters;
     private boolean isPaused = false;
-    
+
+    /**
+     * Rajoute des GraphicsUpdater qui est un afficheur d'image
+     * @param updater
+     */
     private void addGraphics(GraphicsUpdater updater) {
         gameRoot.getChildren().add(updater.getNode());
         graphicsUpdaters.add(updater);
@@ -44,6 +48,7 @@ public class GameView {
         var BonusFactory = new BonusGraphics(scale) ;
         var affichageScore = new Score();
         var afficheVie = new Vie();
+        var affichageLevel = new LevelGraphics() ;
         graphicsUpdaters = new ArrayList<>();
         
         for (var critter : maze.getCritters()) addGraphics(critterFactory.makeGraphics(critter));
@@ -53,6 +58,7 @@ public class GameView {
             addGraphics(affichageScore.displayScore(root));
             addGraphics(afficheVie.remainingLife());
 		    addGraphics(BonusFactory.afficheBonus());
+            addGraphics(affichageLevel.displayScore());
 		
 		// Crée le texte de pause
 		pauseText = new Text("Pause");

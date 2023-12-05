@@ -19,10 +19,10 @@ public class Vie {
         ImageView vie = new ImageView(imageNLF);
 
         //Emplacement de l'affichage de la vie
-        vie.setFitHeight(20);
-        vie.setFitWidth(50);
-        vie.setX(500);
-        vie.setY(705);
+        vie.setFitHeight(40);
+        vie.setFitWidth(100);
+        vie.setX(14.5 * 35);
+        vie.setY(22.5 * 35);
 
         return new GraphicsUpdater() {
             @Override

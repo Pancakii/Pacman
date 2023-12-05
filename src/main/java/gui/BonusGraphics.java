@@ -23,6 +23,10 @@ public final class BonusGraphics {
     private final double y ;
 
 
+    /**
+     * Initialisation du scale, des images ( avec leur taille )  et les coordonnées
+     * @param scale
+     */
     public BonusGraphics(double scale ){
         this.scale = scale;
         this.fraise = new ImageView(new Image("FruitFraise.png" , scale*size , scale*size , true , true )) ;
@@ -34,12 +38,16 @@ public final class BonusGraphics {
         this.cloche = new ImageView(new Image("BonusCloche.png" , scale*size , scale*size , true , true )) ;
         this.cle = new ImageView(new Image("BonusCle.png" , scale*size , scale*size , true , true )) ;
         this.instance = cerise ;
-        this.x = (10 + (1 - size) / 2) * scale ;
-        this.y = (11 + (1 - size) / 2) * scale ;
+        this.x = (11 + (1 - size) / 2) * scale ;
+        this.y = (12 + (1 - size) / 2) * scale ;
 
     }
 
-    // retourne une image en fonction du niveau du jeu
+    /**
+     * Une image en fonction du niveau du jeu
+     * @return l'image en fonction de l'instance
+     */
+
     public ImageView updateImageBonus (){
             switch (PacMan.getLevel()) {
                 case 1 -> this.instance = this.cerise;
@@ -54,7 +62,10 @@ public final class BonusGraphics {
         return this.instance ;
     }
 
-
+    /**
+     * Affiche le graphisme du bonus en temps réel
+     * @return imageView
+     */
     public GraphicsUpdater afficheBonus (){
         ImageView imageView = new ImageView( updateImageBonus().getImage());
         imageView.setTranslateX(x);

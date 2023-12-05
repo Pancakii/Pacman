@@ -6,6 +6,9 @@ public class Bonus {
     private static int point ;
     public static final Bonus INSTANCE = new Bonus();
 
+    /**
+     * Initialisation du bonus
+     */
     private Bonus()
     {
         haveBonus =false ;
@@ -13,23 +16,31 @@ public class Bonus {
     }
 
 
-    // retourne si pacman peut manger un bonus ou pas
+    /**
+     * Retourne si pacman peut manger un bonus ou pas
+     */
     public static boolean canHaveBonus() {
         return haveBonus;
     }
 
-    // change haveBonus
-
+    /**
+     *  Change haveBonus
+     */
     public static void setHaveBonus(boolean havebonus) {
         haveBonus = havebonus;
     }
 
-    //change le temps du timer
+    /**
+     * Change le temps du timer
+     */
     public static void setBonusTimer (double bonusTime){
          bonusTimer = bonusTime;
     }
 
-    // regarde si le fruit peut apparaitre dans la map et retoune haveBonus
+    /**
+     * Regarde si le fruit peut apparaitre dans la map et retoune haveBonus
+     * @return haveBonus
+     */
     public static boolean appartionFruit(){
         if ( PacMan.getCountDot()%70==0 && bonusTimer <= 10 && PacMan.getCountDot() != 0){
             haveBonus = true ;
@@ -37,7 +48,10 @@ public class Bonus {
         return haveBonus ;
     }
 
-    // timer du bonus
+    /**
+     *  timer du bonus
+     * @param delta
+     */
     public void bonusTimer(long delta){
         double delta_double = (double) delta ;
         if(haveBonus && bonusTimer <= 10) {
@@ -49,7 +63,10 @@ public class Bonus {
         }
     }
 
-    //retourne le point de chaque bonus
+    /**
+     * Retourne le point de chaque bonus
+     * @return point
+     */
     public static int pointBonus(){
         switch (PacMan.getLevel()){
             case 1 -> point = 100 ;
