@@ -44,6 +44,7 @@ public class GameView {
         var BonusFactory = new BonusGraphics(scale) ;
         var affichageScore = new Score();
         var afficheVie = new Vie();
+        var affichageLevel = new LevelGraphics() ;
         graphicsUpdaters = new ArrayList<>();
         
         for (var critter : maze.getCritters()) addGraphics(critterFactory.makeGraphics(critter));
@@ -53,6 +54,7 @@ public class GameView {
             addGraphics(affichageScore.displayScore(root));
             addGraphics(afficheVie.remainingLife());
 		    addGraphics(BonusFactory.afficheBonus());
+            addGraphics(affichageLevel.displayScore(root));
 		
 		// Crée le texte de pause
 		pauseText = new Text("Pause");

@@ -34,8 +34,8 @@ public final class BonusGraphics {
         this.cloche = new ImageView(new Image("BonusCloche.png" , scale*size , scale*size , true , true )) ;
         this.cle = new ImageView(new Image("BonusCle.png" , scale*size , scale*size , true , true )) ;
         this.instance = cerise ;
-        this.x = (10 + (1 - size) / 2) * scale ;
-        this.y = (11 + (1 - size) / 2) * scale ;
+        this.x = (11 + (1 - size) / 2) * scale ;
+        this.y = (12 + (1 - size) / 2) * scale ;
 
     }
 

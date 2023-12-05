@@ -43,6 +43,8 @@ public class Jeu implements EventHandler<ActionEvent> {
         App.menu.setWidth(maze.getWidth() * 35.0);
         App.menu.setHeight(maze.getHeight() * 36.0);
         App.menu.setScene(gameScene);
+        App.menu.setX(330);
+        App.menu.setY(15);
 
         if (!lancer) {
             gameView.animate();

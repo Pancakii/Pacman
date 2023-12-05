@@ -20,7 +20,7 @@ public class MazeConfig {
                       IntCoordinates inkyPos, IntCoordinates clydePos) {
         this.grid = new Cell[grid.length][grid[0].length];
         for (int i = 0; i < getHeight(); i++) {
-            if (getWidth() >= 0) System.arraycopy(grid[i], 0, this.grid[i], 0, getHeight());
+            if (getWidth() >= 0) System.arraycopy(grid[i], 0, this.grid[i], 0, getWidth());
         }
         this.pacManPos = pacManPos;
         this.blinkyPos = blinkyPos;
@@ -87,7 +87,7 @@ public class MazeConfig {
     
     /**
      * Méthode qui vérifie si la prochaine case est un mur en IntCoordinates
-     * @param position	Position du critter
+     * @param pos	Position du critter
      * @return (true) c'est un mur (false) ce n'est pas un mur
      */
     public boolean isWall(IntCoordinates pos) {
@@ -188,6 +188,7 @@ public class MazeConfig {
         // Utilise la première ligne pour initialiser le tableau, puis on lit le labyrinthe
         for (int i = 0; i < maxCols; i++) {
             char currentChar = firstLine.charAt(i);
+
             if (currentChar == '0') {
                 maze[j][i] = Cellule(0);
             } else if (currentChar == '1') {
@@ -201,24 +202,24 @@ public class MazeConfig {
             }
         }
 
-        j++; // Avance à la prochaine ligne
-
-        while ((str = r.readLine()) != null) {
-            for (int i = 0; i < str.length(); i++) {
-                char currentChar = str.charAt(i);
+        for(int i = 1; i < numRows; i++)
+        {
+            str = r.readLine();
+            for (j = 0; j < str.length(); j++)
+            {
+                char currentChar = str.charAt(j);
                 if (currentChar == '0') {
-                    maze[j][i] = Cellule(0);
+                    maze[i][j] = Cellule(0);
                 } else if (currentChar == '1') {
-                    maze[j][i] = Cellule(1);
+                    maze[i][j] = Cellule(1);
                 } else if (currentChar == '2') {
-                    maze[j][i] = Cellule(2);
+                    maze[i][j] = Cellule(2);
                 } else if (currentChar == '3') {
-                    maze[j][i] = Cellule(3);
+                    maze[i][j] = Cellule(3);
                 } else if (currentChar == '4') {
-                    maze[j][i] = Cellule(4);
+                    maze[i][j] = Cellule(4);
                 }
             }
-            j++;
         }
         
         return maze;
@@ -230,11 +231,11 @@ public class MazeConfig {
     public static MazeConfig make() throws Exception {
         return new MazeConfig(grid(),
         						//(x, y)
-                new IntCoordinates(10, 15), // pacman
-                new IntCoordinates(10, 8), // blinky
-                new IntCoordinates(10, 9), // pinky
-                new IntCoordinates(9, 9), // inky
-                new IntCoordinates(11, 9)  // clyde
+                new IntCoordinates(11, 16), // pacman
+                new IntCoordinates(11, 9), // blinky
+                new IntCoordinates(11, 10), // pinky
+                new IntCoordinates(10, 10), // inky
+                new IntCoordinates(12, 10)  // clyde
         ) ;
     }
 

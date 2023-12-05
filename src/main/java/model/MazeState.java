@@ -5,6 +5,7 @@ import config.MazeConfig;
 import geometry.IntCoordinates;
 import geometry.RealCoordinates;
 import gui.GameOver;
+import misc.Debug;
 
 
 import java.util.Set;
@@ -97,7 +98,7 @@ public final class MazeState {
             PacMan.setCountDotTotal(0);
             PacMan.setLevel(PacMan.getLevel()+1);
 			resetCritters();
-			
+            Debug.out(PacMan.getCountDotTotal()+"");
         }
     }
 
@@ -233,6 +234,7 @@ public final class MazeState {
         resetCritters();
         PacMan.setLevel(1);
         PacMan.setCountDot(0);
+        PacMan.setCountDotTotal(0);
     }
 
     private void resetCritter(Critter critter) {
@@ -252,7 +254,7 @@ public final class MazeState {
 
     private void resetGridState(){
         for(int i = 0; i< gridState.length;i++){
-            for(int j = 0; j< gridState.length;j++){
+            for(int j = 0; j< gridState[i].length;j++){
                 gridState[i][j] = false;
             }
         }
