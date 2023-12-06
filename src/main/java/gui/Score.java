@@ -9,7 +9,7 @@ import model.MazeState;
 
 public class Score {
 
-    public GraphicsUpdater displayScore(Pane root) {
+    public GraphicsUpdater displayScore() {
 
         Text point = new Text();
 

@@ -55,7 +55,7 @@ public class GameView {
         for (int x = 0; x < maze.getWidth(); x++)
         for (int y = 0; y < maze.getHeight(); y++)
         	addGraphics(cellFactory.makeGraphics(maze, new IntCoordinates(x, y)));
-            addGraphics(affichageScore.displayScore(root));
+            addGraphics(affichageScore.displayScore());
             addGraphics(afficheVie.remainingLife());
 		    addGraphics(BonusFactory.afficheBonus());
             addGraphics(affichageLevel.displayScore());
