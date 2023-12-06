@@ -3,7 +3,6 @@ import model.MazeState;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.Pane;
 
 public class Vie {
 
@@ -27,15 +26,12 @@ public class Vie {
         return new GraphicsUpdater() {
             @Override
             public void update() {
-
-                    switch (MazeState.lives){
-                        case 1 : vie.setImage(imageOneLF);break;
-                        case 2 : vie.setImage(imageTwo);break;
-                        case 3 : vie.setImage(imageThree);break;
-                        default: vie.setImage(imageNLF);break;
-
-                    }
-
+                vie.setImage(imageThree);
+                switch (MazeState.lives){
+                    case 1 : vie.setImage(imageOneLF);break;
+                    case 2 : vie.setImage(imageTwo);break;
+                    case 3 : vie.setImage(imageThree);break;
+                }
             }
 
             @Override
