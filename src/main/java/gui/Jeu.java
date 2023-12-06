@@ -43,6 +43,7 @@ public class Jeu implements EventHandler<ActionEvent> {
                 pacmanController.keyPressedHandler(event);
             }
         });
+        maze.resetGame();
         double gameWidth = maze.getWidth() * scale ;
         double gameHeight = maze.getHeight() * scale ;
         gameScene.setOnKeyReleased(pacmanController::keyReleasedHandler);
