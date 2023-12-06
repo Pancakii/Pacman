@@ -74,7 +74,6 @@ public class MenuDemarage implements EventHandler<ActionEvent> {
                 lancer = true;
         }
 
-
         @Override
         public void handle(ActionEvent event) {
                 affichageMenuDemarage();
