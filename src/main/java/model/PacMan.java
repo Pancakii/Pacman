@@ -148,7 +148,7 @@ public final class PacMan implements Critter {
 		var pacPos = PacMan.INSTANCE.getPos().round();// get pacman position
 		int x = pacPos.x(); // get x axis
 		int y = pacPos.y(); // get y axis
-        if ( x == 10 && y == 11 && Bonus.canHaveBonus()){
+        if ( x == 11 && y == 12 && Bonus.canHaveBonus()){
 			MazeState.addScore(Bonus.pointBonus());
 			Bonus.setHaveBonus(false);
 			Bonus.setBonusTimer(0);
