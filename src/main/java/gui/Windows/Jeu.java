@@ -1,5 +1,4 @@
 package gui.Windows;
-
 import config.MazeConfig;
 import gui.App;
 import gui.GameView;
@@ -10,6 +9,8 @@ import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
 import model.MazeState;
+import java.awt.Dimension;
+import java.awt.Toolkit;
 
 public class Jeu implements EventHandler<ActionEvent> {
     private static Pane root = new Pane();
@@ -40,13 +41,19 @@ public class Jeu implements EventHandler<ActionEvent> {
                 pacmanController.keyPressedHandler(event);
             }
         });
-
+        double gameWidth = maze.getWidth() * 35.0 ;
+        double gameHeight = maze.getHeight() * 36.0 ;
         gameScene.setOnKeyReleased(pacmanController::keyReleasedHandler);
-        App.menu.setWidth(maze.getWidth() * 35.0);
-        App.menu.setHeight(maze.getHeight() * 36.0);
+        App.menu.setWidth(gameWidth);
+        App.menu.setHeight(gameHeight);
         App.menu.setScene(gameScene);
-        App.menu.setX(330);
-        App.menu.setY(15);
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        double screenSizeWidthidth = screenSize.getWidth();
+        double screenSizeHeight = screenSize.getHeight();
+        App.menu.setX((screenSizeWidthidth - gameWidth)/2);
+        App.menu.setY((screenSizeHeight -gameHeight)/8);
+
+
 
         if (!lancer) {
             gameView.animate();

@@ -26,7 +26,7 @@ public class MenuDemarage implements EventHandler<ActionEvent> {
                 App.menu.setWidth(300);
 
                 //Il y a du CSS dans le setStyke, lien de l'image, est ce que ca se repete, la taille et la position
-                parent.setStyle("-fx-background-image: url('background.jpeg'); -fx-background-repeat: no-repeat;-fx-background-size: 300 300;-fx-background-position: center center;");
+                parent.setStyle("-fx-background-image: url('background.jpeg'); -fx-background-repeat: no-repeat;-fx-background-size: 500 500;-fx-background-position: left top;");
                 // Ajouter un nom a la page
                 App.menu.setTitle("Menu");
 
@@ -91,8 +91,6 @@ public class MenuDemarage implements EventHandler<ActionEvent> {
                 App.menu.show();
                 lancer = true;
         }
-
-
 
         @Override
         public void handle(ActionEvent event) {

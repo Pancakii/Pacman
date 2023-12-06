@@ -1,17 +1,15 @@
 package model;
 
 
-import gui.PacmanController;
 import config.MazeConfig;
 import geometry.IntCoordinates;
 import geometry.RealCoordinates;
 import gui.Windows.GameOver;
 import gui.PacmanController;
 
-
-import java.util.Set;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import static model.Ghost.*;
 
@@ -22,6 +20,7 @@ public final class MazeState {
     private final boolean[][] gridState;
     private final List<Critter> critters;
     public static int score;
+    public static int addLiveScore ;
     public static int lives = 3;
     private final Map<Critter, RealCoordinates> initialPos;
     public static String nickname = "Nobody";
@@ -68,6 +67,7 @@ public final class MazeState {
             updateGhosts(deltaTns, ate_energizer);
             bonusUpdate(deltaTns);
             updateMap();
+            addLive();
     	}
     }
 
@@ -89,11 +89,11 @@ public final class MazeState {
 
     /**
      *  Affiche si le bonus peut apparaitre
-     * @param deltaTns
+     * @param deltaTns le temps du bonus
      */
     private void bonusUpdate(long deltaTns){
-        PacMan.eatBonus(); // vérifie s'il peut manger un fruit
         if ( Bonus.canHaveBonus()) { // vérifie si le bonus peut être manger
+            PacMan.eatBonus(); // vérifie s'il peut manger un fruit
             Bonus.INSTANCE.bonusTimer(deltaTns); // lance le timer du bonus
         }
     }
@@ -223,17 +223,22 @@ public final class MazeState {
 
     public static void addScore(int increment) {
         score += increment;
+        addLiveScore +=increment ;
+    }
+
+    /**
+     * Ajoute une vie quand le joueur atteint le score de 10000 points
+     */
+    public void addLive(){
+        if (addLiveScore >= 10000) {    // vérifie que le score du joueur a bien atteint 10000 points
+            setAddLiveScore(0); // remet le compteur qui rajout de la vie à 0
+            lives++; // ajoute une vie
+        }
     }
 
     private void playerLost() {
         MazeState.lives--;
         if(MazeState.lives == 0){
-            ajoutScore(score);
-            for(int i = 0;i< tabNickname.length;i++){
-                System.out.println(tabNickname[i]);
-                System.out.println(tabScore[i]);
-            }
-
             GameOver.affichageGameOver();
             resetGame();
         }
@@ -281,45 +286,8 @@ public final class MazeState {
         return gridState[pos.y()][pos.x()];
     }
 
-    public boolean tryAddScore(int score){
-        for(int i = 0; i<tabScore.length;i++){
-            if(score>tabScore[i]){
-                return true;
-            }
-        }
-        return false;
+
+    public static void setAddLiveScore(int addLiveScore) {
+        MazeState.addLiveScore = addLiveScore;
     }
-
-    public void ajoutScoreDansLaListe(int position){
-        String[] tabNomF = new String[5];
-        int[] tabScoreF = new  int[5];
-
-        for(int p = 0;p<position;p++){
-            tabNomF[p] = this.tabNickname[p];
-            tabScoreF[p] = this.tabScore[p];
-        }
-        tabNomF[position] = this.tabNickname[position];
-        tabScoreF[position] = this.tabScore[position];
-
-        for(int i = position+1; i<tabScore.length;i++){
-            tabNomF[i] = this.tabNickname[i-1];
-            tabScoreF[i] = this.tabScore[i-1];
-        }
-        this.tabNickname = tabNomF;
-        this.tabScore = tabScoreF;
-
-    }
-    public void ajoutScore(int score){
-        if(tryAddScore(score)){
-           int position = 0;
-           while(tabScore[position] > score && tabScore[position] != 0){
-                 position = position + 1;
-           }
-
-           ajoutScoreDansLaListe(position);
-        }
-
-    }
-
-
 }
