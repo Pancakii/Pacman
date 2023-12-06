@@ -34,7 +34,7 @@ public class Jeu implements EventHandler<ActionEvent> {
 
     public static void Game() throws Exception {
         App.menu.setTitle("Pacman"); // Ajouter un nom a la page
-        
+
         //Sert à détecter si le joueur appuye sur le bouton espace (= Pause du jeu)
         gameScene.setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.SPACE) {
