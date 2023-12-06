@@ -7,7 +7,8 @@ import javafx.scene.layout.Pane;
 
 public class Vie {
 
-    public GraphicsUpdater remainingLife(final Pane root) {
+
+    public GraphicsUpdater remainingLife(){
 
         //Initialissation des images de la vie
         Image imageNLF = new Image("CoeurVide.png");
@@ -19,15 +20,11 @@ public class Vie {
         ImageView vie = new ImageView(imageNLF);
 
         //Emplacement de l'affichage de la vie
-        final int fh = 20;
-        final int fw = 50;
-        final int cx = 500;
-        final int cy = 705;
 
-        vie.setFitHeight(fh);
-        vie.setFitWidth(fw);
-        vie.setX(cx);
-        vie.setY(cy);
+        vie.setFitHeight(40);
+        vie.setFitWidth(100);
+        vie.setX(14.5 * 35);
+        vie.setY(22.5 * 35);
 
         return new GraphicsUpdater() {
             @Override

@@ -6,6 +6,9 @@ public class Bonus {
     private static int point ;
     public static final Bonus INSTANCE = new Bonus();
 
+    /**
+     * Initialisation du bonus
+     */
     private Bonus()
     {
         haveBonus =false ;
@@ -13,31 +16,42 @@ public class Bonus {
     }
 
 
-    // retourne si pacman peut manger un bonus ou pas
+    /**
+     * Retourne si pacman peut manger un bonus ou pas
+     */
     public static boolean canHaveBonus() {
         return haveBonus;
     }
 
-    // change haveBonus
-
+    /**
+     *  Change haveBonus
+     */
     public static void setHaveBonus(boolean havebonus) {
         haveBonus = havebonus;
     }
 
-    //change le temps du timer
+    /**
+     * Change le temps du timer
+     */
     public static void setBonusTimer (double bonusTime){
          bonusTimer = bonusTime;
     }
 
-    // regarde si le fruit peut apparaitre dans la map et retoune haveBonus
+    /**
+     * Regarde si le fruit peut apparaitre dans la map et retoune haveBonus
+     * @return haveBonus
+     */
     public static boolean appartionFruit(){
-        if ( PacMan.getCountDot()%70==0 && bonusTimer <= 10 && PacMan.getCountDot()!=0){
+        if ( PacMan.getCountDot()%70==0 && bonusTimer <= 10 && PacMan.getCountDot() != 0){
             haveBonus = true ;
         }
         return haveBonus ;
     }
 
-    // timer du bonus
+    /**
+     *  timer du bonus
+     * @param delta
+     */
     public void bonusTimer(long delta){
         double delta_double = (double) delta ;
         if(haveBonus && bonusTimer <= 10) {
@@ -49,41 +63,21 @@ public class Bonus {
         }
     }
 
-    //retourne le point de chaque bonus
+    /**
+     * Retourne le point de chaque bonus
+     * @return point
+     */
+
     public static int pointBonus(){
         switch (PacMan.getLevel()){
-            case 1 -> {
-                point = 100 ;
-                return point ;
-            }
-            case 2 -> {
-                point = 300 ;
-                return point ;
-            }
-            case 3, 4 -> {
-                point = 500 ;
-                return point ;
-            }
-            case 5, 6 -> {
-                point = 700 ;
-                return point ;
-            }
-            case 7, 8 -> {
-                point = 1000 ;
-                return point ;
-            }
-            case 9, 10 -> {
-                point = 2000 ;
-                return point ;
-            }
-            case 11, 12 -> {
-                point = 3000 ;
-                return point ;
-            }
-            case 13 -> {
-                point = 5000 ;
-                return point ;
-            }
+            case 1 -> point = 100 ;
+            case 2 -> point = 300 ;
+            case 3, 4 -> point = 500 ;
+            case 5, 6 -> point = 700 ;
+            case 7, 8 -> point = 1000 ;
+            case 9, 10 -> point = 2000 ;
+            case 11, 12 -> point = 3000 ;
+            case 13 -> point = 5000 ;
         }
         return point ;
     }

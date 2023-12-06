@@ -1,7 +1,6 @@
 package geometry;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 public record RealCoordinates(double x, double y) {
@@ -22,42 +21,46 @@ public record RealCoordinates(double x, double y) {
     }
 
     /**
-     *
-     * @return the coordinates of all integer squares that a unit square with current coordinates would intersect
-      */
+     * Méthode qui renvoie un ensemble IntCoordinates
+     * @return Renvoie un ensemble IntCoordinates correspondant aux voisins de notre position
+     */
     public Set<IntCoordinates> intNeighbours() {
-        return new HashSet<>(List.of(
-                new IntCoordinates((int) Math.floor(x), (int) Math.floor(y)),
-                new IntCoordinates((int) Math.floor(x), (int) Math.ceil(y)),
-                new IntCoordinates((int) Math.ceil(x), (int) Math.floor(y)),
-                new IntCoordinates((int) Math.ceil(x), (int) Math.ceil(y))
-        )
-        );
+        Set<IntCoordinates> neighbours = new HashSet<>();
+
+        int floorX = (int) Math.floor(x);
+        int floorY = (int) Math.floor(y);
+        int ceilX = (int) Math.ceil(x);
+        int ceilY = (int) Math.ceil(y);
+
+        neighbours.add(new IntCoordinates(floorX, floorY));
+        neighbours.add(new IntCoordinates(floorX, ceilY));
+        neighbours.add(new IntCoordinates(ceilX, floorY));
+        neighbours.add(new IntCoordinates(ceilX, ceilY));
+
+        return neighbours;
     }
+
 
     public IntCoordinates round() {
         return new IntCoordinates((int) Math.round(x), (int) Math.round(y));
     }
 
-    public RealCoordinates floorX() {
-        return new RealCoordinates((int) Math.floor(x), y);
+    public boolean smallDiff(RealCoordinates other)
+    {
+        return Math.abs(x() - other.x()) < 0.05 && Math.abs(y() - other.y()) < 0.05;
     }
-
-    public RealCoordinates floorY() {
-        return new RealCoordinates(x, (int) Math.floor(y));
-    }
-
-    public RealCoordinates ceilX() {
-        return new RealCoordinates((int) Math.ceil(x), y);
-    }
-
-    public RealCoordinates ceilY() {
-        return new RealCoordinates(x, (int) Math.ceil(y));
-    }
-
-    public RealCoordinates warp(final int width, final int height) {
+    
+    
+    /**
+     * Méthode qui délimite les zones "hors limites"
+     * @param width   largeur du plateau de jeu
+     * @param height	longeur du plateau de jeu
+     * @return Renvoie des nouvelles coordonnées (RealCoordinates) "appropriées" 
+     */
+    public RealCoordinates warp(int width, int height) {
         var rx = x;
         var ry = y;
+        
         while (Math.round(rx) < 0) {
             rx += width;
         }
@@ -67,41 +70,11 @@ public record RealCoordinates(double x, double y) {
         while (Math.round(rx) >= width) {
             rx -= width;
         }
-        while (Math.round(rx) >= height) {
+
+        while (Math.round(ry) >= height) {
             ry -= height;
         }
+
         return new RealCoordinates(rx, ry);
     }
-    // regarde si il y a un mur a gauche
-    public IntCoordinates[] intNeighbourWest() {
-        return new IntCoordinates[]{
-                new IntCoordinates((int) Math.floor(x), (int) Math.floor(y)),
-                new IntCoordinates((int) Math.floor(x), (int) Math.ceil(y))
-        };
-    }
-
-    // regarde si il y a un mur a droite
-    public IntCoordinates[] intNeighbourEast() {
-        return new IntCoordinates[]{
-                new IntCoordinates((int) Math.ceil(x), (int) Math.ceil(y)),
-                new IntCoordinates((int) Math.ceil(x), (int) Math.floor(y))
-        };
-    }
-
-    // regarde si il y a un mur en haut
-    public IntCoordinates[] intNeighbourNorth() {
-        return new IntCoordinates[]{
-                new IntCoordinates((int) Math.floor(x), (int) Math.ceil(y)),
-                new IntCoordinates((int) Math.ceil(x), (int) Math.ceil(y))
-        };
-    }
-
-    // regarde si il y a un mur en bas
-    public IntCoordinates[] intNeighbourSouth() {
-        return new IntCoordinates[]{
-                new IntCoordinates((int) Math.floor(x), (int) Math.floor(y)),
-                new IntCoordinates((int) Math.ceil(x), (int) Math.floor(y))
-        };
-    }
-
 }
