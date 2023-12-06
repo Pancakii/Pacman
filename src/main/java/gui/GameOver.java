@@ -20,7 +20,7 @@ public class GameOver  {
                 App.menu.setHeight(500);
                 App.menu.setWidth(500);
                 //Il y a du CSS dans le setStyke, lien de l'image, est ce que ca se repete, la taille et la position
-                parent.setStyle("-fx-background-image: url('GOB.jpeg'); -fx-background-repeat: no-repeat;-fx-background-size: 500 500;-fx-background-position: left top;");
+                parent.setStyle("-fx-background-image: url('GOB.png'); -fx-background-repeat: no-repeat;-fx-background-size: 500 500;-fx-background-position: left top;");
                 // Ajouter un nom a la page
                 App.menu.setTitle("GameOver");
                 // Ne plus pouvoir aggrandir/retrecir la page
