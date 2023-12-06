@@ -61,7 +61,7 @@ public final class MazeState {
      * @param pause	Vérification si l'utilisateur a mis le jeu en pause
      */
     public void update(long deltaTns, boolean pause) {
-    	if(!pause) {
+    	if(!pause && lives > 0) {
     		moveCritters(deltaTns);
             boolean ate_energizer = updatePacman(deltaTns);
             updateGhosts(deltaTns, ate_energizer);
@@ -240,7 +240,6 @@ public final class MazeState {
         MazeState.lives--;
         if(MazeState.lives == 0){
             GameOver.affichageGameOver();
-            resetGame();
         }
         resetCritters();
     }

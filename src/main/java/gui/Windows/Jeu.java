@@ -32,7 +32,7 @@ public class Jeu implements EventHandler<ActionEvent> {
 
     public static void Game() throws Exception {
         App.menu.setTitle("Pacman"); // Ajouter un nom a la page
-        
+
         //Sert à détecter si le joueur appuye sur le bouton espace (= Pause du jeu)
         gameScene.setOnKeyPressed(event -> {
             if (event.getCode() == KeyCode.SPACE) {
@@ -41,6 +41,8 @@ public class Jeu implements EventHandler<ActionEvent> {
                 pacmanController.keyPressedHandler(event);
             }
         });
+
+        maze.resetGame();
         double gameWidth = maze.getWidth() * 35.0 ;
         double gameHeight = maze.getHeight() * 36.0 ;
         gameScene.setOnKeyReleased(pacmanController::keyReleasedHandler);
