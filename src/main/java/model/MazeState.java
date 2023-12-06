@@ -135,7 +135,7 @@ public final class MazeState {
     private void playerLost() {
         lives--;
         if(MazeState.lives == 0){
-            ajoutScore(nickname,score);
+            ajoutScore(score);
             for(int i = 0;i< tabNickname.length;i++){
                 System.out.println(tabNickname[i]);
                 System.out.println(tabScore[i]);
@@ -189,7 +189,7 @@ public final class MazeState {
         return false;
     }
 
-    public void ajoutScoreDansLaListe(String name, int score, int position){
+    public void ajoutScoreDansLaListe(int position){
         String[] tabNomF = new String[5];
         int[] tabScoreF = new  int[5];
 
@@ -208,14 +208,14 @@ public final class MazeState {
         this.tabScore = tabScoreF;
 
     }
-    public void ajoutScore(String name, int score){
+    public void ajoutScore(int score){
         if(tryAddScore(score)){
            int position = 0;
            while(tabScore[position] > score && tabScore[position] != 0){
                  position = position + 1;
            }
 
-           ajoutScoreDansLaListe(name,score,position);
+           ajoutScoreDansLaListe(position);
         }
 
     }

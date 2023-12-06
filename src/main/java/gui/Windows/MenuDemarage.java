@@ -22,11 +22,11 @@ public class MenuDemarage implements EventHandler<ActionEvent> {
         private static boolean lancer = false;
 
         public static void affichageMenuDemarage()  {
-                App.menu.setHeight(500);
-                App.menu.setWidth(500);
+                App.menu.setHeight(300);
+                App.menu.setWidth(300);
 
                 //Il y a du CSS dans le setStyke, lien de l'image, est ce que ca se repete, la taille et la position
-                parent.setStyle("-fx-background-image: url('background.jpeg'); -fx-background-repeat: no-repeat;-fx-background-size: 500 500;-fx-background-position: center center;");
+                parent.setStyle("-fx-background-image: url('background.jpeg'); -fx-background-repeat: no-repeat;-fx-background-size: 300 300;-fx-background-position: center center;");
                 // Ajouter un nom a la page
                 App.menu.setTitle("Menu");
 
@@ -45,7 +45,7 @@ public class MenuDemarage implements EventHandler<ActionEvent> {
                         //La barre qui permet d'ajouter un nom
 
                         GridPane gridPane = new GridPane();
-                        TextField txtName = new TextField();
+                        TextField txtName = new TextField("Random");
                         txtName.setPromptText("Nickname");
                         txtName.setFocusTraversable(false);
                         gridPane.add(txtName,1,0,1,1);

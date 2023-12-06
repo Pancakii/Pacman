@@ -1,10 +1,11 @@
 package gui;
 
 
-import gui.Windows.GameOver;
 import javafx.application.Application;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+
+import static gui.Windows.MenuDemarage.affichageMenuDemarage;
 
 
 public class App extends Application {
@@ -17,8 +18,8 @@ public class App extends Application {
         // Ajouter une icone a la page`
         Image icon = new Image("pacman.png");
         menu.getIcons().add(icon);
-        GameOver.affichageGameOver();
-        //affichageMenuDemarage();
+        //GameOver.affichageGameOver();
+            affichageMenuDemarage();
 
     }
 }

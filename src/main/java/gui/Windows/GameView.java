@@ -1,6 +1,7 @@
-package gui;
+package gui.Windows;
 
 import geometry.IntCoordinates;
+import gui.*;
 import javafx.animation.AnimationTimer;
 import javafx.scene.layout.Pane;
 import model.MazeState;
