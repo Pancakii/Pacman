@@ -5,7 +5,6 @@ import config.MazeConfig;
 import geometry.IntCoordinates;
 import geometry.RealCoordinates;
 import gui.GameOver;
-import misc.Debug;
 
 
 import java.util.Set;
@@ -21,6 +20,7 @@ public final class MazeState {
     private final boolean[][] gridState;
     private final List<Critter> critters;
     public static int score;
+    public static int addLiveScore ;
     public static int lives = 3;
 
     private final Map<Critter, RealCoordinates> initialPos;
@@ -66,6 +66,7 @@ public final class MazeState {
             updateGhosts(deltaTns, ate_energizer);
             bonusUpdate(deltaTns);
             updateMap();
+            addLive();
     	}
     }
 
@@ -87,11 +88,11 @@ public final class MazeState {
 
     /**
      *  Affiche si le bonus peut apparaitre
-     * @param deltaTns
+     * @param deltaTns le temps du bonus
      */
     private void bonusUpdate(long deltaTns){
-        PacMan.eatBonus(); // vérifie s'il peut manger un fruit
         if ( Bonus.canHaveBonus()) { // vérifie si le bonus peut être manger
+            PacMan.eatBonus(); // vérifie s'il peut manger un fruit
             Bonus.INSTANCE.bonusTimer(deltaTns); // lance le timer du bonus
         }
     }
@@ -221,6 +222,17 @@ public final class MazeState {
 
     public static void addScore(int increment) {
         score += increment;
+        addLiveScore +=increment ;
+    }
+
+    /**
+     * Ajoute une vie quand le joueur atteint le score de 10000 points
+     */
+    public void addLive(){
+        if (addLiveScore >= 10000) {    // vérifie que le score du joueur a bien atteint 10000 points
+            setAddLiveScore(0); // remet le compteur qui rajout de la vie à 0
+            lives++; // ajoute une vie
+        }
     }
 
     private void playerLost() {
@@ -271,5 +283,9 @@ public final class MazeState {
 
     public boolean getGridState(IntCoordinates pos) {
         return gridState[pos.y()][pos.x()];
+    }
+
+    public static void setAddLiveScore(int addLiveScore) {
+        MazeState.addLiveScore = addLiveScore;
     }
 }
