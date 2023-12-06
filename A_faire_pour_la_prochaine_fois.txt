@@ -1,0 +1,54 @@
+
+REUNION N2 : 
+
+SCRUM MASTER : MINA 
+
+ALEXIS :
+* Tache : Affichage des scores 
+       - demande de merge faite 
+	 - Problèmes rencontrés : mise à jour du score et de la vie en jeu 
+Emirhan : 
+* PacMan presque finie. + ajout de fonctions utiles ( timing de energizer, manger les Dot et energizer..) 
+* Class note pour l’algorithme de path findings
+* à fait l’Algorithme pour afficher la map (avec les murs etc..)
+
+
+Mina : 
+* Début de la map avec Cellule fini 
+* Fin du PacMan controller 
+* 2 merge requests 
+* Prochaine tâche : affichage de pacMan 
+
+Salim : 
+* Application des Cellules plus simples + 1ere demande de merge faite
+* Erreur de build corriger avec Cell simples + peut maintenant RUN
+
+Sofyane : 
+* Adapter la classe CellGraphicsFactory à la classe Cell 
+* Debogage de Sprites ( CritterGraphicsFactory)
+* Merge
+
+A faire pour la prochaine seance :
+Salim :
+Régler les probleme des murs 
+Configurer les murs en carre 
+
+Mina :
+Configurer les changements d’images de pacman 
+Attendre que le labyrinthe est bien fini pour faire pacmancontroller  
+
+Alexis :
+Finir vie et score en affichage 
+Faire ecran game over 
+
+Emirhan :
+A* Algorithm 
+Ghost AI 
+Finir pacman 
+
+Sofyane : 
+Faire un menu
+
+
+
+
