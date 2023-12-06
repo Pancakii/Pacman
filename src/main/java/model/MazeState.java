@@ -251,6 +251,9 @@ public final class MazeState {
         PacMan.setLevel(1);
         PacMan.setCountDot(0);
         PacMan.setCountDotTotal(0);
+        setAddLiveScore(0);
+        Bonus.setHaveBonus(false);
+        Bonus.setBonusTimer(0);
     }
 
     private void resetCritter(Critter critter) {
