@@ -1,3 +1,4 @@
+/*
 package pathfinding;
 
 import config.Cell;
@@ -258,3 +259,4 @@ public class Ghost_pf
         }
     }
 }
+*/
