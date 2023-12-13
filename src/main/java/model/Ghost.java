@@ -28,6 +28,7 @@ public enum Ghost implements Critter {
 
     private final double chase_timer_max = 20;
     private double chase_timer = 0;
+    private static IntCoordinates Clyde_startPosition;
 
     @Override
     public RealCoordinates getPos() {
@@ -37,6 +38,11 @@ public enum Ghost implements Critter {
     @Override
     public void setPos(RealCoordinates newPos) {
         pos = newPos;
+        
+        // Met à jour la position initiale uniquement pour Clyde
+        if (this == CLYDE && Clyde_startPosition == null) {
+            Clyde_startPosition = newPos.round();
+        }
     }
 
     @Override
@@ -154,10 +160,11 @@ public enum Ghost implements Critter {
 
             RealCoordinates currPost = pos.plus(DirectionUtils.getVector(Direction.NONE));
             IntCoordinates currCell = currPost.round();
-
+            
             // Handling cases if there's a wall or if in intersection and if the timer of random direction ended
             boolean bool = mazeConfig.getCell(nextCell).isWall() || mazeConfig.isIntersection(currCell) && path_finding_timer <= 0;
-            int[] base_out_coordinates = {10, 9};
+            
+            int[] base_out_coordinates = {Clyde_startPosition.x() - 1, Clyde_startPosition.y()};         
             if (currCell.x() == base_out_coordinates[0] && currCell.y() == base_out_coordinates[1])
             {
                 direction = Direction.NORTH;

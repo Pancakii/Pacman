@@ -55,12 +55,21 @@ public class GameView {
 
         for (var critter : maze.getCritters()) addGraphics(critterFactory.makeGraphics(critter));
         for (int x = 0; x < maze.getWidth(); x++)
-            for (int y = 0; y < maze.getHeight(); y++)
-                addGraphics(cellFactory.makeGraphics(maze, new IntCoordinates(x, y)));
-        addGraphics(affichageScore.displayScore(root));
-        addGraphics(afficheVie.remainingLife());
-        addGraphics(BonusFactory.afficheBonus());
-        addGraphics(affichageLevel.displayScore());
+        for (int y = 0; y < maze.getHeight(); y++)
+        	addGraphics(cellFactory.makeGraphics(maze, new IntCoordinates(x, y)));
+            addGraphics(affichageScore.displayScore());
+            addGraphics(afficheVie.remainingLife());
+		    addGraphics(BonusFactory.afficheBonus());
+            addGraphics(affichageLevel.displayScore());
+		
+		// Crée le texte de pause
+		pauseText = new Text("Pause");
+		pauseText.setFont(Font.font(200));
+	    pauseText.setFill(Color.rgb(255, 165, 0));
+		
+	    // Crée le background du texte et de ses valeurs
+	     backgroundRect = new Rectangle(maze.getWidth() * 40.0, 200); 
+	     backgroundRect.setFill(Color.rgb(15, 5, 107, 0.9)); // Définir la couleur du fond avec une opacité de 50%
 
         // Crée le texte de pause
         pauseText = new Text("Pause");

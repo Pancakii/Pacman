@@ -23,12 +23,16 @@ public class Jeu implements EventHandler<ActionEvent> {
             throw new RuntimeException(e);
         }
     }
+    private static Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+    private static double screenSizeWidthidth = screenSize.getWidth();
+    private static double screenSizeHeight = screenSize.getHeight();
+    private static double scale = screenSizeHeight / (mazeConfig.getHeight() + 1 ) ;
 
     private static PacmanController pacmanController = new PacmanController(mazeConfig);
     private static Scene gameScene = new Scene(root);
     private static MazeState maze = new MazeState(mazeConfig);
     private static boolean lancer = false;
-    private static GameView gameView = new GameView(maze, root, 35.0, maze.getWidth() - 75, (maze.getHeight() * 18.0)/2);
+    private static GameView gameView = new GameView(maze, root, scale, maze.getWidth() - 75, (maze.getHeight() * 18.0)/2);
 
     public static void Game() throws Exception {
         App.menu.setTitle("Pacman"); // Ajouter un nom a la page
@@ -41,21 +45,15 @@ public class Jeu implements EventHandler<ActionEvent> {
                 pacmanController.keyPressedHandler(event);
             }
         });
-
         maze.resetGame();
-        double gameWidth = maze.getWidth() * 35.0 ;
-        double gameHeight = maze.getHeight() * 36.0 ;
+        double gameWidth = maze.getWidth() * scale ;
+        double gameHeight = maze.getHeight() * scale ;
         gameScene.setOnKeyReleased(pacmanController::keyReleasedHandler);
         App.menu.setWidth(gameWidth);
         App.menu.setHeight(gameHeight);
         App.menu.setScene(gameScene);
-        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        double screenSizeWidthidth = screenSize.getWidth();
-        double screenSizeHeight = screenSize.getHeight();
         App.menu.setX((screenSizeWidthidth - gameWidth)/2);
         App.menu.setY((screenSizeHeight -gameHeight)/8);
-
-
 
         if (!lancer) {
             gameView.animate();
