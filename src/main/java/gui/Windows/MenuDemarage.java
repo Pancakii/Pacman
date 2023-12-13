@@ -22,8 +22,8 @@ public class MenuDemarage implements EventHandler<ActionEvent> {
         private static boolean lancer = false;
 
         public static void affichageMenuDemarage()  {
-                App.menu.setHeight(300);
-                App.menu.setWidth(300);
+                App.menu.setHeight(500);
+                App.menu.setWidth(500);
 
                 //Il y a du CSS dans le setStyke, lien de l'image, est ce que ca se repete, la taille et la position
                 parent.setStyle("-fx-background-image: url('background.jpeg'); -fx-background-repeat: no-repeat;-fx-background-size: 500 500;-fx-background-position: left top;");

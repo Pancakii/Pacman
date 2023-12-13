@@ -6,7 +6,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import model.MazeState;
@@ -22,11 +21,11 @@ public class GameOver  {
 
 
         public static void affichageGameOver() {
-                final int tw = 700;
+                final int tw = 500;
                 App.menu.setHeight(tw);
                 App.menu.setWidth(tw);
                 //Il y a du CSS dans le setStyke, lien de l'image, est ce que ca se repete, la taille et la position
-                parent.setStyle("-fx-background-image: url('GOB.jpeg'); -fx-background-repeat: no-repeat;-fx-background-size: 500 500;-fx-background-position: left top;");
+                parent.setStyle("-fx-background-image: url('GOB.png'); -fx-background-repeat: no-repeat;-fx-background-size: 500 500;-fx-background-position: left top;");
                 // Ajouter un nom a la page
                 App.menu.setTitle("GameOver");
                 // Ne plus pouvoir aggrandir/retrecir la page
@@ -80,19 +79,6 @@ public class GameOver  {
                         exitbouton.setOnAction(new ExitButon());
                         parent.getChildren().add(exitbouton);
 
-                        //Scoreboard affichage
-                        sb.setText("ScoreBoard :");
-                        sb.setTranslateX(250);
-                        sb.setTranslateY(20);
-                        sb.setFont(Font.font(50));
-                        sb.setFill(Color.YELLOW);
-                        parent.getChildren().add(sb);
-
-                        Rectangle rectangle = new Rectangle(250,300,Color.BLACK);
-                        rectangle.setTranslateX(450);
-                        rectangle.setTranslateY(-200);
-
-                        parent.getChildren().add(rectangle);
 
                 }
 

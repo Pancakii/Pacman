@@ -240,6 +240,7 @@ public final class MazeState {
         MazeState.lives--;
         if(MazeState.lives == 0){
             GameOver.affichageGameOver();
+            ajoutScore(score);
         }
         resetCritters();
     }
@@ -289,4 +290,39 @@ public final class MazeState {
     public static void setAddLiveScore(int addLiveScore) {
         MazeState.addLiveScore = addLiveScore;
     }
-}
+
+
+    public boolean tryAddScore(int score){
+        for(int i = 0; i<tabScore.length;i++){
+            if(score>tabScore[i]){
+                return true;
+            }
+        }
+        return false;
+    }
+
+
+
+    public void ajoutScoreDansLaListe(int position){
+        String[] tabNomF = new String[5];
+        int[] tabScoreF = new  int[5];
+
+        this.tabScore = tabScoreF;
+
+    }
+
+    public void ajoutScore(int score) {
+        if (tryAddScore(score)) {
+            int position = 0;
+            while (tabScore[position] > score && tabScore[position] != 0) {
+                position = position + 1;
+            }
+
+            ajoutScoreDansLaListe(position);
+        }
+    }
+
+
+
+
+    }
