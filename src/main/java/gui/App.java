@@ -16,6 +16,5 @@ public class App extends Application {
         menu.setFullScreenExitHint ("Press esc for exit");
 
         affichageMenuDemarage();
-
     }
 }
