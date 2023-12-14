@@ -7,7 +7,6 @@ import model.Critter;
 import model.Ghost;
 import model.PacMan;
 
-
 public final class CritterGraphicsFactory {
     private final double scale;
     private final double size = 0.7;
@@ -185,6 +184,7 @@ public final class CritterGraphicsFactory {
                 }
                 imageView.setTranslateX((critter.getPos().x() + (1 - size) / 2) * scale);
                 imageView.setTranslateY((critter.getPos().y() + (1 - size) / 2) * scale);
+
             }
 
             @Override
@@ -193,4 +193,5 @@ public final class CritterGraphicsFactory {
             }
         };
     }
+
 }

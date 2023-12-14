@@ -29,7 +29,7 @@ public class AskName implements EventHandler{
             GridPane gridPane = new GridPane();
             TextField txtName = new TextField("Random");
             txtName.setPromptText("Nickname");
-            txtName.setFocusTraversable(false);
+            txtName.setFocusTraversable(true);
             gridPane.add(txtName,1,0,1,1);
 
             gridPane.setTranslateX(175);

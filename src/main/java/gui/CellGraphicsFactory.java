@@ -1,5 +1,6 @@
 package gui;
 
+
 import geometry.IntCoordinates;
 import javafx.scene.Group;
 import javafx.scene.Node;
@@ -23,8 +24,8 @@ public class CellGraphicsFactory {
      */
     public GraphicsUpdater makeGraphics(MazeState state, IntCoordinates pos) {
         var group = new Group();
-        group.setTranslateX(pos.x()*scale);
-        group.setTranslateY(pos.y()*scale);
+        group.setTranslateX(pos.x() * scale);
+        group.setTranslateY(pos.y() * scale);
         var cell = state.getConfig().getCell(pos);
         var dot = new Circle();
         
@@ -78,3 +79,5 @@ public class CellGraphicsFactory {
         };
     }
 }
+
+

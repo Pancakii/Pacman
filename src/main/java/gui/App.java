@@ -11,7 +11,6 @@ import static gui.Windows.MenuDemarage.affichageMenuDemarage;
 public class App extends Application {
     public static Stage menu = new Stage(); //la seule fenetre du jeu
 
-
     @Override
     public void start(final Stage primaryStage) {
         menu.setResizable(false); // Ne plus pouvoir aggrandir/retrecir la page
@@ -20,6 +19,7 @@ public class App extends Application {
         menu.getIcons().add(icon);
         //GameOver.affichageGameOver();
             affichageMenuDemarage();
+
 
     }
 }
