@@ -23,8 +23,7 @@ public final class MazeState {
     public static int addLiveScore ;
     public static int lives = 3;
     private final Map<Critter, RealCoordinates> initialPos;
-    public static String nickname = "Nobody";
-    private int[] tabScore = new int[5];
+    public static String nickname;
 
     public MazeState(MazeConfig config) {
         this.config = config;

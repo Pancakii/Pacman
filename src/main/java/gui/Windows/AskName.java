@@ -22,7 +22,7 @@ public class AskName implements EventHandler{
         App.menu.setHeight(500);
         App.menu.setWidth(500);
         App.menu.setTitle("Name");
-
+        parent.setStyle("-fx-background-color: #000000");
         if(!lancer){
             //La barre qui permet d'ajouter un nom
 
@@ -37,13 +37,12 @@ public class AskName implements EventHandler{
             gridPane.setVgap(8);
             gridPane.setHgap(10);
             txtName.setOnAction(new EventHandler<ActionEvent>() {
-                                    @Override
-                                    public void handle(ActionEvent event) {
-                                        MazeState.nickname = txtName.getText();
-                                        Jeu.Game();
-                                    }
-                                }
-            );
+                @Override
+                public void handle(ActionEvent event) {
+                    MazeState.nickname = txtName.getText();
+                    Jeu.Game();
+                }
+            });
             parent.getChildren().add(gridPane);
         }
 
