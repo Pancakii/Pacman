@@ -2,6 +2,8 @@ package gui.Windows;
 
 import gui.App;
 import gui.ExitButon;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
@@ -10,13 +12,11 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import model.MazeState;
 
-public class GameOver  {
+public class GameOver implements EventHandler<ActionEvent> {
         private static VBox parent = new VBox();
         private static Scene scene = new Scene(parent);
         private static Text score =  new Text();
         private static Text go = new Text();
-        private static Text sb = new Text();
-
         private static boolean lancer = false;
 
 
@@ -91,4 +91,8 @@ public class GameOver  {
     }
 
 
+        @Override
+        public void handle(ActionEvent event) {
+                affichageGameOver();
+        }
 }

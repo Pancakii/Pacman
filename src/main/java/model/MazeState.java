@@ -4,8 +4,8 @@ package model;
 import config.MazeConfig;
 import geometry.IntCoordinates;
 import geometry.RealCoordinates;
-import gui.Windows.GameOver;
 import gui.PacmanController;
+import gui.Windows.ScoreBoard;
 
 import java.util.List;
 import java.util.Map;
@@ -24,7 +24,6 @@ public final class MazeState {
     public static int lives = 3;
     private final Map<Critter, RealCoordinates> initialPos;
     public static String nickname = "Nobody";
-    private String[] tabNickname = new String[5];
     private int[] tabScore = new int[5];
 
     public MazeState(MazeConfig config) {
@@ -239,8 +238,7 @@ public final class MazeState {
     private void playerLost() {
         MazeState.lives--;
         if(MazeState.lives == 0){
-            GameOver.affichageGameOver();
-            ajoutScore(score);
+            ScoreBoard.afficheScoreBoard();
         }
         resetCritters();
     }
@@ -292,38 +290,6 @@ public final class MazeState {
     public static void setAddLiveScore(int addLiveScore) {
         MazeState.addLiveScore = addLiveScore;
     }
-
-
-    public boolean tryAddScore(int score){
-        for(int i = 0; i<tabScore.length;i++){
-            if(score>tabScore[i]){
-                return true;
-            }
-        }
-        return false;
-    }
-
-
-
-    public void ajoutScoreDansLaListe(int position){
-        String[] tabNomF = new String[5];
-        int[] tabScoreF = new  int[5];
-
-        this.tabScore = tabScoreF;
-
-    }
-
-    public void ajoutScore(int score) {
-        if (tryAddScore(score)) {
-            int position = 0;
-            while (tabScore[position] > score && tabScore[position] != 0) {
-                position = position + 1;
-            }
-
-            ajoutScoreDansLaListe(position);
-        }
-    }
-
 
 
 

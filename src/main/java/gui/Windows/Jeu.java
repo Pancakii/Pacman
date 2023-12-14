@@ -34,7 +34,7 @@ public class Jeu implements EventHandler<ActionEvent> {
     private static boolean lancer = false;
     private static GameView gameView = new GameView(maze, root, scale, maze.getWidth() - 75, (maze.getHeight() * 18.0)/2);
 
-    public static void Game() throws Exception {
+    public static void Game() {
         App.menu.setTitle("Pacman"); // Ajouter un nom a la page
 
         //Sert à détecter si le joueur appuye sur le bouton espace (= Pause du jeu)
