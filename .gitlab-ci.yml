@@ -1,3 +1,10 @@
+image: gradle:latest
+
+stages:
+  - setup
+  - build
+  - test
+
 before_script:
   - apt-get update -qq && apt-get install -y -qq sqlite3 libsqlite3-dev nodejs
   - apt-get install -y ruby
@@ -6,10 +13,19 @@ before_script:
   - gem install bundler --no-document
   - bundle install --jobs $(nproc) "${FLAGS[@]}"
 
-rspec:
+setup:
+  stage: setup
   script:
-    - bundle exec rspec
+    - chmod +x gradlew
 
-rubocop:
+build:
+  stage: build
   script:
+    - ./gradlew build
+
+test:
+  stage: test
+  script:
+    - ./gradlew test
+    - bundle exec rspec
     - bundle exec rubocop
