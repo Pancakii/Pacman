@@ -1,6 +1,7 @@
 /*
 package pathfinding;
 
+
 import config.Cell;
 import config.MazeConfig;
 import geometry.IntCoordinates;
