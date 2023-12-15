@@ -11,7 +11,8 @@ before_script:
   - ruby -v
   - which ruby
   - gem install bundler --no-document
-  - bundle install --jobs $(nproc) "${FLAGS[@]}"
+  - bundle install --jobs $(nproc) "${FLAGS[@]}" --path vendor/bundle
+
 
 setup:
   stage: setup
