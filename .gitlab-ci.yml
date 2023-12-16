@@ -21,9 +21,9 @@ before_script:
 build:
   stage: build
   script:
-    - ./gradlew build
+    - ./gradlew assemble
 
-run:
-  stage: run
+test:
+  stage: test
   script:
-    - ./gradlew run
+    - ./gradlew test
