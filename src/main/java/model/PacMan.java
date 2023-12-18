@@ -4,62 +4,59 @@ package model;
 import geometry.RealCoordinates;
 import config.*;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-
 
 public final class PacMan implements Critter {
     private Direction direction = Direction.NONE;
     private RealCoordinates pos;
     private boolean energized;
-	private final double energized_timer_max = 10;
-	private double energized_timer;
-	private static int level;
-	private static int countDot;
-	private static int countDotTotal;
-	private static final int dotTotal = 151;
+    private final double energized_timer_max = 10;
+    private double energized_timer;
+    private static int level;
+    private static int countDot;
+    private static int countDotTotal;
+    private static final int dotTotal = 151;
 
 
-
-	// We should be able to change the position
-	// when we change the level.
-    private PacMan()
-	{
-		this(0.0, 0.0, false);
+    // We should be able to change the position
+    // when we change the level.
+    private PacMan() {
+        this(0.0, 0.0, false);
     }
 
     public static final PacMan INSTANCE = new PacMan();
 
-
     public static boolean checknEatCell(MazeConfig grid, boolean[][] grid_state)
-	{
+    {
 		/*
 		Check if pacman is in a new cell, if so eat the content
 		 */
-    	var pacPos = PacMan.INSTANCE.getPos().round();// get pacman position
-    	int x = pacPos.x(); // get x axis
-		int y = pacPos.y(); // get y axis
-		if(!grid_state[y][x]) // verify if the cell pacman in is entered before(false = not entered yet)
-		{
-			if (grid.getCell(pacPos).aDot())// if the unentered cell contains a dot
-			{
-				MazeState.addScore(10);// add 1 to the score
-				countDot++;
-				countDotTotal++;
-				grid_state[y][x] = true;// set the cell state "entered"
-			}
-			else if (grid.getCell(pacPos).aEnergizer())// if the unentered cell contains an energizer
-			{
-				MazeState.addScore(50);// add 10 to the score
-				countDot++;
-				countDotTotal++ ;
-				INSTANCE.energized_timer = INSTANCE.energized_timer_max;// set the energizer timer
-				INSTANCE.setEnergized(true);// set energized true
-				grid_state[y][x] = true;// set the cell state "entered"
-				return true;
-			}
-		}
-		return false;
+        var pacPos = PacMan.INSTANCE.getPos().round();// get pacman position
+        int x = pacPos.x(); // get x axis
+        int y = pacPos.y(); // get y axis
+        if(!grid_state[y][x]) // verify if the cell pacman in is entered before(false = not entered yet)
+        {
+            if (grid.getCell(pacPos).aDot())// if the unentered cell contains a dot
+            {
+                MazeState.addScore(10);// add 1 to the score
+                countDot++;
+                countDotTotal++;
+                grid_state[y][x] = true;// set the cell state "entered"
+            }
+            else if (grid.getCell(pacPos).aEnergizer())// if the unentered cell contains an energizer
+            {
+                MazeState.addScore(50);// add 10 to the score
+                countDot++;
+                countDotTotal++ ;
+                INSTANCE.energized_timer = INSTANCE.energized_timer_max;// set the energizer timer
+                INSTANCE.setEnergized(true);// set energized true
+                grid_state[y][x] = true;// set the cell state "entered"
+                return true;
+            }
+        }
+        return false;
     }
 
 	public List<Critter> closeGhosts(List<Critter> critters)
@@ -141,10 +138,10 @@ public final class PacMan implements Critter {
 		}
 	}
 
-	/**
-	 *  Regarde si le bonus peut être mangées par pacman
-	 */
-	public static void eatBonus(){
+    /**
+     *  Regarde si le bonus peut être mangées par pacman
+     */
+    public static void eatBonus(){
 		var pacPos = PacMan.INSTANCE.getPos().round();// get pacman position
 		int x = pacPos.x(); // get x axis
 		int y = pacPos.y(); // get y axis
@@ -167,63 +164,60 @@ public final class PacMan implements Critter {
         this.energized = energized;
     }
 
-	/**
-	 * retourne le level
-	 * @return level
-	 */
-	public static int getLevel() {
+    /**
+     * retourne le level
+     * @return level
+     */
+    public static int getLevel() {
 		return level ;
 	}
 
-	/**
-	 * Change le level
-	 * @param level
-	 */
+    /**
+     * Change le level
+     * @param level
+     */
+    public static void setLevel(int level) {
+        PacMan.level = level;
 
-	public static void setLevel(int level) {
-		PacMan.level = level;
-	}
+    }
 
-	/**
-	 * Retourne le countDot
-	 * @return countDot
-	 */
-	public static int getCountDot() {
+    /**
+     * Retourne le countDot
+     * @return countDot
+     */
+    public static int getCountDot() {
 		return countDot;
 	}
 
-	/**
-	 *  Change le countDot
-	 * @param countDot
-	 */
-
-	public static void setCountDot(int countDot) {
+    /**
+     *  Change le countDot
+     * @param countDot
+     */
+    public static void setCountDot(int countDot) {
 		PacMan.countDot = countDot;
 	}
 
-	/**
-	 * Retourne le nombre total de dots mangé
-	 * @return countDotTotal
-	 */
-	public static int getCountDotTotal() {
+    /**
+     * Retourne le nombre total de dots mangé
+     * @return countDotTotal
+     */
+    public static int getCountDotTotal() {
 		return countDotTotal;
 	}
 
-	/**
-	 * Retourne le nombre de dots au total
-	 * @return dotTotal
-	 */
-
-	public static int getDotTotal() {
+    /**
+     * Retourne le nombre de dots au total
+     * @return dotTotal
+     */
+    public static int getDotTotal() {
 		return dotTotal;
 	}
 
-	/**
-	 * Change le nombre total de dots mangé
-	 * @param countDotTotal
-	 */
-
-	public static void setCountDotTotal(int countDotTotal) {
+    /**
+     * Change le nombre total de dots mangé
+     * @param countDotTotal
+     */
+    public static void setCountDotTotal(int countDotTotal) {
 		PacMan.countDotTotal = countDotTotal;
 	}
 }

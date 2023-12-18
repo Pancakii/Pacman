@@ -101,7 +101,7 @@ public class Ghost_pf
 
         // Handling cases if there's a wall or if in intersection and if the timer of random direction ended
         boolean bool = mazeConfig.getCell(nextCell).isWall() || mazeConfig.isIntersection(currCell) && ghost.getPath_finding_timer() <= 0;
-        int[] base_out_coordinates = {10, 9};
+        int[] base_out_coordinates = {Ghost.getClyde_startPosition().x() - 1, Ghost.getClyde_startPosition().y()};
         if (currCell.x() == base_out_coordinates[0] && currCell.y() == base_out_coordinates[1])
         {
             ghost.setDirection(Direction.NORTH);

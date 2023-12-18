@@ -246,14 +246,14 @@ public final class MazeState {
     public void resetGame(){
         MazeState.lives = 3;
         MazeState.score = 0;
-        resetGridState();
-        resetCritters();
         PacMan.setLevel(1);
         PacMan.setCountDot(0);
         PacMan.setCountDotTotal(0);
         setAddLiveScore(0);
         Bonus.setHaveBonus(false);
         Bonus.setBonusTimer(0);
+        resetGridState();
+        resetCritters();
     }
 
     private void resetCritter(Critter critter) {
@@ -263,7 +263,6 @@ public final class MazeState {
         {
             ((Ghost) critter).setFrightened(false);
             ((Ghost) critter).setEaten(false);
-
         }
     }
 

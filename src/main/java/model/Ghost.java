@@ -5,10 +5,8 @@ import config.MazeConfig;
 import geometry.IntCoordinates;
 import geometry.RealCoordinates;
 import pathfinding.Ghost_pf;
-import pathfinding.Node;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 public enum Ghost implements Critter {
 
@@ -65,6 +63,7 @@ public enum Ghost implements Critter {
     public double getScatter_timer() {return scatter_timer;}
     public void setScatter_timer(double scatter_timer) {this.scatter_timer = scatter_timer;}
 
+    public static IntCoordinates getClyde_startPosition() {return Clyde_startPosition;}
 
 
 
@@ -76,7 +75,7 @@ public enum Ghost implements Critter {
     @Override
     public void setPos(RealCoordinates newPos) {
         pos = newPos;
-        
+
         // Met à jour la position initiale uniquement pour Clyde
         if (this == CLYDE && Clyde_startPosition == null) {
             Clyde_startPosition = newPos.round();
