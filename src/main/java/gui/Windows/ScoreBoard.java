@@ -1,0 +1,200 @@
+package gui.Windows;
+
+import gui.App;
+import gui.GraphicsUpdater;
+import javafx.scene.Node;
+import javafx.scene.Scene;
+import javafx.scene.input.KeyCode;
+import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
+import model.MazeState;
+
+public class ScoreBoard {
+
+    private static VBox parent = new VBox();
+    private static Scene scene = new Scene(parent);
+    private static boolean lancer = false;
+
+    private static int[] tabScore = {0,0,0,0,0};
+    private static String[] tabName = {"Mina","Emirhan","Salim","Sofyane","Alexis"};
+
+
+    public static boolean canAdd(int score){
+        if(tabScore[4] < score || tabScore[4] == 0) {
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
+    public static void ajoutTab(int score, String nom){
+        int[] newTabScore = new int[5];
+        String[] newTabString = new String[5];
+        boolean ajoute = false;
+
+        for(int i = 0; i< tabScore.length-1 ;i++){
+            if(tabScore[i]<score && ajoute == false){
+                newTabScore[i] = score;
+                newTabString[i] = nom;
+                ajoute = true;
+            }
+            if(ajoute == true){
+                newTabScore[i+1] = tabScore[i];
+                newTabString[i+1] = tabName[i];
+            }
+            else{
+                newTabScore[i] = tabScore[i];
+                newTabString[i] = tabName[i];
+
+            }
+
+        }
+
+        tabName = newTabString;
+        tabScore = newTabScore;
+
+    }
+
+    public static void newScore(int score, String nom){
+        if(canAdd(score)){
+            ajoutTab(score,nom);
+        }
+    }
+
+    public static void afficheScore(){
+        for(int i = 0;i<tabScore.length;i++){
+            System.out.println(tabName[i] + tabScore[i]);
+        }
+    }
+    static Text nom1 = new Text();
+    static Text score1 = new Text();
+    static Text nom2 = new Text();
+    static Text score2 = new Text();
+    static Text nom3 = new Text();
+    static Text score3 = new Text();
+    static Text nom4 = new Text();
+    static Text score4 = new Text();
+    static Text nom5 = new Text();
+    static Text score5 = new Text();
+    public static void affichageScore(){
+        int positionXNom = 140;
+        int postionXScore = 240;
+        int positionY= 150;
+
+        nom1.setText(tabName[0]);
+        score1.setText(String.valueOf(tabScore[0]));
+        nom1.setTranslateX(positionXNom + 20);
+        nom1.setTranslateY(positionY +20);
+        nom1.setFont(Font.font(10));
+        score1.setTranslateX(postionXScore + 20);
+        score1.setTranslateY(positionY);
+        score1.setFont(Font.font(10));
+        nom1.setFill(Color.YELLOW);
+        score1.setFill(Color.YELLOW);
+        parent.getChildren().add(nom1);
+        parent.getChildren().add(score1);
+
+        nom2.setText(tabName[1]);
+        score2.setText(String.valueOf(tabScore[1]));
+        nom2.setTranslateX(positionXNom + 20);
+        nom2.setTranslateY(positionY +20);
+        nom2.setFont(Font.font(10));
+        score2.setTranslateX(postionXScore + 20);
+        score2.setTranslateY(positionY);
+        score2.setFont(Font.font(10));
+        nom2.setFill(Color.YELLOW);
+        score2.setFill(Color.YELLOW);
+        parent.getChildren().add(nom2);
+        parent.getChildren().add(score2);
+
+        nom3.setText(tabName[2]);
+        score3.setText(String.valueOf(tabScore[2]));
+        nom3.setTranslateX(positionXNom + 20);
+        nom3.setTranslateY(positionY +20);
+        nom3.setFont(Font.font(10));
+        score3.setTranslateX(postionXScore + 20);
+        score3.setTranslateY(positionY);
+        score3.setFont(Font.font(10));
+        nom3.setFill(Color.YELLOW);
+        score3.setFill(Color.YELLOW);
+        parent.getChildren().add(nom3);
+        parent.getChildren().add(score3);
+
+        nom4.setText(tabName[3]);
+        score4.setText(String.valueOf(tabScore[3]));
+        nom4.setTranslateX(positionXNom + 20);
+        nom4.setTranslateY(positionY +20);
+        nom4.setFont(Font.font(10));
+        score4.setTranslateX(postionXScore + 20);
+        score4.setTranslateY(positionY);
+        score4.setFont(Font.font(10));
+        nom4.setFill(Color.YELLOW);
+        score4.setFill(Color.YELLOW);
+        parent.getChildren().add(nom4);
+        parent.getChildren().add(score4);
+
+        nom5.setText(tabName[4]);
+        score5.setText(String.valueOf(tabScore[4]));
+        nom5.setTranslateX(positionXNom + 20);
+        nom5.setTranslateY(positionY +20);
+        nom5.setFont(Font.font(10));
+        score5.setTranslateX(postionXScore + 20);
+        score5.setTranslateY(positionY);
+        score5.setFont(Font.font(10));
+        nom5.setFill(Color.YELLOW);
+        score5.setFill(Color.YELLOW);
+        parent.getChildren().add(nom5);
+        parent.getChildren().add(score5);
+
+    }
+
+    public static GraphicsUpdater updateScore(){
+        return new GraphicsUpdater() {
+            @Override
+            public void update() {
+                nom1.setText(tabName[0]);
+                nom2.setText(tabName[1]);
+                nom3.setText(tabName[2]);
+                nom4.setText(tabName[3]);
+                nom5.setText(tabName[4]);
+            }
+            @Override
+            public Node getNode() {
+                return null;
+            }
+        };
+    }
+
+    public static void afficheScoreBoard(){
+
+        parent.getChildren().clear();
+        newScore(MazeState.score,MazeState.nickname);
+        affichageScore();
+
+        afficheScore();
+        System.out.println();
+
+        App.menu.setHeight(500);
+        App.menu.setWidth(500);
+        parent.setStyle("-fx-background-color: #000000");
+        App.menu.setTitle("ScoreBoard");
+
+
+        scene.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.SPACE) {
+                GameOver.affichageGameOver();}
+        });
+
+
+        App.menu.setScene(scene);
+        App.menu.show();
+        lancer =true;
+
+
+
+    }
+
+}

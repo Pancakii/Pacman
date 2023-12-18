@@ -12,6 +12,9 @@ public class Score {
     public GraphicsUpdater displayScore() {
 
         Text point = new Text();
+        final int x = 600;
+        final int y = 720;
+        final int f = 18;
 
         point.setText("Score: " + MazeState.score);
         point.setX(18 * 35);

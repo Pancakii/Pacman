@@ -1,5 +1,9 @@
-package gui;
+package gui.Windows;
 
+import gui.App;
+import gui.ExitButon;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
@@ -8,17 +12,18 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import model.MazeState;
 
-public class GameOver  {
+public class GameOver implements EventHandler<ActionEvent> {
         private static VBox parent = new VBox();
-        private static Scene scene =new Scene(parent);
+        private static Scene scene = new Scene(parent);
         private static Text score =  new Text();
         private static Text go = new Text();
         private static boolean lancer = false;
 
 
-        public static void affichageGameOver(){
-                App.menu.setHeight(500);
-                App.menu.setWidth(500);
+        public static void affichageGameOver() {
+                final int tw = 500;
+                App.menu.setHeight(tw);
+                App.menu.setWidth(tw);
                 //Il y a du CSS dans le setStyke, lien de l'image, est ce que ca se repete, la taille et la position
                 parent.setStyle("-fx-background-image: url('GOB.png'); -fx-background-repeat: no-repeat;-fx-background-size: 500 500;-fx-background-position: left top;");
                 // Ajouter un nom a la page
@@ -26,13 +31,20 @@ public class GameOver  {
                 // Ne plus pouvoir aggrandir/retrecir la page
 
                 score.setText("Score: " + MazeState.score);
-                if(!lancer){
+                if(!lancer) {
                         //affiche le score apres le game over
+                        final int txScore = 125;
+                        final int tyScore = 100;
+                        final int fsScore = 20;
 
-                        score.setTranslateX(125);
-                        score.setTranslateY(100);//La ou on place le score
-                        score.setFont(Font.font(20)); //La taille de l'affichage du score
-                        score.setFill(Color.WHITE); //La couleur
+
+                        //La ou on place le score
+                        score.setTranslateX(txScore);
+                        score.setTranslateY(tyScore);
+                        //La taille de l'affichage du score
+                        score.setFont(Font.font(fsScore));
+                        //La couleur
+                        score.setFill(Color.WHITE);
                         parent.getChildren().add(score);
 
                         //affichage du mesage GameOver
@@ -67,6 +79,7 @@ public class GameOver  {
                         exitbouton.setOnAction(new ExitButon());
                         parent.getChildren().add(exitbouton);
 
+
                 }
 
                 App.menu.setX(500);
@@ -78,4 +91,8 @@ public class GameOver  {
     }
 
 
+        @Override
+        public void handle(ActionEvent event) {
+                affichageGameOver();
+        }
 }
