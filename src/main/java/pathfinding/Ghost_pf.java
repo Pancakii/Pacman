@@ -217,7 +217,7 @@ public class Ghost_pf
             {
                 // If in desired location, to pass to the other one we remove the current one
                 ghost.getPath().remove(0);
-                followPath(ghost);
+                Ghost_pf.followPath(ghost);
             }
             else
             {
