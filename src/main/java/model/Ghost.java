@@ -31,21 +31,41 @@ public enum Ghost implements Critter {
     private static IntCoordinates Clyde_startPosition;
 
 
-    public void setEaten(boolean eaten) {
-        this.eaten = eaten;
-    }
 
     public boolean isEaten() {
         return eaten;
+    }
+    public void setEaten(boolean eaten) {
+        this.eaten = eaten;
     }
 
     public boolean isFrightened() {
         return frightened;
     }
-
     public void setFrightened(boolean frightened) {
         this.frightened = frightened;
     }
+
+    public ArrayList<RealCoordinates> getPath() {return path;}
+    public void setPath(ArrayList<RealCoordinates> path) {this.path = path;}
+
+    public double getPath_finding_timer_max() {return path_finding_timer_max;}
+
+    public double getPath_finding_timer() {return path_finding_timer;}
+    public void setPath_finding_timer(double path_finding_timer) {this.path_finding_timer = path_finding_timer;}
+
+    public double getChase_timer_max() {return chase_timer_max;}
+
+    public void setChase_timer(double chase_timer) {this.chase_timer = chase_timer;}
+    public double getChase_timer() {return chase_timer;}
+
+    public double getScatter_timer_max() {return scatter_timer_max;}
+
+    public double getScatter_timer() {return scatter_timer;}
+    public void setScatter_timer(double scatter_timer) {this.scatter_timer = scatter_timer;}
+
+
+
 
     @Override
     public RealCoordinates getPos() {
@@ -177,11 +197,11 @@ public enum Ghost implements Critter {
 
             RealCoordinates currPost = pos.plus(DirectionUtils.getVector(Direction.NONE));
             IntCoordinates currCell = currPost.round();
-            
+
             // Handling cases if there's a wall or if in intersection and if the timer of random direction ended
             boolean bool = mazeConfig.getCell(nextCell).isWall() || mazeConfig.isIntersection(currCell) && path_finding_timer <= 0;
-            
-            int[] base_out_coordinates = {Clyde_startPosition.x() - 1, Clyde_startPosition.y()};         
+
+            int[] base_out_coordinates = {Clyde_startPosition.x() - 1, Clyde_startPosition.y()};
             if (currCell.x() == base_out_coordinates[0] && currCell.y() == base_out_coordinates[1])
             {
                 direction = Direction.NORTH;
