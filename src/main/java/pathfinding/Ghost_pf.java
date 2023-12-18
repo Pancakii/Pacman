@@ -1,4 +1,3 @@
-/*
 package pathfinding;
 
 
@@ -17,18 +16,6 @@ import java.util.Random;
 public class Ghost_pf
 {
 
-    private final double path_finding_timer_max = 0.3;
-    private double[] path_finding_timer = {0.0, 0.0, 0.0, 0.0};
-
-    private final double scatter_timer_max = 7;
-    private double[] scatter_timer = {scatter_timer_max, scatter_timer_max, scatter_timer_max, scatter_timer_max};
-
-    private final double chase_timer_max = 20;
-    private double[] chase_timer = {0.0, 0.0, 0.0, 0.0};
-    private ArrayList<RealCoordinates>[] path = new ArrayList[]{new ArrayList<RealCoordinates>(), new ArrayList<RealCoordinates>(), new ArrayList<RealCoordinates>(), new ArrayList<RealCoordinates>()};
-
-
-
     public void scatterChaseTimer(Ghost ghost, long d)
     {
         // sets one of the values to 0 and the other to the max, or just does time stuff
@@ -36,44 +23,44 @@ public class Ghost_pf
         // Work on either chase or scatter timer, depending on values
         if(ghost.chase_timer > 0)
         {
-            chase_timer -= delta;
-            if (chase_timer <= 0)
+            ghost.chase_timer -= delta;
+            if (ghost.chase_timer <= 0)
             {
                 // If enters this if block, it means its scatter's turn
-                chase_timer = 0;
-                scatter_timer = scatter_timer_max;
+                ghost.chase_timer = 0;
+                ghost.scatter_timer = ghost.scatter_timer_max;
             }
         }
         else
         {
-            scatter_timer -= delta;
-            if (scatter_timer <= 0)
+            ghost.scatter_timer -= delta;
+            if (ghost.scatter_timer <= 0)
             {
                 // If enters this if block, it means its chase's turn
-                scatter_timer = 0;
-                chase_timer = chase_timer_max;
+                ghost.scatter_timer = 0;
+                ghost.chase_timer = ghost.chase_timer_max;
             }
         }
     }
 
-    public boolean can_it_find_path()
+    public boolean can_it_find_path(Ghost ghost)
     {
         int pellet_count = PacMan.getCountDotTotal();
-        return switch (this) {
+        return switch (ghost) {
             case BLINKY, PINKY -> true;
             case INKY -> pellet_count > 30;
             case CLYDE -> pellet_count > 60;
         };
     }
 
-    private void getPathBLINKY(Cell[][] grid)
+    private void getPathBLINKY(Ghost ghost, Cell[][] grid)
     {
         // Direct chase
         RealCoordinates pac_pos = PacMan.INSTANCE.getPos();
-        path = Node.getPath(this.pos, pac_pos, grid);
+        ghost.path = Node.getPath(ghost.pos, pac_pos, grid);
     }
 
-    private void getPathINKYPINKY(Cell[][] grid, MazeConfig mazeConfig)
+    private void getPathINKYPINKY(Ghost ghost, Cell[][] grid, MazeConfig mazeConfig)
     {
         RealCoordinates pac_pos = PacMan.INSTANCE.getPos();
         // goes in front
@@ -87,43 +74,43 @@ public class Ghost_pf
                 IntCoordinates nextCell = nextPos.round();
                 if (!mazeConfig.getCell(nextCell).isWall())
                 {
-                    path = Node.getPath(this.pos, nextPos, grid);
+                    ghost.path = Node.getPath(ghost.pos, nextPos, grid);
                 }
                 else
                 {
-                    path = Node.getPath(this.pos, pac_pos, grid);
+                    ghost.path = Node.getPath(ghost.pos, pac_pos, grid);
                 }
                 break;
             }
         }
         if (PacMan.INSTANCE.getDirection() == Direction.NONE)
         {
-            path = Node.getPath(this.pos, pac_pos, grid);
+            ghost.path = Node.getPath(ghost.pos, pac_pos, grid);
         }
     }
 
-    private void getPathCLYDE(MazeConfig mazeConfig)
+    private void getPathCLYDE(Ghost ghost, MazeConfig mazeConfig)
     {
         // Random
-        RealCoordinates nextPos = pos.plus(DirectionUtils.getVector(direction));
+        RealCoordinates nextPos = ghost.pos.plus(DirectionUtils.getVector(ghost.direction));
         IntCoordinates nextCell = nextPos.round();
 
-        RealCoordinates currPost = pos.plus(DirectionUtils.getVector(Direction.NONE));
+        RealCoordinates currPost = ghost.pos.plus(DirectionUtils.getVector(Direction.NONE));
         IntCoordinates currCell = currPost.round();
 
         // Handling cases if there's a wall or if in intersection and if the timer of random direction ended
-        boolean bool = mazeConfig.getCell(nextCell).isWall() || mazeConfig.isIntersection(currCell) && path_finding_timer <= 0;
+        boolean bool = mazeConfig.getCell(nextCell).isWall() || mazeConfig.isIntersection(currCell) && ghost.path_finding_timer <= 0;
         int[] base_out_coordinates = {10, 9};
         if (currCell.x() == base_out_coordinates[0] && currCell.y() == base_out_coordinates[1])
         {
-            direction = Direction.NORTH;
+            ghost.direction = Direction.NORTH;
         }
-        else if (bool || direction == Direction.NONE)// adding also if direction is none, so it doesn't stop moving
+        else if (bool || ghost.direction == Direction.NONE)// adding also if direction is none, so it doesn't stop moving
         {
             ArrayList<Direction> direcs = new ArrayList<>();
             for (Direction DIR : new Direction[]{Direction.NORTH, Direction.EAST, Direction.SOUTH, Direction.WEST})
             {
-                nextPos = pos.plus(DirectionUtils.getVector(DIR));
+                nextPos = ghost.pos.plus(DirectionUtils.getVector(DIR));
                 nextCell = nextPos.round();
                 if (!mazeConfig.getCell(nextCell).isWall())
                 {
@@ -131,133 +118,132 @@ public class Ghost_pf
                 }
             }
             int choice = new Random().nextInt(direcs.size());
-            direction = direcs.get(choice);
+            ghost.direction = direcs.get(choice);
         }
     }
 
-    private void normalPath(Cell[][] grid, MazeConfig mazeConfig)
+    private void normalPath(Ghost ghost, Cell[][] grid, MazeConfig mazeConfig)
     {
         // Follow pacman using own behavior
-        path_finding_timer = path_finding_timer_max;
+        ghost.path_finding_timer = ghost.path_finding_timer_max;
 
         // If chase time, then chase pacman. If not, move randomly around the map
-        if(chase_timer > 0)
+        if(ghost.chase_timer > 0)
         {
-            switch (this) {
+            switch (ghost) {
                 case BLINKY:
-                    getPathBLINKY(grid);
+                    getPathBLINKY(ghost, grid);
                     break;
                 case INKY, PINKY:
-                    getPathINKYPINKY(grid, mazeConfig);
+                    getPathINKYPINKY(ghost, grid, mazeConfig);
                     break;
                 case CLYDE:
-                    getPathCLYDE(mazeConfig);
+                    getPathCLYDE(ghost, mazeConfig);
                     break;
             }
         }
         else
         {
-            resetPath();
-            getPathCLYDE(mazeConfig);
+            ghost.resetPath();
+            getPathCLYDE(ghost, mazeConfig);
         }
     }
 
-    private void frightenedPath(MazeConfig mazeConfig)
+    private void frightenedPath(Ghost ghost, MazeConfig mazeConfig)
     {
         // Run away from pacman
-        path_finding_timer = path_finding_timer_max;
-        resetPath();
-        getPathCLYDE(mazeConfig);
+        ghost.path_finding_timer = ghost.path_finding_timer_max;
+        ghost.resetPath();
+        getPathCLYDE(ghost, mazeConfig);
     }
 
-    private void eatenPath(Cell[][] grid, RealCoordinates base_coord)
+    private void eatenPath(Ghost ghost, Cell[][] grid, RealCoordinates base_coord)
     {
         // Return home because eaten
-        if (path_finding_timer <= 0)
+        if (ghost.path_finding_timer <= 0)
         {
             // Get path to the base and renew timer
-            path_finding_timer = path_finding_timer_max;
-            path = Node.getPath(this.pos, base_coord, grid);
+            ghost.path_finding_timer = ghost.path_finding_timer_max;
+            ghost.path = Node.getPath(ghost.pos, base_coord, grid);
         }
-        if (path.isEmpty())
+        if (ghost.path.isEmpty())
         {
             // Either arrived at base or Pacman follow location
             // If arrived to the base, set eaten and can be eaten false
-            if(pos.round().same(base_coord.round()))
+            if(ghost.pos.round().same(base_coord.round()))
             {
-                if(eaten)
+                if(ghost.eaten)
                 {
-                    frightened = false;
+                    ghost.frightened = false;
                 }
-                eaten = false;
+                ghost.eaten = false;
             }
         }
     }
 
-    public void getPath(Cell[][] grid, MazeConfig mazeConfig, long delta, RealCoordinates base_coord)
+    public void getPath(Ghost ghost, Cell[][] grid, MazeConfig mazeConfig, long delta, RealCoordinates base_coord)
     {
         double delta_double = (double) delta;
-        path_finding_timer -= delta_double / 1000000000;
-        boolean bool = path_finding_timer <= 0 || direction == Direction.NONE || eaten || frightened;
+        ghost.path_finding_timer -= delta_double / 1000000000;
+        boolean bool = ghost.path_finding_timer <= 0 || ghost.direction == Direction.NONE || ghost.eaten || ghost.frightened;
         // If not eaten, cant be eaten, the timer is up or the direction is none, find path to Pacman
         // Also be allowed to get out of base
-        if(bool && can_it_find_path())
+        if(bool && can_it_find_path(ghost))
         {
-            if (!eaten && !frightened)
+            if (!ghost.eaten && !ghost.frightened)
             {
-                normalPath(grid, mazeConfig);
+                normalPath(ghost, grid, mazeConfig);
             }
-            else if(frightened)
+            else if(ghost.frightened)
             {
-                frightenedPath(mazeConfig);
+                frightenedPath(ghost, mazeConfig);
             }
             else
             {
-                eatenPath(grid, base_coord);
+                eatenPath(ghost, grid, base_coord);
             }
         }
     }
 
 
 
-    public void followPath()
+    public void followPath(Ghost ghost)
     {
-        if(!path.isEmpty())
+        if(!ghost.path.isEmpty())
         {
-            RealCoordinates to_follow = path.get(0);
-            if (pos.round().same(to_follow.round()))
+            RealCoordinates to_follow = ghost.path.get(0);
+            if (ghost.pos.round().same(to_follow.round()))
             {
                 // If in desired location, to pass to the other one we remove the current one
-                path.remove(0);
-                followPath();
+                ghost.path.remove(0);
+                followPath(ghost);
             }
             else
             {
                 // To find out where to move, we check x and y values.
-                if (to_follow.round().x() == pos.round().x())
+                if (to_follow.round().x() == ghost.pos.round().x())
                 {
-                    if(to_follow.y() > pos.y())
+                    if(to_follow.y() > ghost.pos.y())
                     {
-                        direction = Direction.SOUTH;
+                        ghost.direction = Direction.SOUTH;
                     }
                     else
                     {
-                        direction = Direction.NORTH;
+                        ghost.direction = Direction.NORTH;
                     }
                 }
-                else if (to_follow.round().y() == pos.round().y())
+                else if (to_follow.round().y() == ghost.pos.round().y())
                 {
-                    if(to_follow.x() > pos.x())
+                    if(to_follow.x() > ghost.pos.x())
                     {
-                        direction = Direction.EAST;
+                        ghost.direction = Direction.EAST;
                     }
                     else
                     {
-                        direction = Direction.WEST;
+                        ghost.direction = Direction.WEST;
                     }
                 }
             }
         }
     }
 }
-*/
