@@ -1,14 +1,16 @@
+stages:
+  - build
+  - test
+
 before_script:
-  - apt-get update -qq && apt-get install -y -qq sqlite3 libsqlite3-dev nodejs
-  - ruby -v
-  - which ruby
-  - gem install bundler --no-document
-  - bundle install --jobs $(nproc)  "${FLAGS[@]}"
+  - chmod +x gradlew
 
-rspec:
+build:
+  stage: build
   script:
-    - bundle exec rspec
+    - ./gradlew build
 
-rubocop:
+test:
+  stage: test
   script:
-    - bundle exec rubocop
+    - ./gradlew test
