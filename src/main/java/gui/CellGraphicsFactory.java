@@ -70,6 +70,7 @@ public class CellGraphicsFactory {
             @Override
             public void update() {
                 dot.setVisible(!state.getGridState(pos));
+
             }
 
             @Override
@@ -78,6 +79,9 @@ public class CellGraphicsFactory {
             }
         };
     }
+
+
+
 }
 
 
