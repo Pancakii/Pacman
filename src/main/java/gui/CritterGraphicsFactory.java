@@ -82,18 +82,18 @@ public final class CritterGraphicsFactory {
         double energizedTimer = PacMan.INSTANCE.getEnergized_timer();
         switch (ghost) {
             case BLINKY -> {
-                if(ghost.frightened)
-                {
-                    if (energized && energizedTimer > 3)
-                    {
-                        return ghostWhenPacmanEnergized;
-                    }
-                    else if (energized && energizedTimer > 0)
-                    {
-                        return ghostWhenPacmanEnergizedEnd;
-                    }
-                }
-                else if (ghost.eaten){
+				if(ghost.isFrightened())
+				{
+					if (energized && energizedTimer > 3)
+					{
+						return ghostWhenPacmanEnergized;
+					}
+					else if (energized && energizedTimer > 0)
+					{
+						return ghostWhenPacmanEnergizedEnd;
+					}
+				}
+                else if (ghost.isEaten()){
                     return eyeGhost ;
                 }
                 else
@@ -102,18 +102,18 @@ public final class CritterGraphicsFactory {
                 }
             }
             case CLYDE -> {
-                if(ghost.frightened)
-                {
-                    if (energized && energizedTimer > 3)
-                    {
-                        return ghostWhenPacmanEnergized;
-                    }
-                    else if (energized && energizedTimer > 0)
-                    {
-                        return ghostWhenPacmanEnergizedEnd;
-                    }
-                }
-                else if (ghost.eaten){
+                if(ghost.isFrightened())
+				{
+					if (energized && energizedTimer > 3)
+					{
+						return ghostWhenPacmanEnergized;
+					}
+					else if (energized && energizedTimer > 0)
+					{
+						return ghostWhenPacmanEnergizedEnd;
+					}
+				}
+                else if (ghost.isEaten()){
                     return eyeGhost ;
                 }
                 else
@@ -122,18 +122,18 @@ public final class CritterGraphicsFactory {
                 }
             }
             case INKY -> {
-                if(ghost.frightened)
-                {
-                    if (energized && energizedTimer > 3)
-                    {
-                        return ghostWhenPacmanEnergized;
-                    }
-                    else if (energized && energizedTimer > 0)
-                    {
-                        return ghostWhenPacmanEnergizedEnd;
-                    }
-                }
-                else if (ghost.eaten){
+                if(ghost.isFrightened())
+				{
+					if (energized && energizedTimer > 3)
+					{
+						return ghostWhenPacmanEnergized;
+					}
+					else if (energized && energizedTimer > 0)
+					{
+						return ghostWhenPacmanEnergizedEnd;
+					}
+				}
+                else if (ghost.isEaten()){
                     return eyeGhost ;
                 }
                 else
@@ -142,18 +142,18 @@ public final class CritterGraphicsFactory {
                 }
             }
             case PINKY -> {
-                if(ghost.frightened)
-                {
-                    if (energized && energizedTimer > 3)
-                    {
-                        return ghostWhenPacmanEnergized;
-                    }
-                    else if (energized && energizedTimer > 0)
-                    {
-                        return ghostWhenPacmanEnergizedEnd;
-                    }
-                }
-                else if (ghost.eaten){
+                if(ghost.isFrightened())
+				{
+					if (energized && energizedTimer > 3)
+					{
+						return ghostWhenPacmanEnergized;
+					}
+					else if (energized && energizedTimer > 0)
+					{
+						return ghostWhenPacmanEnergizedEnd;
+					}
+				}
+                else if (ghost.isEaten()){
                     return eyeGhost ;
                 }
                 else

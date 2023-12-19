@@ -121,13 +121,13 @@ public final class MazeState {
             for (Critter g : close_ghosts)
             {
                 Ghost ghost = (Ghost)g;
-                if(!ghost.eaten && ghost.frightened && PacMan.INSTANCE.isEnergized())
+                if(!ghost.isEaten() && ghost.isFrightened() && PacMan.INSTANCE.isEnergized())
                 {
                     addScore(200);
-                    ghost.eaten = true;
-                    ghost.frightened = false;
+                    ghost.setEaten(true);
+                    ghost.setFrightened(false);
                 }
-                if(!ghost.frightened && !ghost.eaten)
+                if(!ghost.isFrightened() && !ghost.isEaten())
                 {
                     playerLost();
                     break;
@@ -157,12 +157,12 @@ public final class MazeState {
         Ghost ghost = (Ghost) critter;
         if(ate_energizer)
         {
-            ghost.frightened = true;
+            ghost.setFrightened(true);
             ghost.resetPath();
         }
         if(!PacMan.INSTANCE.isEnergized())
         {
-            ghost.frightened = false;
+            ghost.setFrightened(false);
         }
 
         ghost.scatterChaseTimer(deltaTns);
@@ -260,8 +260,8 @@ public final class MazeState {
         critter.setPos(initialPos.get(critter));
         if(critter instanceof Ghost)
         {
-            ((Ghost) critter).frightened = false;
-            ((Ghost) critter).eaten = false;
+            ((Ghost) critter).setFrightened(false);
+            ((Ghost) critter).setEaten(false);
         }
     }
 
