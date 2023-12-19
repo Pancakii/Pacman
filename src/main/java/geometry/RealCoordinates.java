@@ -12,11 +12,11 @@ public record RealCoordinates(double x, double y) {
     public static final RealCoordinates WEST_UNIT = new RealCoordinates(-1, 0);
 
 
-    public RealCoordinates plus(RealCoordinates other) {
+    public RealCoordinates plus(final RealCoordinates other) {
         return new RealCoordinates(x + other.x, y + other.y);
     }
 
-    public RealCoordinates times(double multiplier) {
+    public RealCoordinates times(final double multiplier) {
         return new RealCoordinates(x * multiplier, y * multiplier);
     }
 
@@ -70,6 +70,7 @@ public record RealCoordinates(double x, double y) {
         while (Math.round(rx) >= width) {
             rx -= width;
         }
+
         while (Math.round(ry) >= height) {
             ry -= height;
         }

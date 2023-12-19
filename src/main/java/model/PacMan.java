@@ -12,6 +12,7 @@ public final class PacMan implements Critter {
     private Direction direction = Direction.NONE;
     private RealCoordinates pos;
     private boolean energized;
+
     private final double energized_timer_max = 10;
     private double energized_timer;
     private static int level;
@@ -88,6 +89,7 @@ public final class PacMan implements Critter {
 		level = 1 ;
 		countDot = 0 ;
 		countDotTotal = 0 ;
+
 	}
 
     @Override

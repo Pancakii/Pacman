@@ -1,10 +1,12 @@
-package gui;
-
-import javafx.scene.input.KeyCode;
+package gui.Windows;
 import config.MazeConfig;
+import gui.App;
+import gui.GameView;
+import gui.PacmanController;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
 import model.MazeState;
 import java.awt.Dimension;
@@ -32,7 +34,7 @@ public class Jeu implements EventHandler<ActionEvent> {
     private static boolean lancer = false;
     private static GameView gameView = new GameView(maze, root, scale, maze.getWidth() - 75, (maze.getHeight() * 18.0)/2);
 
-    public static void Game() throws Exception {
+    public static void Game() {
         App.menu.setTitle("Pacman"); // Ajouter un nom a la page
 
         //Sert à détecter si le joueur appuye sur le bouton espace (= Pause du jeu)

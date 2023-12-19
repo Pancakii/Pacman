@@ -23,6 +23,7 @@ public record Cell(boolean passable, boolean wall, Content initialContent) {
      * Méthode qui vérifie si la cellule est Mur
      * @return (true) la cellule est Mur (false) ce n'est pas un Mur
      */
+
     public boolean isWall() {
         return wall;
     }
@@ -53,7 +54,7 @@ public record Cell(boolean passable, boolean wall, Content initialContent) {
     public boolean aNothing() {
         return initialContent == Content.NOTHING;
     }
-    
+
     
     /**
      * Méthode qui construit des cellules
@@ -71,7 +72,6 @@ public record Cell(boolean passable, boolean wall, Content initialContent) {
         if (i == 2) return new Cell(true, false, Content.DOT);
         // Case avec un energizer
         if (i == 3) return new Cell(true, false, Content.ENERGIZER);
-
         return null;
     }
 }

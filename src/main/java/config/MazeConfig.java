@@ -1,17 +1,11 @@
 package config;
 
-import javafx.scene.text.Text;
-import geometry.RealCoordinates;
 import geometry.IntCoordinates;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import static config.Cell.Cellule;
+import geometry.RealCoordinates;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
-import java.util.ArrayList;
 
 import static config.Cell.Cellule;
 
@@ -59,32 +53,32 @@ public class MazeConfig {
     public int getHeight() {
         return grid.length;
     }
-	
-	public Cell[][] getGrid()
-	{
-		return grid;
-	}
-	
-	/**
-	 * Méthode qui vérifie si la prochaine case est "passable" 
-	 * @param position	Position du critter
-	 * @return (true) prochaine case est "passable" (false) sinon non
-	 */
+
+    public Cell[][] getGrid()
+    {
+        return grid;
+    }
+
+    /**
+     * Méthode qui vérifie si la prochaine case est "passable"
+     * @param position	Position du critter
+     * @return (true) prochaine case est "passable" (false) sinon non
+     */
     public boolean isPassable(RealCoordinates position) {
-    	IntCoordinates pos = position.round();
+        IntCoordinates pos = position.round();
         return grid[Math.floorMod(pos.y(), getHeight())][Math.floorMod(pos.x(), getWidth())].isPassable();
     }
-	
+
     /**
      * Méthode qui vérifie si la prochaine case est un mur en RealCoordinates
      * @param position	Position du critter
      * @return (true) c'est un mur (false) ce n'est pas un mur
      */
     public boolean isWall(RealCoordinates position) {
-    	IntCoordinates pos = position.round();
+        IntCoordinates pos = position.round();
         return grid[Math.floorMod(pos.y(), getHeight())][Math.floorMod(pos.x(), getWidth())].isWall();
     }
-    
+
     /**
      * Méthode qui vérifie si la prochaine case est un mur en IntCoordinates
      * @param pos	Position du critter
@@ -142,7 +136,7 @@ public class MazeConfig {
     public Cell getCell(IntCoordinates pos) {
         return grid[Math.floorMod(pos.y(), getHeight())][Math.floorMod(pos.x(), getWidth())];
     }
-    
+
     /**
      * Méthode qui compte le nombre de ligne du fichier Maze.txt
      * @return Retourne un entier qui correspond aux nombres de ligne du fichier Maze.txt
@@ -182,7 +176,7 @@ public class MazeConfig {
         FileReader fr = new FileReader(file);
         BufferedReader r = new BufferedReader(fr);
         String str;
-        String firstLine = r.readLine(); 
+        String firstLine = r.readLine();
         int maxCols = firstLine.length(); // Obtiens la longueur de la première ligne
         int numRows = compteligne(); // Utilise la fonction pour obtenir le nombre de lignes
 
@@ -227,7 +221,7 @@ public class MazeConfig {
                 }
             }
         }
-        
+
         return maze;
     }
 
@@ -237,7 +231,7 @@ public class MazeConfig {
      */
     public static MazeConfig make() throws Exception {
         return new MazeConfig(grid(),
-        						//(x, y)
+                //(x, y)
                 new IntCoordinates(11, 16), // pacman
                 new IntCoordinates(11, 9), // blinky
                 new IntCoordinates(11, 10), // pinky

@@ -1,15 +1,15 @@
 package model;
 
-import gui.PacmanController;
+
 import config.MazeConfig;
 import geometry.IntCoordinates;
 import geometry.RealCoordinates;
-import gui.GameOver;
+import gui.PacmanController;
+import gui.Windows.ScoreBoard;
 
-
-import java.util.Set;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import static model.Ghost.*;
 
@@ -22,9 +22,8 @@ public final class MazeState {
     public static int score;
     public static int addLiveScore ;
     public static int lives = 3;
-
     private final Map<Critter, RealCoordinates> initialPos;
-
+    public static String nickname;
 
     public MazeState(MazeConfig config) {
         this.config = config;
@@ -238,7 +237,7 @@ public final class MazeState {
     private void playerLost() {
         MazeState.lives--;
         if(MazeState.lives == 0){
-            GameOver.affichageGameOver();
+            ScoreBoard.afficheScoreBoard();
         }
         resetCritters();
     }
@@ -286,7 +285,11 @@ public final class MazeState {
         return gridState[pos.y()][pos.x()];
     }
 
+
     public static void setAddLiveScore(int addLiveScore) {
         MazeState.addLiveScore = addLiveScore;
     }
-}
+
+
+
+    }

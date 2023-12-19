@@ -6,6 +6,7 @@ import javafx.scene.image.ImageView;
 
 public class Vie {
 
+
     public GraphicsUpdater remainingLife(){
 
         //Initialissation des images de la vie
@@ -18,6 +19,7 @@ public class Vie {
         ImageView vie = new ImageView(imageNLF);
 
         //Emplacement de l'affichage de la vie
+
         vie.setFitHeight(40);
         vie.setFitWidth(100);
         vie.setX(14.5 * 35);
