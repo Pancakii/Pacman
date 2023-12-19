@@ -30,27 +30,60 @@ public enum Ghost implements Critter {
     private static IntCoordinates Clyde_startPosition;
 
 
-
+    /**
+     * Gets eaten.
+     * @return
+     */
     public boolean isEaten() {
         return eaten;
     }
-    public void setEaten(boolean eaten) {
-        this.eaten = eaten;
-    }
 
-    public boolean isFrightened() {
-        return frightened;
-    }
-    public void setFrightened(boolean frightened) {
-        this.frightened = frightened;
-    }
+    /**
+     * Sets eaten.
+     * @param eaten
+     */
+    public void setEaten(boolean eaten) {this.eaten = eaten;}
 
+    /**
+     * Gets frightened.
+     * @return
+     */
+    public boolean isFrightened() {return frightened;}
+
+    /**
+     * Sets frightened.
+     * @param frightened
+     */
+    public void setFrightened(boolean frightened) {this.frightened = frightened;}
+
+    /**
+     * Gets path.
+     * @return
+     */
     public ArrayList<RealCoordinates> getPath() {return path;}
+
+    /**
+     * Sets path.
+     * @param path
+     */
     public void setPath(ArrayList<RealCoordinates> path) {this.path = path;}
 
+    /**
+     * Gets path_finding_timer_max.
+     * @return
+     */
     public double getPath_finding_timer_max() {return path_finding_timer_max;}
 
+    /**
+     * Gets path_finding_timer.
+     * @return
+     */
     public double getPath_finding_timer() {return path_finding_timer;}
+
+    /**
+     * Sets path_finding_timer.
+     * @param path_finding_timer
+     */
     public void setPath_finding_timer(double path_finding_timer) {this.path_finding_timer = path_finding_timer;}
 
     public double getChase_timer_max() {return chase_timer_max;}

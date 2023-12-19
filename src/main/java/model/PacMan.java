@@ -4,7 +4,6 @@ package model;
 import geometry.RealCoordinates;
 import config.*;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,12 +22,23 @@ public final class PacMan implements Critter {
 
     // We should be able to change the position
     // when we change the level.
+
+    /**
+     * Constructor of PacMan.
+     */
     private PacMan() {
         this(0.0, 0.0, false);
     }
 
     public static final PacMan INSTANCE = new PacMan();
 
+    /**
+     * Une fonction qui fait pacman manger les dots ou energizers. Returne true s'il en a mangé.
+     * Il augmente aussi le score, countDot, CountDotTotal dans les bons cas.
+     * @param grid le tableau contenant les cellules.
+     * @param grid_state le tableau qui sait si le cellule est entré/découvert ou pas
+     * @return si Pacman a mangé un dot ou energiser
+     */
     public static boolean checknEatCell(MazeConfig grid, boolean[][] grid_state)
     {
 		/*
@@ -60,6 +70,11 @@ public final class PacMan implements Critter {
         return false;
     }
 
+    /**
+     * Retourne les fantomes qui sont dans la meme case que pacman.
+     * @param critters la liste des fantomes
+     * @return la liste des fantomes qui sont dans la meme case.
+     */
 	public List<Critter> closeGhosts(List<Critter> critters)
 	{
 		/*
@@ -71,16 +86,18 @@ public final class PacMan implements Critter {
 		for (var critter : critters) {
 			if (critter instanceof Ghost && critter.getPos().round().equals(pacPos))
 			{
-				if (PacMan.INSTANCE.isEnergized())
-				{
-					MazeState.addScore(10);
-				}
 				res.add(critter);
 			}
 		}
 		return res;
 	}
 
+    /**
+     * Constructor of PacMan.
+     * @param x coordinate
+     * @param y coordinate
+     * @param e energized
+     */
 	private PacMan(double x, double y, boolean e)
 	{
 		pos = new RealCoordinates(x, y);
@@ -92,33 +109,50 @@ public final class PacMan implements Critter {
 
 	}
 
+    /**
+     * Gets position.
+     * @return
+     */
     @Override
     public RealCoordinates getPos() {
         return pos;
     }
 
+    /**
+     * Gets speed.
+     * @return
+     */
     @Override
     public double getSpeed() {
         return isEnergized() ? 4 : 3;
     }
 
+    /**
+     * Gets direction.
+     * @return
+     */
     @Override
-    public Direction getDirection() {
-        return direction;
-    }
+    public Direction getDirection() {return direction;}
 
+    /**
+     * Sets direction
+     * @param direction
+     */
     @Override
-    public void setDirection(Direction direction) {
-        this.direction = direction;
-    }
+    public void setDirection(Direction direction) {this.direction = direction;}
 
+    /**
+     * Sets position.
+     * @param pos
+     */
     @Override
-    public void setPos(RealCoordinates pos) {
-        this.pos = pos;
-    }
+    public void setPos(RealCoordinates pos) {this.pos = pos;}
 
 
-
+    /**
+     * Decreases energized_timer, sets energized false when below 0.
+     * @param delta
+     */
 	public void energizedTimerCount(long delta)
 	{
 		// This function decreases the timer of the energy buff.
@@ -155,12 +189,24 @@ public final class PacMan implements Critter {
 	}
 
 
+    /**
+     * Gets energized_timer
+     * @return
+     */
 	public double getEnergized_timer() {
 		return energized_timer;
 	}
 
+    /**
+     * Gets energized
+     * @return
+     */
 	public boolean isEnergized() {return energized;}
 
+    /**
+     * Sets energized
+     * @param energized
+     */
     public void setEnergized(boolean energized)
 	{
         this.energized = energized;
