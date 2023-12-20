@@ -64,11 +64,7 @@ public class ScoreBoard {
         }
     }
 
-    public static void afficheScore(){
-        for(int i = 0;i<tabScore.length;i++){
-            System.out.println(tabName[i] + tabScore[i]);
-        }
-    }
+
     static Text nom1 = new Text();
     static Text score1 = new Text();
     static Text nom2 = new Text();
@@ -173,9 +169,6 @@ public class ScoreBoard {
         parent.getChildren().clear();
         newScore(MazeState.score,MazeState.nickname);
         affichageScore();
-
-        afficheScore();
-        System.out.println();
 
         App.menu.setHeight(500);
         App.menu.setWidth(500);
