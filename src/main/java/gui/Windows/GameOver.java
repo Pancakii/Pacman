@@ -2,14 +2,18 @@ package gui.Windows;
 
 import gui.App;
 import gui.ExitButon;
+import javafx.animation.TranslateTransition;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.util.Duration;
 import model.MazeState;
 
 public class GameOver implements EventHandler<ActionEvent> {
@@ -78,6 +82,73 @@ public class GameOver implements EventHandler<ActionEvent> {
                         exitbouton.setFont(Font.font(20));
                         exitbouton.setOnAction(new ExitButon());
                         parent.getChildren().add(exitbouton);
+
+                        //Pacman animation
+                        Image pacManAnimation = new Image("PacmanRight.gif");
+                        ImageView pacManAnimationIV = new ImageView(pacManAnimation);
+                        pacManAnimationIV.setFitWidth(50);
+                        pacManAnimationIV.setFitHeight(50);
+                        pacManAnimationIV.setTranslateX(-500);
+                        pacManAnimationIV.setTranslateY(80);
+                        TranslateTransition pacmanTranslateTransition = new TranslateTransition(Duration.seconds(5), pacManAnimationIV);
+                        pacmanTranslateTransition.setFromX(-pacManAnimationIV.getImage().getWidth());
+                        pacmanTranslateTransition.setToX(500);
+                        pacmanTranslateTransition.setCycleCount(pacmanTranslateTransition.INDEFINITE);
+                        parent.getChildren().add(pacManAnimationIV);
+                        pacmanTranslateTransition.play();
+
+                        //Fantome animation
+                        Image blinkyAnimation = new Image("Blinky.gif");
+                        ImageView blinkyAnimationIV = new ImageView(blinkyAnimation);
+                        blinkyAnimationIV.setFitWidth(50);
+                        blinkyAnimationIV.setFitHeight(50);
+                        blinkyAnimationIV.setTranslateX(-400);
+                        blinkyAnimationIV.setTranslateY(30);
+                        TranslateTransition blinkyTranslateTransition = new TranslateTransition(Duration.seconds(5), blinkyAnimationIV);
+                        blinkyTranslateTransition.setFromX(-blinkyAnimationIV.getImage().getWidth());
+                        blinkyTranslateTransition.setToX(600);
+                        blinkyTranslateTransition.setCycleCount(blinkyTranslateTransition.INDEFINITE);
+                        parent.getChildren().add(blinkyAnimationIV);
+                        blinkyTranslateTransition.play();
+
+                        Image inkyAnimation = new Image("Inky.gif");
+                        ImageView inkyAnimationIV = new ImageView(inkyAnimation);
+                        inkyAnimationIV.setFitWidth(50);
+                        inkyAnimationIV.setFitHeight(50);
+                        inkyAnimationIV.setTranslateX(-300);
+                        inkyAnimationIV.setTranslateY(-20);
+                        TranslateTransition inkyTranslateTransition = new TranslateTransition(Duration.seconds(5), inkyAnimationIV);
+                        inkyTranslateTransition.setFromX(-inkyAnimationIV.getImage().getWidth());
+                        inkyTranslateTransition.setToX(700);
+                        inkyTranslateTransition.setCycleCount(inkyTranslateTransition.INDEFINITE);
+                        parent.getChildren().add(inkyAnimationIV);
+                        inkyTranslateTransition.play();
+
+                        Image clydeAnimation = new Image("Clyde.gif");
+                        ImageView clydeAnimationIV = new ImageView(clydeAnimation);
+                        clydeAnimationIV.setFitWidth(50);
+                        clydeAnimationIV.setFitHeight(50);
+                        clydeAnimationIV.setTranslateX(-200);
+                        clydeAnimationIV.setTranslateY(-70);
+                        TranslateTransition clydeTranslateTransition = new TranslateTransition(Duration.seconds(5), clydeAnimationIV);
+                        clydeTranslateTransition.setFromX(-clydeAnimationIV.getImage().getWidth());
+                        clydeTranslateTransition.setToX(800);
+                        clydeTranslateTransition.setCycleCount(clydeTranslateTransition.INDEFINITE);
+                        parent.getChildren().add(clydeAnimationIV);
+                        clydeTranslateTransition.play();
+
+                        Image pinkyAnimation = new Image("Pinky.gif");
+                        ImageView pinkyAnimationIV = new ImageView(pinkyAnimation);
+                        pinkyAnimationIV.setFitWidth(50);
+                        pinkyAnimationIV.setFitHeight(50);
+                        pinkyAnimationIV.setTranslateX(-100);
+                        pinkyAnimationIV.setTranslateY(-120);
+                        TranslateTransition pinkyTranslateTransition = new TranslateTransition(Duration.seconds(5), pinkyAnimationIV);
+                        pinkyTranslateTransition.setFromX(-pinkyAnimationIV.getImage().getWidth());
+                        pinkyTranslateTransition.setToX(900);
+                        pinkyTranslateTransition.setCycleCount(pinkyTranslateTransition.INDEFINITE);
+                        parent.getChildren().add(pinkyAnimationIV);
+                        pinkyTranslateTransition.play();
 
 
                 }

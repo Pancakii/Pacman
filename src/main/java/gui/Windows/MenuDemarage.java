@@ -109,7 +109,7 @@ public class MenuDemarage implements EventHandler<ActionEvent> {
                         pacmanTranslateTransition.play();
 
                         //Fantome animation
-                        Image blinkyAnimation = new Image("Blinky.gif");
+                        Image blinkyAnimation = new Image("GhostEnergized.gif");
                         ImageView blinkyAnimationIV = new ImageView(blinkyAnimation);
                         blinkyAnimationIV.setFitWidth(50);
                         blinkyAnimationIV.setFitHeight(50);
@@ -122,7 +122,7 @@ public class MenuDemarage implements EventHandler<ActionEvent> {
                         parent.getChildren().add(blinkyAnimationIV);
                         blinkyTranslateTransition.play();
 
-                        Image inkyAnimation = new Image("Inky.gif");
+                        Image inkyAnimation = new Image("GhostEnergized.gif");
                         ImageView inkyAnimationIV = new ImageView(inkyAnimation);
                         inkyAnimationIV.setFitWidth(50);
                         inkyAnimationIV.setFitHeight(50);
@@ -135,7 +135,7 @@ public class MenuDemarage implements EventHandler<ActionEvent> {
                         parent.getChildren().add(inkyAnimationIV);
                         inkyTranslateTransition.play();
 
-                        Image clydeAnimation = new Image("Clyde.gif");
+                        Image clydeAnimation = new Image("GhostEnergized.gif");
                         ImageView clydeAnimationIV = new ImageView(clydeAnimation);
                         clydeAnimationIV.setFitWidth(50);
                         clydeAnimationIV.setFitHeight(50);
@@ -148,7 +148,7 @@ public class MenuDemarage implements EventHandler<ActionEvent> {
                         parent.getChildren().add(clydeAnimationIV);
                         clydeTranslateTransition.play();
 
-                        Image pinkyAnimation = new Image("Pinky.gif");
+                        Image pinkyAnimation = new Image("GhostEnergized.gif");
                         ImageView pinkyAnimationIV = new ImageView(pinkyAnimation);
                         pinkyAnimationIV.setFitWidth(50);
                         pinkyAnimationIV.setFitHeight(50);
