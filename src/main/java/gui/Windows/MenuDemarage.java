@@ -54,7 +54,11 @@ public class MenuDemarage implements EventHandler<ActionEvent> {
                         jouerbouton.setFont(Font.font(20));
                         jouerbouton.setBackground(null);
                         jouerbouton.setTextFill(Color.WHITE);
-                        jouerbouton.setStyle("-fx-border-color: yellow; -fx-border-width: 2px; -fx-font-family: 'Arial'");
+                        jouerbouton.setStyle("-fx-border-color: yellow; -fx-border-width: 2px;");
+
+                        jouerbouton.setOnMousePressed(e -> jouerbouton.setScaleX(1.2));
+                        jouerbouton.setOnMouseReleased(e -> jouerbouton.setScaleX(1.0));
+
 
                         jouerbouton.scaleShapeProperty();
                         jouerbouton.setOnAction(new AskName());
@@ -66,9 +70,11 @@ public class MenuDemarage implements EventHandler<ActionEvent> {
                         modebouton.setTranslateY(40);
                         modebouton.setBackground(null);
                         modebouton.setTextFill(Color.WHITE);
-                        modebouton.setStyle("-fx-border-color: yellow; -fx-border-width: 2px; -fx-font-family: 'Arial'");
+                        modebouton.setStyle("-fx-border-color: yellow; -fx-border-width: 2px;");
                         modebouton.setFont(Font.font(20));
 
+                        modebouton.setOnMousePressed(e -> modebouton.setScaleX(1.2));
+                        modebouton.setOnMouseReleased(e -> modebouton.setScaleX(1.0));
 
                         //App.mebouton.setOnAction();
                         parent.getChildren().add(modebouton);
@@ -79,9 +85,13 @@ public class MenuDemarage implements EventHandler<ActionEvent> {
                         exitbouton.setTranslateX(230);
                         exitbouton.setTranslateY(60);
                         exitbouton.setFont(Font.font(20));
-                        exitbouton.setStyle("-fx-border-color: yellow; -fx-border-width: 2px; -fx-font-family: 'Arial'");
+                        exitbouton.setStyle("-fx-border-color: yellow; -fx-border-width: 2px;");
                         exitbouton.setBackground(null);
                         exitbouton.setOnAction(new ExitButon());
+
+                        exitbouton.setOnMousePressed(e -> exitbouton.setScaleX(1.2));
+                        exitbouton.setOnMouseReleased(e -> exitbouton.setScaleX(1.0));
+
                         parent.getChildren().add(exitbouton);
 
                         //Pacman animation
