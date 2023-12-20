@@ -1,18 +1,16 @@
 package model;
 
 
+import config.MazeConfig;
 import geometry.RealCoordinates;
-import config.*;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 public final class PacMan implements Critter {
     private Direction direction = Direction.NONE;
     private RealCoordinates pos;
-    private boolean energized;
-
+    public static boolean energized;
     private final double energized_timer_max = 10;
     private double energized_timer;
     private static int level;
@@ -116,7 +114,6 @@ public final class PacMan implements Critter {
     public void setPos(RealCoordinates pos) {
         this.pos = pos;
     }
-
 
 
 	public void energizedTimerCount(long delta)

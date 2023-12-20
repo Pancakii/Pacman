@@ -8,6 +8,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import model.MazeState;
+import model.PacMan;
 
 import java.util.ArrayList;
 
@@ -18,6 +19,7 @@ public class CellGraphicsFactory {
     private static int upRBG =( downRGB + 1) % 3 ; // downRGB + 1 modulo 3
     private static Color color = Color.rgb(colorRGB[0],colorRGB[1],colorRGB[2]);
     private ArrayList<Rectangle> murs = new ArrayList<>();
+    private int compteurCouleur = 1;
 
 
     public CellGraphicsFactory(double scale) {
@@ -79,10 +81,10 @@ public class CellGraphicsFactory {
             @Override
             public void update() {
                 dot.setVisible(!state.getGridState(pos));
-                if(System.nanoTime()% 90000 == 0){
+                if(System.nanoTime()% 90000 == 0 ){
                     changingColorAllWall();
-
                 }
+
             }
 
             @Override
@@ -100,20 +102,26 @@ public class CellGraphicsFactory {
         }
     }
 
-    private void changingColor(){
+    private void changingColorNormal(){
 
         resetColorRGB();
         colorRGB[downRGB] = colorRGB[downRGB] - 1 ;
         colorRGB[upRBG] = colorRGB[upRBG] + 1;
         color =  Color.rgb(colorRGB[0],colorRGB[1],colorRGB[2]);
-        scale += 0.01;
     }
 
-    private void changingColorAllWall()  {
+
+
+    private void changingColorAllWall(){
+
+        if (PacMan.INSTANCE.isEnergized()){
+            color = Color.DARKBLUE;
+        }else{
+            changingColorNormal();
+        }
         for(int i = 0; i<murs.size();i++){
             murs.get(i).setFill(color);
         }
-        changingColor();
     }
 
 

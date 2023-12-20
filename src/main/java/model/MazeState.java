@@ -236,6 +236,7 @@ public final class MazeState {
 
     private void playerLost() {
         MazeState.lives--;
+        PacMan.energized = false;
         if(MazeState.lives == 0){
             ScoreBoard.afficheScoreBoard();
         }
