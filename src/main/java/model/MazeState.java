@@ -25,6 +25,10 @@ public final class MazeState {
     private final Map<Critter, RealCoordinates> initialPos;
     public static String nickname;
 
+    /**
+     * Constructor of MazeState
+     * @param config mazeconfig
+     */
     public MazeState(MazeConfig config) {
         this.config = config;
         height = config.getHeight();
@@ -41,14 +45,26 @@ public final class MazeState {
         resetCritters();
     }
 
+    /**
+     * Gets critter list, ghosts and pacman.
+     * @return the critter list
+     */
     public List<Critter> getCritters() {
         return critters;
     }
 
+    /**
+     * Gets width.
+     * @return width
+     */
     public double getWidth() {
         return width;
     }
 
+    /**
+     * Gets height.
+     * @return height
+     */
     public int getHeight() {
         return height;
     }
@@ -70,11 +86,13 @@ public final class MazeState {
     }
 
 
+
+    //PACMAN FUNCTIONS
+
     /**
-    PACMAN FUNCTIONS
-
-
-    Uses Pacman functions to update its state
+     * Uses Pacman functions to update its state. Returns whether pacman ate an energizer or not.
+     * @param deltaTns delta time
+     * @return whether pacman ate an energizer or not.
      */
     private boolean updatePacman(long deltaTns)
     {
@@ -110,9 +128,9 @@ public final class MazeState {
 
     /**
      * Si pacman entre dans une case où il y a un fantôme
-     * on vérifie s'il est énergiser
-     * Oui : Gagne 10pts et tue le fantôme
-     * Non : Perd une vie ou Game Over si 0 vie
+     * on vérifie s'il est énergisé:
+     * -Oui : Gagne 200 pts et mange le fantôme
+     * -Non : Perd une vie ou Game Over si 0 vie
      */
     private void eatGhosts() {
         List<Critter> close_ghosts = PacMan.INSTANCE.closeGhosts(critters);
@@ -136,9 +154,11 @@ public final class MazeState {
         }
     }
 
+    //GHOST FUNCTIONS
     /**
-    *GHOST FUNCTIONS
-    *Updates all ghosts
+     * Updates all ghosts.
+     * @param deltaTns delta time
+     * @param ate_energizer whether pacman ate an energizer or not
      */
     public void updateGhosts(long deltaTns, boolean ate_energizer)
     {
@@ -151,7 +171,13 @@ public final class MazeState {
         }
     }
 
-    // Updates one ghost
+
+    /**
+     * Updates the given ghost.
+     * @param critter the said ghost
+     * @param deltaTns delta time
+     * @param ate_energizer whether pacman ate an energizer or not
+     */
     public void updateGhost(Critter critter, long deltaTns, boolean ate_energizer)
     {
         Ghost ghost = (Ghost) critter;
@@ -219,6 +245,10 @@ public final class MazeState {
         return true;
     }
 
+    /**
+     * Adds the given value to score and addLiveScore.
+     * @param increment the said value
+     */
     public static void addScore(int increment) {
         score += increment;
         addLiveScore +=increment ;
@@ -234,6 +264,9 @@ public final class MazeState {
         }
     }
 
+    /**
+     * Removes 1 life and resets critters. If life is 0, then shows the scoreboard.
+     */
     private void playerLost() {
         MazeState.lives--;
         if(MazeState.lives == 0){
@@ -241,7 +274,10 @@ public final class MazeState {
         }
         resetCritters();
     }
-    
+
+    /**
+     * Resets the game values concerning critters, level, score, bonus and level.
+     */
     public void resetGame(){
         MazeState.lives = 3;
         MazeState.score = 0;
@@ -255,6 +291,10 @@ public final class MazeState {
         resetCritters();
     }
 
+    /**
+     * Resets single critter's position and direction. If it is a ghost, then also resets eaten, frightened and get_out_timer.
+     * @param critter the said critter
+     */
     private void resetCritter(Critter critter) {
         critter.setDirection(Direction.NONE);
         critter.setPos(initialPos.get(critter));
@@ -266,10 +306,16 @@ public final class MazeState {
         }
     }
 
+    /**
+     * Resets all critters.
+     */
     private void resetCritters() {
         for (var critter: critters) resetCritter(critter);
     }
 
+    /**
+     * Resets gridState.
+     */
     private void resetGridState(){
         for(int i = 0; i< gridState.length;i++){
             for(int j = 0; j< gridState[i].length;j++){
@@ -278,19 +324,28 @@ public final class MazeState {
         }
     }
 
+    /**
+     * Gets config
+     * @return config
+     */
     public MazeConfig getConfig() {
         return config;
     }
 
+    /**
+     * Gets gridState element using IntCoordinates position.
+     * @param pos said position
+     * @return the value of the element
+     */
     public boolean getGridState(IntCoordinates pos) {
         return gridState[pos.y()][pos.x()];
     }
 
-
+    /**
+     * Sets the addLiveScore the given value.
+     * @param addLiveScore the said value
+     */
     public static void setAddLiveScore(int addLiveScore) {
         MazeState.addLiveScore = addLiveScore;
     }
-
-
-
     }
