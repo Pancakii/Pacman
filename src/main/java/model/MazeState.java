@@ -269,6 +269,7 @@ public final class MazeState {
      */
     private void playerLost() {
         MazeState.lives--;
+        PacMan.INSTANCE.setEnergized(false);
         if(MazeState.lives == 0){
             ScoreBoard.afficheScoreBoard();
         }
@@ -348,4 +349,4 @@ public final class MazeState {
     public static void setAddLiveScore(int addLiveScore) {
         MazeState.addLiveScore = addLiveScore;
     }
-    }
+}
