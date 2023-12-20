@@ -10,7 +10,7 @@ import java.util.List;
 public final class PacMan implements Critter {
     private Direction direction = Direction.NONE;
     private RealCoordinates pos;
-    public static boolean energized;
+    private  boolean energized;
     private final double energized_timer_max = 10;
     private double energized_timer;
     private static int level;
@@ -113,6 +113,9 @@ public final class PacMan implements Critter {
     @Override
     public void setPos(RealCoordinates pos) {
         this.pos = pos;
+    }
+    public void setEnergised(boolean b){
+        this.energized = b;
     }
 
 
