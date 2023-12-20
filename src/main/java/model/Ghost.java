@@ -29,6 +29,10 @@ public enum Ghost implements Critter {
     private double chase_timer = 0;
     private static IntCoordinates Clyde_startPosition;
 
+    private double get_out_timer = 0.0;
+    // BLINKY, INKY, PINKY, CLYDE
+    // 0     , 10  , 5    , 15
+
 
     /**
      * Gets eaten.
@@ -182,6 +186,18 @@ public enum Ghost implements Critter {
         }
         return res;
     }
+
+    /**
+     * Gets get_out_timer.
+     * @return get_out_timer
+     */
+    public double getGet_out_timer() {return get_out_timer;}
+
+    /**
+     * Sets get_out_timer.
+     * @param get_out_timer to set.
+     */
+    public void setGet_out_timer(double get_out_timer) {this.get_out_timer = get_out_timer;}
 
     /**
      * Checks if the ghost is near the wormwall. Returns 1.0 or 0.5 to be multiplied by speed later.
