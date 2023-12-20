@@ -262,6 +262,7 @@ public final class MazeState {
         {
             ((Ghost) critter).setFrightened(false);
             ((Ghost) critter).setEaten(false);
+            ((Ghost) critter).setGet_out_timer(0);
         }
     }
 
