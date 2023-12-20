@@ -62,7 +62,6 @@ public class Ghost_pf
         {
             ghost.setGet_out_timer(ghost.getGet_out_timer() + delta);
         }
-        // TODO: ADD TIMER WHEN PACMAN DIES SO THEY DONT COME OUT AT ONCE
         int pellet_count = PacMan.getCountDotTotal();
         return switch (ghost) {
             case BLINKY -> true;
