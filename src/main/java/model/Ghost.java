@@ -205,7 +205,7 @@ public enum Ghost implements Critter {
      */
     public double nearWormWall()
     {
-        if(pos.round().y() == 9 && (pos.round().x() < 5 || pos.round().x() > 15))
+        if(pos.round().y() == 10 && (pos.round().x() < 5 || pos.round().x() > 15))
         {
             return 0.5;
         }
