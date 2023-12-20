@@ -9,8 +9,16 @@ import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import model.MazeState;
 
+import java.util.ArrayList;
+
 public class CellGraphicsFactory {
-    private final double scale;
+    private static double scale;
+    public static int[] colorRGB ={255,100,100};
+    private static int downRGB = 0; // entre 0 et 2
+    private static int upRBG =( downRGB + 1) % 3 ; // downRGB + 1 modulo 3
+    private static Color color = Color.rgb(colorRGB[0],colorRGB[1],colorRGB[2]);
+    private ArrayList<Rectangle> murs = new ArrayList<>();
+
 
     public CellGraphicsFactory(double scale) {
         this.scale = scale;
@@ -51,7 +59,8 @@ public class CellGraphicsFactory {
         		Wall.setWidth(scale);
         		Wall.setY(0);
         		Wall.setX(0);
-        		Wall.setFill(Color.BLUEVIOLET);
+        		Wall.setFill(color);
+                murs.add(Wall);
             	group.getChildren().add(Wall);
             	
             //Sinon si la case n'est pas un Mur et n'est pas passable : crée un rectangle bleu
@@ -70,7 +79,10 @@ public class CellGraphicsFactory {
             @Override
             public void update() {
                 dot.setVisible(!state.getGridState(pos));
+                if(System.nanoTime()% 90000 == 0){
+                    changingColorAllWall();
 
+                }
             }
 
             @Override
@@ -78,6 +90,30 @@ public class CellGraphicsFactory {
                 return group;
             }
         };
+    }
+
+
+    private void resetColorRGB(){
+        if(colorRGB[downRGB] == 100){
+            downRGB = (downRGB + 1) % 3;
+            upRBG = ( downRGB + 1) % 3;
+        }
+    }
+
+    private void changingColor(){
+
+        resetColorRGB();
+        colorRGB[downRGB] = colorRGB[downRGB] - 1 ;
+        colorRGB[upRBG] = colorRGB[upRBG] + 1;
+        color =  Color.rgb(colorRGB[0],colorRGB[1],colorRGB[2]);
+        scale += 0.01;
+    }
+
+    private void changingColorAllWall()  {
+        for(int i = 0; i<murs.size();i++){
+            murs.get(i).setFill(color);
+        }
+        changingColor();
     }
 
 
