@@ -67,8 +67,10 @@ public final class CritterGraphicsFactory {
                 this.instance = pacmanDown;
                 return pacmanDown ;
             }
+            default -> {
+                return this.instance ;
+            }
         }
-        return this.instance ;
     }
 
     /**

@@ -1,6 +1,7 @@
 package gui;
 
 import config.MazeConfig;
+import javafx.scene.input.KeyCode;
 import model.Direction;
 import model.DirectionUtils;
 import model.PacMan;
@@ -27,22 +28,29 @@ public class PacmanController {
      * @param event	Récupére la touche appuyer par l'utilisateur
      */
     public void keyPressedHandler(KeyEvent event) {
-        newDirection = null;
 
-        switch (event.getCode()) {
-            case LEFT:
-                newDirection = Direction.WEST;
-                break;
-            case RIGHT:
-                newDirection = Direction.EAST;
-                break;
-            case UP:
-                newDirection = Direction.NORTH;
-                break;
-            case DOWN:
-                newDirection = Direction.SOUTH;
-                break;
+        if(event.getCode() == KeyCode.LEFT || event.getCode() == KeyCode.RIGHT || event.getCode() == KeyCode.UP || event.getCode() == KeyCode.DOWN  ){
+            newDirection = null;
+
+            switch (event.getCode()) {
+                case LEFT:
+                    newDirection = Direction.WEST;
+                    break;
+                case RIGHT:
+                    newDirection = Direction.EAST;
+                    break;
+                case UP:
+                    newDirection = Direction.NORTH;
+                    break;
+                case DOWN:
+                    newDirection = Direction.SOUTH;
+                    break;
+
+            }
+        }else{
+            event.consume();
         }
+
 
         if (newDirection != null) {
             RealCoordinates nextPos = PacMan.INSTANCE.getPos().plus(DirectionUtils.getVector(newDirection));
