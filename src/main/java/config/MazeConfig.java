@@ -141,7 +141,7 @@ public class MazeConfig {
         //NORD
         if(pos.x() >= 1)
         {
-            if (!grid[pos.x() - 1][pos.y()].isWall()) //si neighbor n'est pas un mur
+            if (!grid[pos.x() - 2][pos.y()].isWall()) //si neighbor n'est pas un mur
             {
                 res[0] = true;
             }

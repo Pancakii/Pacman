@@ -1,8 +1,8 @@
 package model;
 
 
+import config.MazeConfig;
 import geometry.RealCoordinates;
-import config.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,8 +10,7 @@ import java.util.List;
 public final class PacMan implements Critter {
     private Direction direction = Direction.NONE;
     private RealCoordinates pos;
-    private boolean energized;
-
+    private  boolean energized;
     private final double energized_timer_max = 10;
     private double energized_timer;
     private static int level;
@@ -111,7 +110,7 @@ public final class PacMan implements Critter {
 
     /**
      * Gets position.
-     * @return
+     * @return position
      */
     @Override
     public RealCoordinates getPos() {
@@ -120,7 +119,7 @@ public final class PacMan implements Critter {
 
     /**
      * Gets speed.
-     * @return
+     * @return speed
      */
     @Override
     public double getSpeed() {
@@ -129,21 +128,21 @@ public final class PacMan implements Critter {
 
     /**
      * Gets direction.
-     * @return
+     * @return direction
      */
     @Override
     public Direction getDirection() {return direction;}
 
     /**
      * Sets direction
-     * @param direction
+     * @param direction to set
      */
     @Override
     public void setDirection(Direction direction) {this.direction = direction;}
 
     /**
      * Sets position.
-     * @param pos
+     * @param pos to set
      */
     @Override
     public void setPos(RealCoordinates pos) {this.pos = pos;}
@@ -151,7 +150,7 @@ public final class PacMan implements Critter {
 
     /**
      * Decreases energized_timer, sets energized false when below 0.
-     * @param delta
+     * @param delta delta time
      */
 	public void energizedTimerCount(long delta)
 	{
@@ -191,7 +190,7 @@ public final class PacMan implements Critter {
 
     /**
      * Gets energized_timer
-     * @return
+     * @return energized_timer
      */
 	public double getEnergized_timer() {
 		return energized_timer;
@@ -199,13 +198,13 @@ public final class PacMan implements Critter {
 
     /**
      * Gets energized
-     * @return
+     * @return energized
      */
 	public boolean isEnergized() {return energized;}
 
     /**
      * Sets energized
-     * @param energized
+     * @param energized to set
      */
     public void setEnergized(boolean energized)
 	{
@@ -222,7 +221,7 @@ public final class PacMan implements Critter {
 
     /**
      * Change le level
-     * @param level
+     * @param level to set
      */
     public static void setLevel(int level) {
         PacMan.level = level;
@@ -239,7 +238,7 @@ public final class PacMan implements Critter {
 
     /**
      *  Change le countDot
-     * @param countDot
+     * @param countDot to set
      */
     public static void setCountDot(int countDot) {
 		PacMan.countDot = countDot;
@@ -263,7 +262,7 @@ public final class PacMan implements Critter {
 
     /**
      * Change le nombre total de dots mangé
-     * @param countDotTotal
+     * @param countDotTotal to set
      */
     public static void setCountDotTotal(int countDotTotal) {
 		PacMan.countDotTotal = countDotTotal;
