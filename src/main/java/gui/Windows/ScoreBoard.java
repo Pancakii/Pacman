@@ -190,8 +190,6 @@ public class ScoreBoard {
         App.menu.setY((screenSizeHeight -App.menu.getHeight())/2);
         App.menu.setScene(scene);
         App.menu.show();
-        App.menu.setScene(scene);
-        App.menu.show();
         lancer =true;
 
 
