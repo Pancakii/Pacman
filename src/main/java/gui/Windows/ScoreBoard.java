@@ -2,13 +2,17 @@ package gui.Windows;
 
 import gui.App;
 import gui.GraphicsUpdater;
+import javafx.animation.TranslateTransition;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.util.Duration;
 import model.MazeState;
 
 public class ScoreBoard {
@@ -78,12 +82,25 @@ public class ScoreBoard {
     public static void affichageScore(){
         int positionXNom = 140;
         int postionXScore = 240;
-        int positionY= 150;
+        int positionY= 120;
+
+        //affichage du texte HighScore en grand
+
+        Image pacmanGift = new Image("HighScoreImage.png");
+        ImageView imagePacmanGift = new ImageView(pacmanGift);
+        imagePacmanGift.setTranslateX(220);
+        imagePacmanGift.setTranslateY(20);
+        imagePacmanGift.setFitHeight(50);
+        imagePacmanGift.setFitWidth(50);
+        parent.getChildren().add(imagePacmanGift);
+
+
+        //affichage des noms
 
         nom1.setText(tabName[0]);
         score1.setText(String.valueOf(tabScore[0]));
         nom1.setTranslateX(positionXNom + 20);
-        nom1.setTranslateY(positionY +20);
+        nom1.setTranslateY(positionY +10);
         nom1.setFont(Font.font(10));
         score1.setTranslateX(postionXScore + 20);
         score1.setTranslateY(positionY);
@@ -96,7 +113,7 @@ public class ScoreBoard {
         nom2.setText(tabName[1]);
         score2.setText(String.valueOf(tabScore[1]));
         nom2.setTranslateX(positionXNom + 20);
-        nom2.setTranslateY(positionY +20);
+        nom2.setTranslateY(positionY +10);
         nom2.setFont(Font.font(10));
         score2.setTranslateX(postionXScore + 20);
         score2.setTranslateY(positionY);
@@ -109,7 +126,7 @@ public class ScoreBoard {
         nom3.setText(tabName[2]);
         score3.setText(String.valueOf(tabScore[2]));
         nom3.setTranslateX(positionXNom + 20);
-        nom3.setTranslateY(positionY +20);
+        nom3.setTranslateY(positionY +10);
         nom3.setFont(Font.font(10));
         score3.setTranslateX(postionXScore + 20);
         score3.setTranslateY(positionY);
@@ -122,7 +139,7 @@ public class ScoreBoard {
         nom4.setText(tabName[3]);
         score4.setText(String.valueOf(tabScore[3]));
         nom4.setTranslateX(positionXNom + 20);
-        nom4.setTranslateY(positionY +20);
+        nom4.setTranslateY(positionY +10);
         nom4.setFont(Font.font(10));
         score4.setTranslateX(postionXScore + 20);
         score4.setTranslateY(positionY);
@@ -135,7 +152,7 @@ public class ScoreBoard {
         nom5.setText(tabName[4]);
         score5.setText(String.valueOf(tabScore[4]));
         nom5.setTranslateX(positionXNom + 20);
-        nom5.setTranslateY(positionY +20);
+        nom5.setTranslateY(positionY +10);
         nom5.setFont(Font.font(10));
         score5.setTranslateX(postionXScore + 20);
         score5.setTranslateY(positionY);
@@ -144,6 +161,76 @@ public class ScoreBoard {
         score5.setFill(Color.YELLOW);
         parent.getChildren().add(nom5);
         parent.getChildren().add(score5);
+
+        //Pacman animation
+        Image pacManAnimation = new Image("PacmanRight.gif");
+        ImageView pacManAnimationIV = new ImageView(pacManAnimation);
+        pacManAnimationIV.setFitWidth(50);
+        pacManAnimationIV.setFitHeight(50);
+        pacManAnimationIV.setTranslateY(200);
+        TranslateTransition pacmanTranslateTransition = new TranslateTransition(Duration.seconds(5), pacManAnimationIV);
+        pacmanTranslateTransition.setFromX(-pacManAnimationIV.getImage().getWidth()-100);
+        pacmanTranslateTransition.setToX(900);
+        pacmanTranslateTransition.setCycleCount(pacmanTranslateTransition.INDEFINITE);
+        parent.getChildren().add(pacManAnimationIV);
+        pacmanTranslateTransition.play();
+
+        //Fantome animation
+        Image blinkyAnimation = new Image("Blinky.gif");
+        ImageView blinkyAnimationIV = new ImageView(blinkyAnimation);
+        blinkyAnimationIV.setFitWidth(50);
+        blinkyAnimationIV.setFitHeight(50);
+        blinkyAnimationIV.setTranslateY(150);
+        TranslateTransition blinkyTranslateTransition = new TranslateTransition(Duration.seconds(5), blinkyAnimationIV);
+        blinkyTranslateTransition.setFromX(-blinkyAnimationIV.getImage().getWidth()-200);
+        blinkyTranslateTransition.setToX(800);
+        blinkyTranslateTransition.setCycleCount(blinkyTranslateTransition.INDEFINITE);
+        parent.getChildren().add(blinkyAnimationIV);
+        blinkyTranslateTransition.play();
+
+        Image inkyAnimation = new Image("Inky.gif");
+        ImageView inkyAnimationIV = new ImageView(inkyAnimation);
+        inkyAnimationIV.setFitWidth(50);
+        inkyAnimationIV.setFitHeight(50);
+        inkyAnimationIV.setTranslateY(100);
+        TranslateTransition inkyTranslateTransition = new TranslateTransition(Duration.seconds(5), inkyAnimationIV);
+        inkyTranslateTransition.setFromX(-inkyAnimationIV.getImage().getWidth()-300);
+        inkyTranslateTransition.setToX(700);
+        inkyTranslateTransition.setCycleCount(inkyTranslateTransition.INDEFINITE);
+        parent.getChildren().add(inkyAnimationIV);
+        inkyTranslateTransition.play();
+
+        Image clydeAnimation = new Image("Clyde.gif");
+        ImageView clydeAnimationIV = new ImageView(clydeAnimation);
+        clydeAnimationIV.setFitWidth(50);
+        clydeAnimationIV.setFitHeight(50);
+        clydeAnimationIV.setTranslateY(50);
+        TranslateTransition clydeTranslateTransition = new TranslateTransition(Duration.seconds(5), clydeAnimationIV);
+        clydeTranslateTransition.setFromX(-clydeAnimationIV.getImage().getWidth()-400);
+        clydeTranslateTransition.setToX(600);
+        clydeTranslateTransition.setCycleCount(clydeTranslateTransition.INDEFINITE);
+        parent.getChildren().add(clydeAnimationIV);
+        clydeTranslateTransition.play();
+
+        Image pinkyAnimation = new Image("Pinky.gif");
+        ImageView pinkyAnimationIV = new ImageView(pinkyAnimation);
+        pinkyAnimationIV.setFitWidth(50);
+        pinkyAnimationIV.setFitHeight(50);
+        pinkyAnimationIV.setTranslateY(0);
+        TranslateTransition pinkyTranslateTransition = new TranslateTransition(Duration.seconds(5), pinkyAnimationIV);
+        pinkyTranslateTransition.setFromX(-pinkyAnimationIV.getImage().getWidth()-500);
+        pinkyTranslateTransition.setToX(500);
+        pinkyTranslateTransition.setCycleCount(pinkyTranslateTransition.INDEFINITE);
+        parent.getChildren().add(pinkyAnimationIV);
+        pinkyTranslateTransition.play();
+
+        Text leave = new Text();
+        leave.setText("Press space");
+        leave.setTranslateX(220);
+        leave.setTranslateY(0);
+        leave.setFill(Color.WHITE);
+        parent.getChildren().add(leave);
+
 
     }
 
@@ -181,10 +268,9 @@ public class ScoreBoard {
                 GameOver.affichageGameOver();}
         });
 
-
         App.menu.setScene(scene);
         App.menu.show();
-        lancer =true;
+        lancer = true;
 
 
 

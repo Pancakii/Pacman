@@ -20,7 +20,8 @@ public class GameOver implements EventHandler<ActionEvent> {
         private static VBox parent = new VBox();
         private static Scene scene = new Scene(parent);
         private static Text score =  new Text();
-        private static Text go = new Text();
+        private static Image pacmanGift = new Image("GameOverText.png");
+        private static ImageView imagePacmanGift = new ImageView(pacmanGift);
         private static boolean lancer = false;
 
 
@@ -37,8 +38,8 @@ public class GameOver implements EventHandler<ActionEvent> {
                 score.setText("Score: " + MazeState.score);
                 if(!lancer) {
                         //affiche le score apres le game over
-                        final int txScore = 125;
-                        final int tyScore = 100;
+                        final int txScore = 150;
+                        final int tyScore = 150;
                         final int fsScore = 20;
 
 
@@ -52,62 +53,77 @@ public class GameOver implements EventHandler<ActionEvent> {
                         parent.getChildren().add(score);
 
                         //affichage du mesage GameOver
-                        go.setText("Game Over!");
-                        go.setTranslateX(125);
-                        go.setTranslateY(20);
-                        go.setFont(Font.font(50));
-                        go.setFill(Color.YELLOW);
-                        parent.getChildren().add(go);
+                        imagePacmanGift.setTranslateX(150);
+                        imagePacmanGift.setTranslateY(20);
+                        imagePacmanGift.setFitHeight(100);
+                        imagePacmanGift.setFitWidth(200);
+                        parent.getChildren().add(imagePacmanGift);
+
 
                         //bouton pour rejouer
-                        Button bouton = new Button("Retry"); //Le nom du bouton
-                        bouton.setTranslateX(210);//Les coordonnées du bouton
-                        bouton.setTranslateY(150);
-                        bouton.setFont(Font.font(20));
-                        bouton.setOnAction(new Jeu());
-                        parent.getChildren().add(bouton);
+                        Button boutonReplay = new Button(" Retry"); //Le nom du bouton
+                        boutonReplay.setTranslateX(210);//Les coordonnées du bouton
+                        boutonReplay.setTranslateY(120);
+                        boutonReplay.setFont(Font.font(20));
+                        boutonReplay.setBackground(null);
+                        boutonReplay.setTextFill(Color.WHITE);
+                        boutonReplay.setStyle("-fx-border-color: yellow; -fx-border-width: 2px;");
+
+                        boutonReplay.setOnMousePressed(e -> boutonReplay.setScaleX(1.2));
+                        boutonReplay.setOnMouseReleased(e -> boutonReplay.setScaleX(1.0));
+
+                        boutonReplay.setOnAction(new Jeu());
+                        parent.getChildren().add(boutonReplay);
 
                         //bouton pour retourner au menu
                         Button menubouton = new Button("Menu");
                         menubouton.setTranslateX(210);
-                        menubouton.setTranslateY(170);
+                        menubouton.setTranslateY(140);
                         menubouton.setFont(Font.font(20));
+                        menubouton.setBackground(null);
+                        menubouton.setTextFill(Color.WHITE);
+                        menubouton.setStyle("-fx-border-color: yellow; -fx-border-width: 2px;");
+
+                        menubouton.setOnMousePressed(e -> menubouton.setScaleX(1.2));
+                        menubouton.setOnMouseReleased(e -> menubouton.setScaleX(1.0));
+
                         menubouton.setOnAction(new MenuDemarage());
                         parent.getChildren().add(menubouton);
 
                         //bouton pour quitter tout lle programme
-                        Button exitbouton = new Button(" Exit  ");
+                        Button exitbouton = new Button("  Exit  ");
                         exitbouton.setTranslateX(210);
-                        exitbouton.setTranslateY(190);
+                        exitbouton.setTranslateY(160);
                         exitbouton.setFont(Font.font(20));
+                        exitbouton.setBackground(null);
+                        exitbouton.setTextFill(Color.WHITE);
+                        exitbouton.setStyle("-fx-border-color: yellow; -fx-border-width: 2px;");
+
+                        exitbouton.setOnMousePressed(e -> exitbouton.setScaleX(1.2));
+                        exitbouton.setOnMouseReleased(e -> exitbouton.setScaleX(1.0));
+
                         exitbouton.setOnAction(new ExitButon());
                         parent.getChildren().add(exitbouton);
 
                         //Pacman animation
-                        Image pacManAnimation = new Image("PacmanRight.gif");
+                        Image pacManAnimation = new Image("PacmanDeadAnimation.gif");
                         ImageView pacManAnimationIV = new ImageView(pacManAnimation);
                         pacManAnimationIV.setFitWidth(50);
                         pacManAnimationIV.setFitHeight(50);
-                        pacManAnimationIV.setTranslateX(-500);
-                        pacManAnimationIV.setTranslateY(80);
-                        TranslateTransition pacmanTranslateTransition = new TranslateTransition(Duration.seconds(5), pacManAnimationIV);
-                        pacmanTranslateTransition.setFromX(-pacManAnimationIV.getImage().getWidth());
-                        pacmanTranslateTransition.setToX(500);
-                        pacmanTranslateTransition.setCycleCount(pacmanTranslateTransition.INDEFINITE);
+                        pacManAnimationIV.setTranslateX(225);
+                        pacManAnimationIV.setTranslateY(-70);
                         parent.getChildren().add(pacManAnimationIV);
-                        pacmanTranslateTransition.play();
 
                         //Fantome animation
                         Image blinkyAnimation = new Image("Blinky.gif");
                         ImageView blinkyAnimationIV = new ImageView(blinkyAnimation);
                         blinkyAnimationIV.setFitWidth(50);
                         blinkyAnimationIV.setFitHeight(50);
-                        blinkyAnimationIV.setTranslateX(-400);
-                        blinkyAnimationIV.setTranslateY(30);
-                        TranslateTransition blinkyTranslateTransition = new TranslateTransition(Duration.seconds(5), blinkyAnimationIV);
-                        blinkyTranslateTransition.setFromX(-blinkyAnimationIV.getImage().getWidth());
-                        blinkyTranslateTransition.setToX(600);
-                        blinkyTranslateTransition.setCycleCount(blinkyTranslateTransition.INDEFINITE);
+                        blinkyAnimationIV.setTranslateX(50);
+                        TranslateTransition blinkyTranslateTransition = new TranslateTransition(Duration.seconds(3), blinkyAnimationIV);
+                        blinkyTranslateTransition.setFromY(-blinkyAnimationIV.getImage().getHeight() -200);
+                        blinkyTranslateTransition.setToY(300);
+                        blinkyTranslateTransition.setCycleCount(TranslateTransition.INDEFINITE);
                         parent.getChildren().add(blinkyAnimationIV);
                         blinkyTranslateTransition.play();
 
@@ -115,12 +131,11 @@ public class GameOver implements EventHandler<ActionEvent> {
                         ImageView inkyAnimationIV = new ImageView(inkyAnimation);
                         inkyAnimationIV.setFitWidth(50);
                         inkyAnimationIV.setFitHeight(50);
-                        inkyAnimationIV.setTranslateX(-300);
-                        inkyAnimationIV.setTranslateY(-20);
-                        TranslateTransition inkyTranslateTransition = new TranslateTransition(Duration.seconds(5), inkyAnimationIV);
-                        inkyTranslateTransition.setFromX(-inkyAnimationIV.getImage().getWidth());
-                        inkyTranslateTransition.setToX(700);
-                        inkyTranslateTransition.setCycleCount(inkyTranslateTransition.INDEFINITE);
+                        inkyAnimationIV.setTranslateX(80);
+                        TranslateTransition inkyTranslateTransition = new TranslateTransition(Duration.seconds(3), inkyAnimationIV);
+                        inkyTranslateTransition.setFromY(-inkyAnimationIV.getImage().getHeight() -200);
+                        inkyTranslateTransition.setToY(300);
+                        inkyTranslateTransition.setCycleCount(TranslateTransition.INDEFINITE);
                         parent.getChildren().add(inkyAnimationIV);
                         inkyTranslateTransition.play();
 
@@ -128,12 +143,12 @@ public class GameOver implements EventHandler<ActionEvent> {
                         ImageView clydeAnimationIV = new ImageView(clydeAnimation);
                         clydeAnimationIV.setFitWidth(50);
                         clydeAnimationIV.setFitHeight(50);
-                        clydeAnimationIV.setTranslateX(-200);
-                        clydeAnimationIV.setTranslateY(-70);
-                        TranslateTransition clydeTranslateTransition = new TranslateTransition(Duration.seconds(5), clydeAnimationIV);
-                        clydeTranslateTransition.setFromX(-clydeAnimationIV.getImage().getWidth());
-                        clydeTranslateTransition.setToX(800);
-                        clydeTranslateTransition.setCycleCount(clydeTranslateTransition.INDEFINITE);
+                        clydeAnimationIV.setTranslateX(150);
+                        clydeAnimationIV.setTranslateY(-1);
+                        TranslateTransition clydeTranslateTransition = new TranslateTransition(Duration.seconds(3), clydeAnimationIV);
+                        clydeTranslateTransition.setFromY(-clydeAnimationIV.getImage().getHeight() -200);
+                        clydeTranslateTransition.setToY(300);
+                        clydeTranslateTransition.setCycleCount(TranslateTransition.INDEFINITE);
                         parent.getChildren().add(clydeAnimationIV);
                         clydeTranslateTransition.play();
 
@@ -141,12 +156,12 @@ public class GameOver implements EventHandler<ActionEvent> {
                         ImageView pinkyAnimationIV = new ImageView(pinkyAnimation);
                         pinkyAnimationIV.setFitWidth(50);
                         pinkyAnimationIV.setFitHeight(50);
-                        pinkyAnimationIV.setTranslateX(-100);
-                        pinkyAnimationIV.setTranslateY(-120);
-                        TranslateTransition pinkyTranslateTransition = new TranslateTransition(Duration.seconds(5), pinkyAnimationIV);
-                        pinkyTranslateTransition.setFromX(-pinkyAnimationIV.getImage().getWidth());
-                        pinkyTranslateTransition.setToX(900);
-                        pinkyTranslateTransition.setCycleCount(pinkyTranslateTransition.INDEFINITE);
+                        pinkyAnimationIV.setTranslateX(180);
+                        TranslateTransition pinkyTranslateTransition = new TranslateTransition(Duration.seconds(3), pinkyAnimationIV);
+                        pinkyTranslateTransition.setFromY(-pinkyAnimationIV.getImage().getHeight() -200);
+                        pinkyTranslateTransition.setToY(300);
+                        pinkyTranslateTransition.setCycleCount(TranslateTransition.INDEFINITE);
+
                         parent.getChildren().add(pinkyAnimationIV);
                         pinkyTranslateTransition.play();
 
@@ -160,7 +175,6 @@ public class GameOver implements EventHandler<ActionEvent> {
                 lancer = true;
 
     }
-
 
         @Override
         public void handle(ActionEvent event) {

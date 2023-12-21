@@ -51,15 +51,15 @@ public class AskName implements EventHandler{
 
 
 
+
             //Pacman animation
             Image pacManAnimation = new Image("PacmanRight.gif");
             ImageView pacManAnimationIV = new ImageView(pacManAnimation);
             pacManAnimationIV.setFitWidth(50);
             pacManAnimationIV.setFitHeight(50);
-            pacManAnimationIV.setTranslateX(-500);
             pacManAnimationIV.setTranslateY(10);
             TranslateTransition pacmanTranslateTransition = new TranslateTransition(Duration.seconds(5), pacManAnimationIV);
-            pacmanTranslateTransition.setFromX(-pacManAnimationIV.getImage().getWidth());
+            pacmanTranslateTransition.setFromX(-pacManAnimationIV.getImage().getWidth()-500);
             pacmanTranslateTransition.setToX(500);
             pacmanTranslateTransition.setCycleCount(pacmanTranslateTransition.INDEFINITE);
             parent.getChildren().add(pacManAnimationIV);
@@ -70,10 +70,9 @@ public class AskName implements EventHandler{
             ImageView blinkyAnimationIV = new ImageView(blinkyAnimation);
             blinkyAnimationIV.setFitWidth(50);
             blinkyAnimationIV.setFitHeight(50);
-            blinkyAnimationIV.setTranslateX(-400);
             blinkyAnimationIV.setTranslateY(-40);
             TranslateTransition blinkyTranslateTransition = new TranslateTransition(Duration.seconds(5), blinkyAnimationIV);
-            blinkyTranslateTransition.setFromX(-blinkyAnimationIV.getImage().getWidth());
+            blinkyTranslateTransition.setFromX(-blinkyAnimationIV.getImage().getWidth()-400);
             blinkyTranslateTransition.setToX(700);
             blinkyTranslateTransition.setCycleCount(blinkyTranslateTransition.INDEFINITE);
             parent.getChildren().add(blinkyAnimationIV);
@@ -83,10 +82,9 @@ public class AskName implements EventHandler{
             ImageView inkyAnimationIV = new ImageView(inkyAnimation);
             inkyAnimationIV.setFitWidth(50);
             inkyAnimationIV.setFitHeight(50);
-            inkyAnimationIV.setTranslateX(-300);
             inkyAnimationIV.setTranslateY(-90);
             TranslateTransition inkyTranslateTransition = new TranslateTransition(Duration.seconds(5), inkyAnimationIV);
-            inkyTranslateTransition.setFromX(-inkyAnimationIV.getImage().getWidth());
+            inkyTranslateTransition.setFromX(-inkyAnimationIV.getImage().getWidth()-300);
             inkyTranslateTransition.setToX(800);
             inkyTranslateTransition.setCycleCount(inkyTranslateTransition.INDEFINITE);
             parent.getChildren().add(inkyAnimationIV);
@@ -96,10 +94,9 @@ public class AskName implements EventHandler{
             ImageView clydeAnimationIV = new ImageView(clydeAnimation);
             clydeAnimationIV.setFitWidth(50);
             clydeAnimationIV.setFitHeight(50);
-            clydeAnimationIV.setTranslateX(-200);
             clydeAnimationIV.setTranslateY(-140);
             TranslateTransition clydeTranslateTransition = new TranslateTransition(Duration.seconds(5), clydeAnimationIV);
-            clydeTranslateTransition.setFromX(-clydeAnimationIV.getImage().getWidth());
+            clydeTranslateTransition.setFromX(-clydeAnimationIV.getImage().getWidth()-200);
             clydeTranslateTransition.setToX(900);
             clydeTranslateTransition.setCycleCount(clydeTranslateTransition.INDEFINITE);
             parent.getChildren().add(clydeAnimationIV);
@@ -109,10 +106,9 @@ public class AskName implements EventHandler{
             ImageView pinkyAnimationIV = new ImageView(pinkyAnimation);
             pinkyAnimationIV.setFitWidth(50);
             pinkyAnimationIV.setFitHeight(50);
-            pinkyAnimationIV.setTranslateX(-100);
             pinkyAnimationIV.setTranslateY(-190);
             TranslateTransition pinkyTranslateTransition = new TranslateTransition(Duration.seconds(5), pinkyAnimationIV);
-            pinkyTranslateTransition.setFromX(-pinkyAnimationIV.getImage().getWidth());
+            pinkyTranslateTransition.setFromX(-pinkyAnimationIV.getImage().getWidth()-100);
             pinkyTranslateTransition.setToX(1000);
             pinkyTranslateTransition.setCycleCount(pinkyTranslateTransition.INDEFINITE);
             parent.getChildren().add(pinkyAnimationIV);
