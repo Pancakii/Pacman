@@ -11,8 +11,12 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
-public class MenuDemarage implements EventHandler<ActionEvent> {
+import java.awt.*;
 
+public class MenuDemarage implements EventHandler<ActionEvent> {
+        private static final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        private static final double screenSizeWidth = screenSize.getWidth();
+        private static final double screenSizeHeight = screenSize.getHeight();
         private static Jeu jeu = new Jeu();
 
         public static VBox parent = new VBox();
@@ -70,7 +74,8 @@ public class MenuDemarage implements EventHandler<ActionEvent> {
                 }
 
 
-
+                App.menu.setX((screenSizeWidth - App.menu.getWidth())/2);
+                App.menu.setY((screenSizeHeight -App.menu.getHeight())/2);
                 App.menu.setScene(scene);
                 App.menu.show();
                 lancer = true;
