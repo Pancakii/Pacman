@@ -16,10 +16,16 @@ import java.util.Random;
 public class Ghost_pf
 {
 
+    /**
+     * Handles scatter/chase timers for the given ghost.
+     * @param ghost the said ghost
+     * @param d delta time
+     */
     public static void scatterChaseTimer(Ghost ghost, long d)
     {
         // sets one of the values to 0 and the other to the max, or just does time stuff
         double delta = (double) d;
+        delta = delta/1000000000;
         // Work on either chase or scatter timer, depending on values
         if(ghost.getChase_timer() > 0)
         {
@@ -43,17 +49,33 @@ public class Ghost_pf
         }
     }
 
-    public static boolean can_it_find_path(Ghost ghost)
+    /**
+     * Decides whether the given ghost can find path or not. Used for getting out of the ghost base one by one.
+     * @param ghost the said ghost
+     * @return boolean
+     */
+    private static boolean can_it_find_path(Ghost ghost, long d)
     {
-        // TODO: ADD TIMER WHEN PACMAN DIES SO THEY DONT COME OUT AT ONCE
+        double delta = (double) d;
+        delta = delta/1000000000;
+        if(ghost.getGet_out_timer() <= 15)
+        {
+            ghost.setGet_out_timer(ghost.getGet_out_timer() + delta);
+        }
         int pellet_count = PacMan.getCountDotTotal();
         return switch (ghost) {
-            case BLINKY, PINKY -> true;
-            case INKY -> pellet_count > 30;
-            case CLYDE -> pellet_count > 60;
+            case BLINKY -> true;
+            case PINKY -> ghost.getGet_out_timer() > 5;
+            case INKY -> pellet_count > 30 && ghost.getGet_out_timer() > 10;
+            case CLYDE -> pellet_count > 60 && ghost.getGet_out_timer() > 15;
         };
     }
 
+    /**
+     * Gives the given ghost BLINKY type path, direct chase to PacMan.
+     * @param ghost the said ghost
+     * @param grid the cell table
+     */
     private static void getPathBLINKY(Ghost ghost, Cell[][] grid)
     {
         // Direct chase
@@ -61,6 +83,13 @@ public class Ghost_pf
         ghost.setPath(Node.getPath(ghost.getPos(), pac_pos, grid));
     }
 
+    /**
+     * Gets the given ghost INKY/PINKY type path, cutting 1 cell in front of PacMan.
+     * If not possible, direct chase.
+     * @param ghost the said ghost
+     * @param grid the cell table
+     * @param mazeConfig mazeconfig
+     */
     private static void getPathINKYPINKY(Ghost ghost, Cell[][] grid, MazeConfig mazeConfig)
     {
         RealCoordinates pac_pos = PacMan.INSTANCE.getPos();
@@ -90,6 +119,11 @@ public class Ghost_pf
         }
     }
 
+    /**
+     * Gets the given ghost a CLYDE type path, random.
+     * @param ghost the said ghost
+     * @param mazeConfig mazeconfig
+     */
     private static void getPathCLYDE(Ghost ghost, MazeConfig mazeConfig)
     {
         // Random
@@ -123,6 +157,12 @@ public class Ghost_pf
         }
     }
 
+    /**
+     * Gets the given ghost when it is not eaten and not frightened (Special behavior for each, almost).
+     * @param ghost the said ghost
+     * @param grid the cell table
+     * @param mazeConfig mazeconfig
+     */
     private static void normalPath(Ghost ghost, Cell[][] grid, MazeConfig mazeConfig)
     {
         // Follow pacman using own behavior
@@ -150,6 +190,11 @@ public class Ghost_pf
         }
     }
 
+    /**
+     * Gets the given ghost the path it should be following when frightened (Random).
+     * @param ghost the said ghost
+     * @param mazeConfig mazeconfig
+     */
     private static void frightenedPath(Ghost ghost, MazeConfig mazeConfig)
     {
         // Run away from pacman
@@ -158,6 +203,12 @@ public class Ghost_pf
         getPathCLYDE(ghost, mazeConfig);
     }
 
+    /**
+     * Gets the given ghost the path it should be following when eaten (Goes to the base).
+     * @param ghost the said ghost
+     * @param grid the cell table
+     * @param base_coord base coordinates
+     */
     private static void eatenPath(Ghost ghost, Cell[][] grid, RealCoordinates base_coord)
     {
         // Return home because eaten
@@ -182,6 +233,15 @@ public class Ghost_pf
         }
     }
 
+    /**
+     * Gets the given ghost the path it needs if:
+     * (path_finding_timer <= 0 or direction == NONE or eaten or frightened) and Ghost_pf.can_it_find_path.
+     * @param ghost the said ghost
+     * @param grid the cell table
+     * @param mazeConfig mazeconfig
+     * @param delta delta time
+     * @param base_coord base coordinates
+     */
     public static void getPath(Ghost ghost, Cell[][] grid, MazeConfig mazeConfig, long delta, RealCoordinates base_coord)
     {
         double delta_double = (double) delta;
@@ -189,7 +249,7 @@ public class Ghost_pf
         boolean bool = ghost.getPath_finding_timer() <= 0 || ghost.getDirection() == Direction.NONE || ghost.isEaten() || ghost.isFrightened();
         // If not eaten, cant be eaten, the timer is up or the direction is none, find path to Pacman
         // Also be allowed to get out of base
-        if(bool && can_it_find_path(ghost))
+        if(bool && can_it_find_path(ghost, delta))
         {
             if (!ghost.isEaten() && !ghost.isFrightened())
             {
@@ -207,7 +267,10 @@ public class Ghost_pf
     }
 
 
-
+    /**
+     * Makes the given ghost follow the path by changing its direction depending on the path.
+     * @param ghost the said ghost
+     */
     public static void followPath(Ghost ghost)
     {
         if(!ghost.getPath().isEmpty())

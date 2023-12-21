@@ -18,40 +18,68 @@ public class Node
     private double h; // the cost to go
 
 
-
-    public Node(RealCoordinates c, Node p)
+    /**
+     * Constructor of Node
+     * @param c coordinates
+     * @param p Parent node
+     */
+    private Node(RealCoordinates c, Node p)
     {
         coordinates = c;
         parent = p;
     }
 
-    double calculateDistance(RealCoordinates p1, RealCoordinates p2)
+    /**
+     * Calculates distance of 2 points.
+     * @param p1 point 1
+     * @param p2 point 2
+     * @return double
+     */
+    private double calculateDistance(RealCoordinates p1, RealCoordinates p2)
     {
         double x = Math.abs(p1.x() - p2.x());
         double y = Math.abs(p1.y() - p2.y());
         return x + y;
     }
 
-    void calculateTotal(RealCoordinates end)
+    /**
+     * Calculates total cost.
+     * @param end the target coordinate
+     */
+    private void calculateTotal(RealCoordinates end)
     {
         // F(Total cost function), total of move and toGo
         toGo(end);
         f = g + h;
     }
 
-    void toGo(RealCoordinates end)
+    /**
+     * Calculates the cost to go.
+     * @param end the target coordinate
+     */
+    private void toGo(RealCoordinates end)
     {
         // Heuristic function, the cost to go
         h = calculateDistance(coordinates, end);
     }
 
 
+    /**
+     * Determines whether the coordinates of 2 nodes are the same.
+     * @param a node 1
+     * @param b node 2
+     * @return result
+     */
     private static boolean same(Node a, Node b)
     {
         // Verifie si les deux noeuds ont la meme coordonnées
         return a.coordinates.x() == b.coordinates.x() && a.coordinates.y() == b.coordinates.y();
     }
 
+    /**
+     * Gets possible neighbor nodes.
+     * @param tab cell table
+     */
     private void getNeighbors(Cell[][] tab)
     {
         neighbors = new ArrayList<>();
@@ -110,7 +138,12 @@ public class Node
         }
     }
 
-    public static Node findLowestCost(ArrayList<Node> list)
+    /**
+     * Finds lowest cost node of the list.
+     * @param list the said list
+     * @return the lowest cost node
+     */
+    private static Node findLowestCost(ArrayList<Node> list)
     {
         // Self-explanatory name
         // We are sure that the list is not empty
@@ -125,7 +158,12 @@ public class Node
         return res;
     }
 
-    public static void addListDistinctive(ArrayList<Node> list, Node to_add)
+    /**
+     * Adds the given node to the list but if a node with same coordinates exist, it swaps itself with it.
+     * @param list the said list
+     * @param to_add the said node
+     */
+    private static void addListDistinctive(ArrayList<Node> list, Node to_add)
     {
         // Adds element to the list but swaps if coordinates are the same
         Node n = sameIn(list, to_add);
@@ -141,7 +179,13 @@ public class Node
         list.add(to_add);
     }
 
-    public static Node sameIn(ArrayList<Node> list, Node element)
+    /**
+     * Determines if a node in the list and the given node has same coordinates.
+     * @param list the said list
+     * @param element the said node
+     * @return node if exists, null otherwise.
+     */
+    private static Node sameIn(ArrayList<Node> list, Node element)
     {
         // Returns it if a node with same coordinates exist. If not, returns null.
         for (Node n : list)
@@ -154,7 +198,13 @@ public class Node
         return null;
     }
 
-    public static boolean exists(ArrayList<Node> list, Node element)
+    /**
+     * Determines if the given node is "same" with any of the nodes in the given list.
+     * @param list the said list
+     * @param element the said node
+     * @return true if same, false otherwise
+     */
+    private static boolean exists(ArrayList<Node> list, Node element)
     {
         for (Node n : list)
         {
@@ -166,7 +216,14 @@ public class Node
         return false;
     }
 
-    public static Node aStar(RealCoordinates s, RealCoordinates e, Cell[][] grid)
+    /**
+     * Puts almost every other functions together to make the A* algorithm.
+     * @param s the start coordinates
+     * @param e the target coordinates
+     * @param grid the cell table
+     * @return the node containing a path from end to start with its one way chained parents
+     */
+    private static Node aStar(RealCoordinates s, RealCoordinates e, Cell[][] grid)
     {
         // Setting the variables that will be used later
         s = s.round().toRealCoordinates(1.0);
@@ -234,6 +291,13 @@ public class Node
         return null;
     }
 
+    /**
+     * Integrates the aStar function to ghosts.
+     * @param s the start coordinates
+     * @param e the target coordinates
+     * @param grid the cell table
+     * @return the path coordinates in a list in the correct way, from start to target
+     */
     public static ArrayList<RealCoordinates> getPath(RealCoordinates s, RealCoordinates e, Cell[][] grid)
     {
         ArrayList<RealCoordinates> res = new ArrayList<>();

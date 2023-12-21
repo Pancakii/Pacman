@@ -12,10 +12,20 @@ public record RealCoordinates(double x, double y) {
     public static final RealCoordinates WEST_UNIT = new RealCoordinates(-1, 0);
 
 
+    /**
+     * Adds the current coordinates to the given and makes a new RealCoordinates.
+     * @param other the said coordinates
+     * @return the result of sum of the coordinates
+     */
     public RealCoordinates plus(final RealCoordinates other) {
         return new RealCoordinates(x + other.x, y + other.y);
     }
 
+    /**
+     * Multiplies the current coordinates with the given multiplier.
+     * @param multiplier the said multiplier
+     * @return the result as a new RealCoordinates
+     */
     public RealCoordinates times(final double multiplier) {
         return new RealCoordinates(x * multiplier, y * multiplier);
     }
@@ -41,6 +51,10 @@ public record RealCoordinates(double x, double y) {
     }
 
 
+    /**
+     * Converts the current coordinates to IntCoordinates.
+     * @return a new IntCoordinates
+     */
     public IntCoordinates round() {
         return new IntCoordinates((int) Math.round(x), (int) Math.round(y));
     }
