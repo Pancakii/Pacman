@@ -10,6 +10,15 @@ import java.io.FileReader;
 import static config.Cell.Cellule;
 
 public class MazeConfig {
+    /**
+     * Constructor of MazeConfig.
+     * @param grid the cell table
+     * @param pacManPos starter position of pacman
+     * @param blinkyPos starter position of BLINKY
+     * @param pinkyPos starter position of PINKY
+     * @param inkyPos starter position of INKY
+     * @param clydePos starter position of CLYDE
+     */
     public MazeConfig(Cell[][] grid, IntCoordinates pacManPos, IntCoordinates blinkyPos, IntCoordinates pinkyPos,
                       IntCoordinates inkyPos, IntCoordinates clydePos) {
         this.grid = new Cell[grid.length][grid[0].length];
@@ -26,34 +35,66 @@ public class MazeConfig {
     private final Cell[][] grid;
     private final IntCoordinates pacManPos, blinkyPos, pinkyPos, inkyPos, clydePos;
 
+    /**
+     * Gets pacManPos.
+     * @return pacManPos
+     */
     public IntCoordinates getPacManPos() {
         return pacManPos;
     }
 
+    /**
+     * Gets blinkyPos.
+     * @return blinkyPos
+     */
     public IntCoordinates getBlinkyPos() {
         return blinkyPos;
     }
 
+    /**
+     * Gets pinkyPos.
+     * @return pinkyPos
+     */
     public IntCoordinates getPinkyPos() {
         return pinkyPos;
     }
 
+    /**
+     * Gets inkyPos.
+     * @return inkyPos
+     */
     public IntCoordinates getInkyPos() {
         return inkyPos;
     }
 
+    /**
+     * Gets clydePos.
+     * @return clydePos
+     */
     public IntCoordinates getClydePos() {
         return clydePos;
     }
 
+    /**
+     * Gets the width of the cell table(grid[0].length).
+     * @return the width of the cell table
+     */
     public int getWidth() {
         return grid[0].length;
     }
 
+    /**
+     * Gets the height of the cell table(grid.length).
+     * @return the height of the cell table
+     */
     public int getHeight() {
         return grid.length;
     }
 
+    /**
+     * Gets grid.
+     * @return grid
+     */
     public Cell[][] getGrid()
     {
         return grid;
@@ -133,6 +174,11 @@ public class MazeConfig {
         return (res[2] || res[0]) && (res[1] || res[3]);
     }
 
+    /**
+     * Gets the cell using the given position
+     * @param pos the said position
+     * @return the cell
+     */
     public Cell getCell(IntCoordinates pos) {
         return grid[Math.floorMod(pos.y(), getHeight())][Math.floorMod(pos.x(), getWidth())];
     }

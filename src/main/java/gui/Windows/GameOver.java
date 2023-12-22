@@ -16,7 +16,12 @@ import javafx.scene.text.Text;
 import javafx.util.Duration;
 import model.MazeState;
 
+import java.awt.*;
+
 public class GameOver implements EventHandler<ActionEvent> {
+        private static final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        private static final double screenSizeWidth = screenSize.getWidth();
+        private static final double screenSizeHeight = screenSize.getHeight();
         private static VBox parent = new VBox();
         private static Scene scene = new Scene(parent);
         private static Text score =  new Text();
@@ -167,8 +172,8 @@ public class GameOver implements EventHandler<ActionEvent> {
 
                 }
 
-                App.menu.setX(500);
-                App.menu.setY(200);
+                App.menu.setX((screenSizeWidth- App.menu.getWidth())/2);
+                App.menu.setY((screenSizeHeight -App.menu.getHeight())/2);
                 App.menu.setScene(scene);
                 App.menu.show();
                 lancer = true;

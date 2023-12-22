@@ -14,7 +14,12 @@ import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 import model.MazeState;
 
+import java.awt.*;
+
 public class AskName implements EventHandler{
+    private static final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+    private static final double screenSizeWidth = screenSize.getWidth();
+    private static final  double screenSizeHeight = screenSize.getHeight();
 
     private static VBox parent = new VBox();
     private static Scene scene = new Scene(parent);
@@ -117,7 +122,8 @@ public class AskName implements EventHandler{
         }
 
 
-
+        App.menu.setX((screenSizeWidth - App.menu.getWidth())/2);
+        App.menu.setY((screenSizeHeight -App.menu.getHeight())/2);
         App.menu.setScene(scene);
         App.menu.show();
         lancer = true;
