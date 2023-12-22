@@ -163,42 +163,43 @@ public class ScoreBoard {
         parent.getChildren().add(score5);
 
         //Pacman animation
-        Image pacManAnimation = new Image("PacmanRight.gif");
-        ImageView pacManAnimationIV = new ImageView(pacManAnimation);
-        pacManAnimationIV.setFitWidth(50);
-        pacManAnimationIV.setFitHeight(50);
-        pacManAnimationIV.setTranslateY(200);
-        TranslateTransition pacmanTranslateTransition = new TranslateTransition(Duration.seconds(5), pacManAnimationIV);
-        pacmanTranslateTransition.setFromX(-pacManAnimationIV.getImage().getWidth()-100);
-        pacmanTranslateTransition.setToX(900);
+        Image pinkyimation = new Image("Pinky.gif");
+        ImageView pinkyimationIV = new ImageView(pinkyimation);
+        pinkyimationIV.setFitWidth(50);
+        pinkyimationIV.setFitHeight(50);
+        pinkyimationIV.setTranslateY(200);
+        TranslateTransition pacmanTranslateTransition = new TranslateTransition(Duration.seconds(5), pinkyimationIV);
+        pacmanTranslateTransition.setFromX(900);
+        pacmanTranslateTransition.setToX(-pinkyimationIV.getImage().getWidth() - 100);
         pacmanTranslateTransition.setCycleCount(pacmanTranslateTransition.INDEFINITE);
-        parent.getChildren().add(pacManAnimationIV);
+        parent.getChildren().add(pinkyimationIV);
         pacmanTranslateTransition.play();
 
         //Fantome animation
-        Image blinkyAnimation = new Image("Blinky.gif");
-        ImageView blinkyAnimationIV = new ImageView(blinkyAnimation);
-        blinkyAnimationIV.setFitWidth(50);
-        blinkyAnimationIV.setFitHeight(50);
-        blinkyAnimationIV.setTranslateY(150);
-        TranslateTransition blinkyTranslateTransition = new TranslateTransition(Duration.seconds(5), blinkyAnimationIV);
-        blinkyTranslateTransition.setFromX(-blinkyAnimationIV.getImage().getWidth()-200);
-        blinkyTranslateTransition.setToX(800);
-        blinkyTranslateTransition.setCycleCount(blinkyTranslateTransition.INDEFINITE);
-        parent.getChildren().add(blinkyAnimationIV);
-        blinkyTranslateTransition.play();
-
         Image inkyAnimation = new Image("Inky.gif");
         ImageView inkyAnimationIV = new ImageView(inkyAnimation);
         inkyAnimationIV.setFitWidth(50);
         inkyAnimationIV.setFitHeight(50);
-        inkyAnimationIV.setTranslateY(100);
+        inkyAnimationIV.setTranslateY(150);
         TranslateTransition inkyTranslateTransition = new TranslateTransition(Duration.seconds(5), inkyAnimationIV);
-        inkyTranslateTransition.setFromX(-inkyAnimationIV.getImage().getWidth()-300);
-        inkyTranslateTransition.setToX(700);
+        inkyTranslateTransition.setFromX(800);
+        inkyTranslateTransition.setToX(-inkyAnimationIV.getImage().getWidth() - 200);
+        inkyTranslateTransition.setCycleCount(TranslateTransition.INDEFINITE);
         inkyTranslateTransition.setCycleCount(inkyTranslateTransition.INDEFINITE);
         parent.getChildren().add(inkyAnimationIV);
         inkyTranslateTransition.play();
+
+        Image blinkyAnimation = new Image("Blinky.gif");
+        ImageView blinkyAnimationIV = new ImageView(blinkyAnimation);
+        blinkyAnimationIV.setFitWidth(50);
+        blinkyAnimationIV.setFitHeight(50);
+        blinkyAnimationIV.setTranslateY(100);
+        TranslateTransition blinkyTranslateTransition = new TranslateTransition(Duration.seconds(5), blinkyAnimationIV);
+        blinkyTranslateTransition.setFromX(700);
+        blinkyTranslateTransition.setToX(-blinkyAnimationIV.getImage().getWidth() - 300);
+        blinkyTranslateTransition.setCycleCount(blinkyTranslateTransition.INDEFINITE);
+        parent.getChildren().add(blinkyAnimationIV);
+        blinkyTranslateTransition.play();
 
         Image clydeAnimation = new Image("Clyde.gif");
         ImageView clydeAnimationIV = new ImageView(clydeAnimation);
@@ -206,23 +207,23 @@ public class ScoreBoard {
         clydeAnimationIV.setFitHeight(50);
         clydeAnimationIV.setTranslateY(50);
         TranslateTransition clydeTranslateTransition = new TranslateTransition(Duration.seconds(5), clydeAnimationIV);
-        clydeTranslateTransition.setFromX(-clydeAnimationIV.getImage().getWidth()-400);
-        clydeTranslateTransition.setToX(600);
+        clydeTranslateTransition.setFromX(600);
+        clydeTranslateTransition.setToX(-clydeAnimationIV.getImage().getWidth() - 400);
         clydeTranslateTransition.setCycleCount(clydeTranslateTransition.INDEFINITE);
         parent.getChildren().add(clydeAnimationIV);
         clydeTranslateTransition.play();
 
-        Image pinkyAnimation = new Image("Pinky.gif");
-        ImageView pinkyAnimationIV = new ImageView(pinkyAnimation);
-        pinkyAnimationIV.setFitWidth(50);
-        pinkyAnimationIV.setFitHeight(50);
-        pinkyAnimationIV.setTranslateY(0);
-        TranslateTransition pinkyTranslateTransition = new TranslateTransition(Duration.seconds(5), pinkyAnimationIV);
-        pinkyTranslateTransition.setFromX(-pinkyAnimationIV.getImage().getWidth()-500);
-        pinkyTranslateTransition.setToX(500);
-        pinkyTranslateTransition.setCycleCount(pinkyTranslateTransition.INDEFINITE);
-        parent.getChildren().add(pinkyAnimationIV);
-        pinkyTranslateTransition.play();
+        Image pacManAnimation = new Image("PacmanLeft.gif");
+        ImageView pacManAnimationIV = new ImageView(pacManAnimation);
+        pacManAnimationIV.setFitWidth(50);
+        pacManAnimationIV.setFitHeight(50);
+        pacManAnimationIV.setTranslateY(0);
+        TranslateTransition pacManTranslateTransition = new TranslateTransition(Duration.seconds(5), pacManAnimationIV);
+        pacManTranslateTransition.setFromX(500);
+        pacManTranslateTransition.setToX(-pacManAnimationIV.getImage().getWidth() - 500);
+        pacManTranslateTransition.setCycleCount(pacManTranslateTransition.INDEFINITE);
+        parent.getChildren().add(pacManAnimationIV);
+        pacManTranslateTransition.play();
 
         Text leave = new Text();
         leave.setText("Press space");

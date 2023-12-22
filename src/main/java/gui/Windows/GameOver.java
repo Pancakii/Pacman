@@ -114,27 +114,14 @@ public class GameOver implements EventHandler<ActionEvent> {
                         pacManAnimationIV.setTranslateY(-70);
                         parent.getChildren().add(pacManAnimationIV);
 
-                        //Fantome animation
-                        Image blinkyAnimation = new Image("Blinky.gif");
-                        ImageView blinkyAnimationIV = new ImageView(blinkyAnimation);
-                        blinkyAnimationIV.setFitWidth(50);
-                        blinkyAnimationIV.setFitHeight(50);
-                        blinkyAnimationIV.setTranslateX(50);
-                        TranslateTransition blinkyTranslateTransition = new TranslateTransition(Duration.seconds(3), blinkyAnimationIV);
-                        blinkyTranslateTransition.setFromY(-blinkyAnimationIV.getImage().getHeight() -200);
-                        blinkyTranslateTransition.setToY(300);
-                        blinkyTranslateTransition.setCycleCount(TranslateTransition.INDEFINITE);
-                        parent.getChildren().add(blinkyAnimationIV);
-                        blinkyTranslateTransition.play();
-
                         Image inkyAnimation = new Image("Inky.gif");
                         ImageView inkyAnimationIV = new ImageView(inkyAnimation);
                         inkyAnimationIV.setFitWidth(50);
                         inkyAnimationIV.setFitHeight(50);
-                        inkyAnimationIV.setTranslateX(80);
-                        TranslateTransition inkyTranslateTransition = new TranslateTransition(Duration.seconds(3), inkyAnimationIV);
-                        inkyTranslateTransition.setFromY(-inkyAnimationIV.getImage().getHeight() -200);
-                        inkyTranslateTransition.setToY(300);
+                        inkyAnimationIV.setTranslateX(50);
+                        TranslateTransition inkyTranslateTransition = new TranslateTransition(Duration.seconds(5), inkyAnimationIV);
+                        inkyTranslateTransition.setFromY(300); // Démarrez en bas de la scène
+                        inkyTranslateTransition.setToY(-inkyAnimationIV.getImage().getHeight() - 300); // Déplacez-vous vers le haut de la scène
                         inkyTranslateTransition.setCycleCount(TranslateTransition.INDEFINITE);
                         parent.getChildren().add(inkyAnimationIV);
                         inkyTranslateTransition.play();
@@ -143,10 +130,9 @@ public class GameOver implements EventHandler<ActionEvent> {
                         ImageView clydeAnimationIV = new ImageView(clydeAnimation);
                         clydeAnimationIV.setFitWidth(50);
                         clydeAnimationIV.setFitHeight(50);
-                        clydeAnimationIV.setTranslateX(150);
-                        clydeAnimationIV.setTranslateY(-1);
-                        TranslateTransition clydeTranslateTransition = new TranslateTransition(Duration.seconds(3), clydeAnimationIV);
-                        clydeTranslateTransition.setFromY(-clydeAnimationIV.getImage().getHeight() -200);
+                        clydeAnimationIV.setTranslateX(100);
+                        TranslateTransition clydeTranslateTransition = new TranslateTransition(Duration.seconds(5), clydeAnimationIV);
+                        clydeTranslateTransition.setFromY(-clydeAnimationIV.getImage().getHeight() -300);
                         clydeTranslateTransition.setToY(300);
                         clydeTranslateTransition.setCycleCount(TranslateTransition.INDEFINITE);
                         parent.getChildren().add(clydeAnimationIV);
@@ -156,11 +142,24 @@ public class GameOver implements EventHandler<ActionEvent> {
                         ImageView pinkyAnimationIV = new ImageView(pinkyAnimation);
                         pinkyAnimationIV.setFitWidth(50);
                         pinkyAnimationIV.setFitHeight(50);
-                        pinkyAnimationIV.setTranslateX(180);
-                        TranslateTransition pinkyTranslateTransition = new TranslateTransition(Duration.seconds(3), pinkyAnimationIV);
-                        pinkyTranslateTransition.setFromY(-pinkyAnimationIV.getImage().getHeight() -200);
-                        pinkyTranslateTransition.setToY(300);
+                        pinkyAnimationIV.setTranslateX(350);
+                        TranslateTransition pinkyTranslateTransition = new TranslateTransition(Duration.seconds(5), pinkyAnimationIV);
+                        pinkyTranslateTransition.setFromY(-pinkyAnimationIV.getImage().getHeight() -300);
+                        pinkyTranslateTransition.setToY(350);
                         pinkyTranslateTransition.setCycleCount(TranslateTransition.INDEFINITE);
+
+                        Image blinkyAnimation = new Image("Blinky.gif");
+                        ImageView blinkyAnimationIV = new ImageView(blinkyAnimation);
+                        blinkyAnimationIV.setFitWidth(50);
+                        blinkyAnimationIV.setFitHeight(50);
+                        blinkyAnimationIV.setTranslateX(400);
+                        TranslateTransition blinkyTranslateTransition = new TranslateTransition(Duration.seconds(5), blinkyAnimationIV);
+                        blinkyTranslateTransition.setFromY(300); // Démarrez en bas de la scène
+                        blinkyTranslateTransition.setToY(-blinkyAnimationIV.getImage().getHeight() - 275); // Déplacez-vous vers le haut de la scène
+                        blinkyTranslateTransition.setCycleCount(TranslateTransition.INDEFINITE);
+                        parent.getChildren().add(blinkyAnimationIV);
+                        blinkyTranslateTransition.play();
+
 
                         parent.getChildren().add(pinkyAnimationIV);
                         pinkyTranslateTransition.play();
