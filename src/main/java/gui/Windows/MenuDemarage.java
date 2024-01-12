@@ -13,6 +13,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.util.Duration;
+import model.PacMan;
 
 import java.awt.*;
 
@@ -38,8 +39,10 @@ public class MenuDemarage implements EventHandler<ActionEvent> {
                 App.menu.setTitle("Menu");
 
 
-
                 if(!lancer){
+
+                        PacMan.INSTANCE.playBeginningSound();
+
                         //affichage du texte PacMan en grand
 
                         Image pacmanGift = new Image("MenuTextPacMan.gif");

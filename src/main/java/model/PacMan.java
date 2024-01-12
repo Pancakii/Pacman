@@ -4,6 +4,9 @@ package model;
 import config.MazeConfig;
 import geometry.RealCoordinates;
 
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,6 +20,18 @@ public final class PacMan implements Critter {
     private static int countDot;
     private static int countDotTotal;
     private static final int dotTotal = 151;
+
+    // Ajout des fichiers audio
+    private static final String path =System.getProperty("user.dir") ;
+    private static final String s = findSlash(path) ;
+    private static final String dotSound = path +s + "src" + s + "main"+ s + "resources" + s + "pacman_chomp.wav";
+    private static final String energizerSound = path + s + "src" + s + "main"+ s + "resources" + s + "pacmaneatingenergizer.wav";
+    private static final String gameOverSound = path + s +"src" + s + "main"+ s + "resources" + s + "pacmandeath.wav";
+    private static final String bonusSound = path + s +"src" + s + "main"+ s + "resources" + s + "pacman_eatfruit.wav";
+    private static final String benginningSound = path + s +"src" + s + "main"+ s + "resources" + s + "Undertale-Papyrus-Theme-Song-Bonetrousle.wav";
+    private static final String extraPacSound = path + s +"src" + s + "main"+ s + "resources" + s + "pacman_eatghost.wav";
+    private static final String eatGhostSound = path + s +"src" + s + "main"+ s + "resources" + s + "pacman_eatghost.wav";
+    private static Clip clip ;
 
 
     // We should be able to change the position
@@ -50,6 +65,7 @@ public final class PacMan implements Critter {
         {
             if (grid.getCell(pacPos).aDot())// if the unentered cell contains a dot
             {
+                PacMan.INSTANCE.playEatDot();
                 MazeState.addScore(10);// add 1 to the score
                 countDot++;
                 countDotTotal++;
@@ -57,6 +73,7 @@ public final class PacMan implements Critter {
             }
             else if (grid.getCell(pacPos).aEnergizer())// if the unentered cell contains an energizer
             {
+                PacMan.INSTANCE.playEatAnEnergizer();
                 MazeState.addScore(50);// add 10 to the score
                 countDot++;
                 countDotTotal++ ;
@@ -181,11 +198,121 @@ public final class PacMan implements Critter {
 		int x = pacPos.x(); // get x axis
 		int y = pacPos.y(); // get y axis
         if ( x == 11 && y == 12 && Bonus.canHaveBonus()){
+            PacMan.INSTANCE.playEatFruitSound();
 			MazeState.addScore(Bonus.pointBonus());
 			Bonus.setHaveBonus(false);
 			Bonus.setBonusTimer(0);
 		}
 	}
+
+    /**
+     * Une fonction qui donne le son quand pacman a perdu de la vie
+     */
+    public void playGameOverSound() {
+        try {
+            clip = AudioSystem.getClip();
+            clip.open(AudioSystem.getAudioInputStream(new File(gameOverSound)));
+            clip.start();
+        } catch (Exception e){
+            e.fillInStackTrace() ;
+        }
+    }
+
+    /**
+     * Une fonction qui donne le son quand pacman mange un ghost
+     */
+    public void playEatGhostSound() {
+        try {
+            clip = AudioSystem.getClip();
+            clip.open(AudioSystem.getAudioInputStream(new File(eatGhostSound)));
+            clip.start();
+        } catch (Exception e){
+            e.fillInStackTrace() ;
+        }
+    }
+
+    /**
+     * Une fonction qui donne le son quand pacman mange un fruit
+     */
+    public void playEatFruitSound() {
+        try {
+            clip = AudioSystem.getClip();
+            clip.open(AudioSystem.getAudioInputStream(new File(bonusSound)));
+            clip.start();
+        } catch (Exception e){
+            e.fillInStackTrace() ;
+        }
+    }
+
+    /**
+     * Une fonction qui donne le son quand on commence le jeu
+     */
+    public void playBeginningSound() {
+        try {
+            clip = AudioSystem.getClip();
+            clip.open(AudioSystem.getAudioInputStream(new File(benginningSound)));
+            clip.start();
+        } catch (Exception e){
+            e.fillInStackTrace() ;
+        }
+    }
+    /**
+     * Une fonction qui donne le son quand on commence le jeu
+     */
+    public void playExtraPacSound() {
+        try {
+            clip = AudioSystem.getClip();
+            clip.open(AudioSystem.getAudioInputStream(new File(extraPacSound)));
+            clip.start();
+        } catch (Exception e){
+            e.fillInStackTrace() ;
+        }
+    }
+
+    /**
+     * Une fonction qui donne le son quand pacman mange un energizer
+     */
+    public void playEatAnEnergizer(){
+        try {
+            clip = AudioSystem.getClip();
+            clip.open(AudioSystem.getAudioInputStream(new File(energizerSound)));
+            clip.start();
+        } catch (Exception e ){
+            e.fillInStackTrace() ;
+        }
+    }
+
+    public void playEatDot (){
+        try {
+            clip = AudioSystem.getClip();
+            clip.open(AudioSystem.getAudioInputStream(new File(dotSound)));
+            clip.start();
+        } catch (Exception e ){
+            e.fillInStackTrace() ;
+        }
+    }
+
+
+    /**
+     * Une fonction qui donne le bon slash
+     * @param p
+     * @return String
+     */
+    private static String findSlash(String p) {
+        for (int i = 0; i < p.length(); i++) {
+            switch (p.charAt(i)) {
+                case '/':
+                    return "/";
+                case '\\':
+                    return "\\";
+            }
+        }
+        return "/";
+    }
+
+    public void closeSound (){
+        clip.close();
+    }
 
 
     /**
