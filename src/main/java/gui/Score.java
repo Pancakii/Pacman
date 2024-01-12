@@ -1,7 +1,6 @@
 package gui;
 
 import javafx.scene.Node;
-import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
@@ -9,6 +8,10 @@ import model.MazeState;
 
 public class Score {
 
+    /**
+     * Une fonction qui met à jour le score du joueur
+     * @return
+     */
     public GraphicsUpdater displayScore() {
 
         Text point = new Text();
