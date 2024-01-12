@@ -16,7 +16,9 @@ public class Regle implements EventHandler<ActionEvent> {
     private static boolean lancer = false;
 
 
-
+    /**
+     * Produire une scene de regle et la mettre dans App.menu. Sets lancer true s'il est false.
+     */
     public static void  rule () {
         App.menu.setHeight(500);
         App.menu.setWidth(500);
@@ -69,6 +71,10 @@ public class Regle implements EventHandler<ActionEvent> {
 
     }
 
+    /**
+     * Event handler which calls rule function
+     * @param event the event which occurred
+     */
     @Override
     public void handle(ActionEvent event) {
         rule();

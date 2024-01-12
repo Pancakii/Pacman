@@ -27,6 +27,9 @@ public class MenuDemarage implements EventHandler<ActionEvent> {
         public static Scene scene = new Scene(parent);
         private static boolean lancer = false;
 
+        /**
+         * Produire une scene de main menu(menu qu'on voit au début) et la mettre dans App.menu. Sets lancer true.
+         */
         public static void affichageMenuDemarage()  {
 
 
@@ -175,6 +178,10 @@ public class MenuDemarage implements EventHandler<ActionEvent> {
                 lancer = true;
         }
 
+        /**
+         * Event handler which calls affichageMenuDemarage function
+         * @param event the event which occurred
+         */
         @Override
         public void handle(ActionEvent event) {
                 affichageMenuDemarage();
