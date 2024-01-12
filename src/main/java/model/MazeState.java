@@ -144,10 +144,12 @@ public final class MazeState {
                     addScore(200);
                     ghost.setEaten(true);
                     ghost.setFrightened(false);
+                    PacMan.INSTANCE.playEatGhostSound();
                 }
                 if(!ghost.isFrightened() && !ghost.isEaten())
                 {
                     playerLost();
+                    PacMan.INSTANCE.playGameOverSound();
                     break;
                 }
             }
@@ -259,6 +261,7 @@ public final class MazeState {
      */
     public void addLive(){
         if (addLiveScore >= 10000) {    // vérifie que le score du joueur a bien atteint 10000 points
+            PacMan.INSTANCE.playExtraPacSound();
             setAddLiveScore(0); // remet le compteur qui rajout de la vie à 0
             lives++; // ajoute une vie
         }
