@@ -313,6 +313,7 @@ public final class PacMan implements Critter {
     public void closeSound (){
         clip.close();
     }
+    public void resetSount () { clip.setFramePosition(0);}
 
 
     /**

@@ -53,6 +53,7 @@ public class AskName implements EventHandler{
                 public void handle(ActionEvent event) {
                     MazeState.nickname = txtName.getText();
                     PacMan.INSTANCE.closeSound();
+                    PacMan.INSTANCE.resetSount();
                     Jeu.Game();
                 }
             });
