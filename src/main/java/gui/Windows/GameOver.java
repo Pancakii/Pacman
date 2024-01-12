@@ -15,6 +15,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 import model.MazeState;
+import model.PacMan;
 
 import java.awt.*;
 
@@ -92,6 +93,7 @@ public class GameOver implements EventHandler<ActionEvent> {
                         menubouton.setOnMousePressed(e -> menubouton.setScaleX(1.2));
                         menubouton.setOnMouseReleased(e -> menubouton.setScaleX(1.0));
 
+                        PacMan.INSTANCE.playBeginningSound();
                         menubouton.setOnAction(new MenuDemarage());
                         parent.getChildren().add(menubouton);
 
