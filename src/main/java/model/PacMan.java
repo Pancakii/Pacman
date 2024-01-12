@@ -30,11 +30,8 @@ public final class PacMan implements Critter {
     private static final String bonusSound = path + s +"src" + s + "main"+ s + "resources" + s + "pacman_eatfruit.wav";
     private static final String benginningSound = path + s +"src" + s + "main"+ s + "resources" + s + "Undertale-Papyrus-Theme-Song-Bonetrousle.wav";
     private static final String extraPacSound = path + s +"src" + s + "main"+ s + "resources" + s + "pacman_eatghost.wav";
-    private static final String intermissionSound = path + s +"src" + s + "main"+ s + "resources" + s + "pacman_intermission.wav";
     private static final String eatGhostSound = path + s +"src" + s + "main"+ s + "resources" + s + "pacman_eatghost.wav";
-
     private static Clip clip ;
-
 
 
     // We should be able to change the position
@@ -68,21 +65,21 @@ public final class PacMan implements Critter {
         {
             if (grid.getCell(pacPos).aDot())// if the unentered cell contains a dot
             {
+                PacMan.INSTANCE.playEatDot();
                 MazeState.addScore(10);// add 1 to the score
                 countDot++;
                 countDotTotal++;
                 grid_state[y][x] = true;// set the cell state "entered"
-               PacMan.INSTANCE.playEatDot();
             }
             else if (grid.getCell(pacPos).aEnergizer())// if the unentered cell contains an energizer
             {
+                PacMan.INSTANCE.playEatAnEnergizer();
                 MazeState.addScore(50);// add 10 to the score
                 countDot++;
                 countDotTotal++ ;
                 INSTANCE.energized_timer = INSTANCE.energized_timer_max;// set the energizer timer
                 INSTANCE.setEnergized(true);// set energized true
                 grid_state[y][x] = true;// set the cell state "entered"
-                PacMan.INSTANCE.playEatAnEnergizer();
                 return true;
             }
         }
@@ -216,7 +213,6 @@ public final class PacMan implements Critter {
             clip = AudioSystem.getClip();
             clip.open(AudioSystem.getAudioInputStream(new File(gameOverSound)));
             clip.start();
-            if ( clip.isActive()) clip.close();
         } catch (Exception e){
             e.fillInStackTrace() ;
         }
@@ -230,7 +226,6 @@ public final class PacMan implements Critter {
             clip = AudioSystem.getClip();
             clip.open(AudioSystem.getAudioInputStream(new File(eatGhostSound)));
             clip.start();
-            if ( clip.isActive()) clip.close();
         } catch (Exception e){
             e.fillInStackTrace() ;
         }
@@ -244,7 +239,6 @@ public final class PacMan implements Critter {
             clip = AudioSystem.getClip();
             clip.open(AudioSystem.getAudioInputStream(new File(bonusSound)));
             clip.start();
-            if ( clip.isActive()) clip.close();
         } catch (Exception e){
             e.fillInStackTrace() ;
         }
@@ -258,7 +252,6 @@ public final class PacMan implements Critter {
             clip = AudioSystem.getClip();
             clip.open(AudioSystem.getAudioInputStream(new File(benginningSound)));
             clip.start();
-            if ( clip.isActive()) clip.close();
         } catch (Exception e){
             e.fillInStackTrace() ;
         }
@@ -271,7 +264,6 @@ public final class PacMan implements Critter {
             clip = AudioSystem.getClip();
             clip.open(AudioSystem.getAudioInputStream(new File(extraPacSound)));
             clip.start();
-            if ( clip.isActive()) clip.close();
         } catch (Exception e){
             e.fillInStackTrace() ;
         }
@@ -285,7 +277,6 @@ public final class PacMan implements Critter {
             clip = AudioSystem.getClip();
             clip.open(AudioSystem.getAudioInputStream(new File(energizerSound)));
             clip.start();
-            if ( clip.isActive()) clip.close();
         } catch (Exception e ){
             e.fillInStackTrace() ;
         }
@@ -296,25 +287,11 @@ public final class PacMan implements Critter {
             clip = AudioSystem.getClip();
             clip.open(AudioSystem.getAudioInputStream(new File(dotSound)));
             clip.start();
-            if ( clip.isActive()) clip.close();
         } catch (Exception e ){
             e.fillInStackTrace() ;
         }
     }
 
-    /**
-     * Une fonction qui donne le son quand pacman est energized
-     */
-    public void playIntermission(){
-        try {
-            clip = AudioSystem.getClip();
-            clip.open(AudioSystem.getAudioInputStream(new File(intermissionSound)));
-            clip.start();
-            if ( clip.isActive()) clip.close();
-        } catch (Exception e ){
-            e.fillInStackTrace() ;
-        }
-    }
 
     /**
      * Une fonction qui donne le bon slash
@@ -334,11 +311,7 @@ public final class PacMan implements Critter {
     }
 
     public void closeSound (){
-        try {
-            clip.close();
-        } catch (Exception e ){
-            e.fillInStackTrace() ;
-        }
+        clip.close();
     }
 
 
