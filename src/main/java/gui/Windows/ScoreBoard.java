@@ -29,7 +29,11 @@ public class ScoreBoard {
     private static int[] tabScore = {0,0,0,0,0};
     private static String[] tabName = {"Mina","Emirhan","Salim","Sofyane","Alexis"};
 
-
+    /**
+     * Une focntion qui vérifie si le joueur peut être affiché dans le scoreboard
+     * @param score le score a la fin du jeu
+     * @return boolean
+     */
     public static boolean canAdd(int score){
         if(tabScore[4] < score || tabScore[4] == 0) {
             return true;
@@ -39,6 +43,11 @@ public class ScoreBoard {
         }
     }
 
+    /**
+     *  Une fonction qui ajoute le nom et le score dans le scoreboard
+     * @param score le score que le joueur a fait
+     * @param nom le nom que le joueur a fait
+     */
     public static void ajoutTab(int score, String nom){
         int[] newTabScore = new int[5];
         String[] newTabString = new String[5];
@@ -67,6 +76,11 @@ public class ScoreBoard {
 
     }
 
+    /**
+     *  Une fonction qui ajoute au scoreboard si seulement le score à dépasser le precedent
+     * @param score score en fin de jeu
+     * @param nom nom du joueur
+     */
     public static void newScore(int score, String nom){
         if(canAdd(score)){
             ajoutTab(score,nom);
@@ -84,6 +98,10 @@ public class ScoreBoard {
     static Text score4 = new Text();
     static Text nom5 = new Text();
     static Text score5 = new Text();
+
+    /**
+     * Une fonction qui affiche le score
+     */
     public static void affichageScore(){
         int positionXNom = 140;
         int postionXScore = 240;
@@ -257,6 +275,9 @@ public class ScoreBoard {
         };
     }
 
+    /**
+     * Une fonction qui affiche le scoreboard
+     */
     public static void afficheScoreBoard(){
 
         parent.getChildren().clear();

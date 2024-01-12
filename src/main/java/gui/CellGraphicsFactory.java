@@ -94,7 +94,9 @@ public class CellGraphicsFactory {
         };
     }
 
-
+    /**
+     * Une fonction qui reset les couleurs des murs
+     */
     private void resetColorRGB(){
         if(colorRGB[downRGB] == 100){
             downRGB = (downRGB + 1) % 3;
@@ -102,6 +104,9 @@ public class CellGraphicsFactory {
         }
     }
 
+    /**
+     * Une fonction qui change la couleur des murs en multicouleur quand pacman n'est pas energized
+     */
     private void changingColorNormal(){
 
         resetColorRGB();
@@ -110,8 +115,9 @@ public class CellGraphicsFactory {
         color =  Color.rgb(colorRGB[0],colorRGB[1],colorRGB[2]);
     }
 
-
-
+    /**
+     * Une fonction qui change la couleur des murs en bleu quand pacman est energized
+     */
     private void changingColorAllWall(){
 
         if (PacMan.INSTANCE.isEnergized()){

@@ -6,6 +6,11 @@ import javafx.scene.image.ImageView;
 
 public class Vie {
 
+    /**
+     * Une fonction qui met à jour les images de vie
+     * @return GraphicsUpdater
+     */
+
 
     public GraphicsUpdater remainingLife(){
 

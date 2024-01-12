@@ -91,7 +91,6 @@ public class GameOver implements EventHandler<ActionEvent> {
 
                         menubouton.setOnMousePressed(e -> menubouton.setScaleX(1.2));
                         menubouton.setOnMouseReleased(e -> menubouton.setScaleX(1.0));
-
                         menubouton.setOnAction(new MenuDemarage());
                         parent.getChildren().add(menubouton);
 
