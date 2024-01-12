@@ -93,10 +93,10 @@ public class GameOver implements EventHandler<ActionEvent> {
                         menubouton.setTextFill(Color.WHITE);
                         menubouton.setStyle("-fx-border-color: yellow; -fx-border-width: 2px;");
 
-                        menubouton.setOnMousePressed(e -> menubouton.setScaleX(1.2));
+                        menubouton.setOnMousePressed(e -> {menubouton.setScaleX(1.2); PacMan.INSTANCE.playBeginningSound();});
                         menubouton.setOnMouseReleased(e -> menubouton.setScaleX(1.0));
 
-                        PacMan.INSTANCE.playBeginningSound();
+
                         menubouton.setOnAction(new MenuDemarage());
                         parent.getChildren().add(menubouton);
 
