@@ -34,6 +34,10 @@ public class Jeu implements EventHandler<ActionEvent> {
     private static boolean lancer = false;
     private static GameView gameView = new GameView(maze, root, scale, maze.getWidth() - 75, (maze.getHeight() * 18.0)/2);
 
+
+    /**
+     * Une function qui set/reset les attributs de App.menu et lui meme. Il sert à lancer la partie du jeu. Sets lancer true.
+     */
     public static void Game() {
         App.menu.setTitle("Pacman"); // Ajouter un nom a la page
 
@@ -63,6 +67,10 @@ public class Jeu implements EventHandler<ActionEvent> {
         lancer = true;
     }
 
+    /**
+     * Event handler which calls Game function
+     * @param event the event which occurred
+     */
     @Override
     public void handle(ActionEvent event) {
         try {
