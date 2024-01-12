@@ -13,6 +13,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.util.Duration;
+import model.PacMan;
 
 import java.awt.*;
 
@@ -20,6 +21,7 @@ public class MenuDemarage implements EventHandler<ActionEvent> {
         private static final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         private static final double screenSizeWidth = screenSize.getWidth();
         private static final double screenSizeHeight = screenSize.getHeight();
+        private static Jeu jeu = new Jeu();
 
         public static VBox parent = new VBox();
         public static Scene scene = new Scene(parent);
@@ -37,8 +39,10 @@ public class MenuDemarage implements EventHandler<ActionEvent> {
                 App.menu.setTitle("Menu");
 
 
-
                 if(!lancer){
+
+                        PacMan.INSTANCE.playBeginningSound();
+
                         //affichage du texte PacMan en grand
 
                         Image pacmanGift = new Image("MenuTextPacMan.gif");
@@ -67,8 +71,8 @@ public class MenuDemarage implements EventHandler<ActionEvent> {
                         jouerbouton.setOnAction(new AskName());
                         parent.getChildren().add(jouerbouton);
 
-                        //bouton pour les regles
-                        Button modebouton = new Button("Regle");
+                        //bouton pour les modes
+                        Button modebouton = new Button("Regles");
                         modebouton.setTranslateX(230);
                         modebouton.setTranslateY(40);
                         modebouton.setBackground(null);
@@ -76,12 +80,13 @@ public class MenuDemarage implements EventHandler<ActionEvent> {
                         modebouton.setStyle("-fx-border-color: yellow; -fx-border-width: 2px;");
                         modebouton.setFont(Font.font(20));
 
+                        modebouton.setOnAction(new Regle());
+
                         modebouton.setOnMousePressed(e -> modebouton.setScaleX(1.2));
                         modebouton.setOnMouseReleased(e -> modebouton.setScaleX(1.0));
 
-                        modebouton.setOnAction(new Regle());
+                        //App.mebouton.setOnAction();
                         parent.getChildren().add(modebouton);
-
 
                         //bouton pour quitter tout lle programme
                         Button exitbouton = new Button("  Exit  ");
@@ -174,7 +179,4 @@ public class MenuDemarage implements EventHandler<ActionEvent> {
         public void handle(ActionEvent event) {
                 affichageMenuDemarage();
         }
-
-
-
 }
