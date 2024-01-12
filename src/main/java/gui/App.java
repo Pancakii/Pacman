@@ -17,8 +17,8 @@ public class App extends Application {
         // Ajouter une icone a la page`
         Image icon = new Image("pacman.png");
         menu.getIcons().add(icon);
-        //GameOver.affichageGameOver();
-            affichageMenuDemarage();
+
+        affichageMenuDemarage();
 
 
     }

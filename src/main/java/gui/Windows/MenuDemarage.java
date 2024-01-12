@@ -20,7 +20,6 @@ public class MenuDemarage implements EventHandler<ActionEvent> {
         private static final Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         private static final double screenSizeWidth = screenSize.getWidth();
         private static final double screenSizeHeight = screenSize.getHeight();
-        private static Jeu jeu = new Jeu();
 
         public static VBox parent = new VBox();
         public static Scene scene = new Scene(parent);
@@ -68,8 +67,8 @@ public class MenuDemarage implements EventHandler<ActionEvent> {
                         jouerbouton.setOnAction(new AskName());
                         parent.getChildren().add(jouerbouton);
 
-                        //bouton pour les modes
-                        Button modebouton = new Button("Mode");
+                        //bouton pour les regles
+                        Button modebouton = new Button("Regle");
                         modebouton.setTranslateX(230);
                         modebouton.setTranslateY(40);
                         modebouton.setBackground(null);
@@ -80,8 +79,9 @@ public class MenuDemarage implements EventHandler<ActionEvent> {
                         modebouton.setOnMousePressed(e -> modebouton.setScaleX(1.2));
                         modebouton.setOnMouseReleased(e -> modebouton.setScaleX(1.0));
 
-                        //App.mebouton.setOnAction();
+                        modebouton.setOnAction(new Regle());
                         parent.getChildren().add(modebouton);
+
 
                         //bouton pour quitter tout lle programme
                         Button exitbouton = new Button("  Exit  ");
@@ -174,4 +174,7 @@ public class MenuDemarage implements EventHandler<ActionEvent> {
         public void handle(ActionEvent event) {
                 affichageMenuDemarage();
         }
+
+
+
 }
