@@ -28,10 +28,12 @@ public final class PacMan implements Critter {
     private static final String energizerSound = path + s + "src" + s + "main"+ s + "resources" + s + "pacmaneatingenergizer.wav";
     private static final String gameOverSound = path + s +"src" + s + "main"+ s + "resources" + s + "pacmandeath.wav";
     private static final String bonusSound = path + s +"src" + s + "main"+ s + "resources" + s + "pacman_eatfruit.wav";
-    private static final String benginningSound = path + s +"src" + s + "main"+ s + "resources" + s + "pacman_beginning.wav";
+    private static final String benginningSound = path + s +"src" + s + "main"+ s + "resources" + s + "Undertale-Papyrus-Theme-Song-Bonetrousle.wav";
     private static final String extraPacSound = path + s +"src" + s + "main"+ s + "resources" + s + "pacman_eatghost.wav";
     private static final String intermissionSound = path + s +"src" + s + "main"+ s + "resources" + s + "pacman_intermission.wav";
     private static final String eatGhostSound = path + s +"src" + s + "main"+ s + "resources" + s + "pacman_eatghost.wav";
+
+    private static Clip clip ;
 
 
 
@@ -210,7 +212,6 @@ public final class PacMan implements Critter {
      * Une fonction qui donne le son quand pacman a perdu de la vie
      */
     public void playGameOverSound() {
-        Clip clip ;
         try {
             clip = AudioSystem.getClip();
             clip.open(AudioSystem.getAudioInputStream(new File(gameOverSound)));
@@ -225,7 +226,6 @@ public final class PacMan implements Critter {
      * Une fonction qui donne le son quand pacman mange un ghost
      */
     public void playEatGhostSound() {
-        Clip clip ;
         try {
             clip = AudioSystem.getClip();
             clip.open(AudioSystem.getAudioInputStream(new File(eatGhostSound)));
@@ -240,7 +240,6 @@ public final class PacMan implements Critter {
      * Une fonction qui donne le son quand pacman mange un fruit
      */
     public void playEatFruitSound() {
-        Clip clip ;
         try {
             clip = AudioSystem.getClip();
             clip.open(AudioSystem.getAudioInputStream(new File(bonusSound)));
@@ -255,7 +254,6 @@ public final class PacMan implements Critter {
      * Une fonction qui donne le son quand on commence le jeu
      */
     public void playBeginningSound() {
-        Clip clip ;
         try {
             clip = AudioSystem.getClip();
             clip.open(AudioSystem.getAudioInputStream(new File(benginningSound)));
@@ -269,7 +267,6 @@ public final class PacMan implements Critter {
      * Une fonction qui donne le son quand on commence le jeu
      */
     public void playExtraPacSound() {
-        Clip clip ;
         try {
             clip = AudioSystem.getClip();
             clip.open(AudioSystem.getAudioInputStream(new File(extraPacSound)));
@@ -284,7 +281,6 @@ public final class PacMan implements Critter {
      * Une fonction qui donne le son quand pacman mange un energizer
      */
     public void playEatAnEnergizer(){
-        Clip clip ;
         try {
             clip = AudioSystem.getClip();
             clip.open(AudioSystem.getAudioInputStream(new File(energizerSound)));
@@ -296,7 +292,6 @@ public final class PacMan implements Critter {
     }
 
     public void playEatDot (){
-        Clip clip ;
         try {
             clip = AudioSystem.getClip();
             clip.open(AudioSystem.getAudioInputStream(new File(dotSound)));
@@ -311,7 +306,6 @@ public final class PacMan implements Critter {
      * Une fonction qui donne le son quand pacman est energized
      */
     public void playIntermission(){
-        Clip clip ;
         try {
             clip = AudioSystem.getClip();
             clip.open(AudioSystem.getAudioInputStream(new File(intermissionSound)));
@@ -339,6 +333,13 @@ public final class PacMan implements Critter {
         return "/";
     }
 
+    public void closeSound (){
+        try {
+            clip.close();
+        } catch (Exception e ){
+            e.fillInStackTrace() ;
+        }
+    }
 
 
     /**

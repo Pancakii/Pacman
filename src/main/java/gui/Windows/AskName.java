@@ -13,6 +13,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 import model.MazeState;
+import model.PacMan;
 
 import java.awt.*;
 
@@ -49,6 +50,7 @@ public class AskName implements EventHandler{
                 @Override
                 public void handle(ActionEvent event) {
                     MazeState.nickname = txtName.getText();
+                    PacMan.INSTANCE.closeSound();
                     Jeu.Game();
                 }
             });
