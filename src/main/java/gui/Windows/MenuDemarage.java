@@ -72,13 +72,15 @@ public class MenuDemarage implements EventHandler<ActionEvent> {
                         parent.getChildren().add(jouerbouton);
 
                         //bouton pour les modes
-                        Button modebouton = new Button("Mode");
+                        Button modebouton = new Button("Regles");
                         modebouton.setTranslateX(230);
                         modebouton.setTranslateY(40);
                         modebouton.setBackground(null);
                         modebouton.setTextFill(Color.WHITE);
                         modebouton.setStyle("-fx-border-color: yellow; -fx-border-width: 2px;");
                         modebouton.setFont(Font.font(20));
+
+                        modebouton.setOnAction(new Regle());
 
                         modebouton.setOnMousePressed(e -> modebouton.setScaleX(1.2));
                         modebouton.setOnMouseReleased(e -> modebouton.setScaleX(1.0));
