@@ -26,7 +26,9 @@ public class AskName implements EventHandler{
     private static Scene scene = new Scene(parent);
     private static boolean lancer = false;
 
-
+    /**
+     * Produire une scene et la mettre dans App.menu qui demande le nom du joueur. Sets lancer true.
+     */
     public static void AskName(){
 
         App.menu.setHeight(200);
@@ -51,6 +53,7 @@ public class AskName implements EventHandler{
                 public void handle(ActionEvent event) {
                     MazeState.nickname = txtName.getText();
                     PacMan.INSTANCE.closeSound();
+                    PacMan.INSTANCE.resetSount();
                     Jeu.Game();
                 }
             });
@@ -132,6 +135,10 @@ public class AskName implements EventHandler{
     }
 
 
+    /**
+     * Event handler which calls AskName function
+     * @param event the event which occurred
+     */
     @Override
     public void handle(Event event) {
         AskName();

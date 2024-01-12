@@ -15,6 +15,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 import model.MazeState;
+import model.PacMan;
 
 import java.awt.*;
 
@@ -30,6 +31,9 @@ public class GameOver implements EventHandler<ActionEvent> {
         private static boolean lancer = false;
 
 
+        /**
+         * Produire une scene de game over et la mettre dans App.menu. Sets lancer true.
+         */
         public static void affichageGameOver() {
                 final int tw = 500;
                 App.menu.setHeight(tw);
@@ -91,6 +95,8 @@ public class GameOver implements EventHandler<ActionEvent> {
 
                         menubouton.setOnMousePressed(e -> menubouton.setScaleX(1.2));
                         menubouton.setOnMouseReleased(e -> menubouton.setScaleX(1.0));
+
+                        PacMan.INSTANCE.playBeginningSound();
                         menubouton.setOnAction(new MenuDemarage());
                         parent.getChildren().add(menubouton);
 
@@ -176,11 +182,15 @@ public class GameOver implements EventHandler<ActionEvent> {
                 App.menu.setScene(scene);
                 App.menu.show();
                 lancer = true;
+        }
 
-    }
 
+        /**
+         * Event handler which calls affichageGameOver function
+         * @param event the event which occurred
+         */
         @Override
         public void handle(ActionEvent event) {
-                affichageGameOver();
+        affichageGameOver();
         }
 }
