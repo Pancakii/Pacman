@@ -1,0 +1,21 @@
+# IntelliJ IDEA, Gradle, and macOS files
+.idea/
+.gradle/
+build/
+.DS_Store
+
+# IntelliJ IDEA project files
+*.iml
+*.iws
+*.ipr
+
+# Compiled Java classes
+*.class
+
+# Logs
+/log/
+
+# User-specific files
+.idea/workspace.xml
+.idea/tasks.xml
+.idea/*.iml
